@@ -183,7 +183,7 @@ function integrate(state, course, bank, pitch) {
     if (crossed && distance <= gate.radius) {
       state.passed++; state.streak++; state.bestStreak = Math.max(state.bestStreak, state.streak);
       state.score += 100 + Math.round(50 * (1 - distance / gate.radius)) + Math.min(state.streak, 5) * 10;
-      event(state, 'pass', `Gate ${state.gateIndex} kept · ${state.streak} in a row`);
+      event(state, 'pass', `Gate ${state.gateIndex} cleared · ${state.streak} in a row`);
     } else {
       state.missed++; state.streak = 0;
       event(state, 'miss', `Gate ${state.gateIndex} missed. Keep flying to the next ring.`);
