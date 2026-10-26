@@ -1,0 +1,13 @@
+{
+  "name": "driftwing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A little airplane. A wide-open sky. An original wind-driven browser game.",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": { "node": ">=24 <25" },
+  "license": "MIT"
+}

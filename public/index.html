@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#edf2ed">
+  <meta name="description" content="A little airplane. A wide-open sky. Ride the thermals, feel the crosswind and find your line in Driftwing, a free browser flight game.">
+  <meta property="og:title" content="Driftwing — find your flow">
+  <meta property="og:description" content="An original wind-driven flight game. Three courses, an open sky, and one little airplane.">
+  <title>Driftwing — find your flow</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/src/game.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#flight-deck">Skip to the flight deck</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Driftwing home"><img src="/favicon.svg" width="34" height="34" alt=""><span>driftwing<span class="brand-dot">.</span></span></a>
+    <span class="header-note"><span class="status-dot"></span> A LITTLE AIRPLANE. A WIDE-OPEN SKY.</span>
+    <button class="plain-button" id="help-button" aria-haspopup="dialog"><span aria-hidden="true">?</span> How to fly</button>
+  </header>
+
+  <main>
+    <section class="flight-deck" id="flight-deck" aria-label="Flight deck">
+      <canvas id="sky" tabindex="0" aria-label="Flight view. Use arrows or W A S D to bank and pitch; P or Escape pauses. Touch controls are below.">Your browser needs Canvas support to display the flight view. Flight instructions and controls are available as text.</canvas>
+      <div class="scene-shade" aria-hidden="true"></div>
+      <div class="wind-readout" aria-label="Current wind">
+        <span class="eyebrow">THE AIR AROUND YOU</span>
+        <div class="wind-line"><span class="wind-arrow" id="wind-arrow" aria-hidden="true">↗</span><span id="wind-label">Finding the breeze</span></div>
+        <span class="wind-detail" id="wind-detail">Wind changes your flight path.</span>
+      </div>
+      <div class="flight-toolbar" id="flight-toolbar" hidden>
+        <span class="course-tag" id="course-tag">Coastline</span>
+        <button class="icon-button light" id="pause-button" aria-label="Pause flight">Ⅱ</button>
+      </div>
+
+      <div class="menu-overlay" id="menu-overlay">
+        <div class="intro-panel">
+          <p class="eyebrow"><span class="small-rule"></span> GO WITH THE FLOW</p>
+          <h1>A little lift.<br>A lot of freedom.</h1>
+          <p class="intro-copy">Find your line through open skies. Catch a rising current, lean into a turn, and let the wind do a little of the work.</p>
+          <div class="course-heading"><span>CHOOSE YOUR FLIGHT</span><span id="course-position">01 / 03</span></div>
+          <div class="course-options" id="course-options" role="group" aria-label="Flight courses"></div>
+          <p class="course-description" id="course-description"></p>
+          <div class="launch-actions"><button class="button primary" id="start-button">Take flight <span aria-hidden="true">↗</span></button><button class="button text-button" id="free-button">Just fly <span aria-hidden="true">→</span></button></div>
+          <p class="launch-note" id="record-note">No account. Just you and the air.</p>
+        </div>
+        <div class="flight-stamp" aria-hidden="true"><span>DRIFTWING FLIGHT CLUB</span><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52"/><path d="m28 66 66-32-22 63-18-28Z M54 69l40-35"/></svg><span>LEARN TO LOVE THE WIND</span></div>
+      </div>
+
+      <div class="center-overlay" id="pause-overlay" hidden>
+        <div class="overlay-card"><p class="eyebrow">A MOMENT OF STILLNESS</p><h2>Take a breath.</h2><p id="pause-reason">Your flight is paused. The sky can wait.</p><button class="button primary" id="resume-button">Back to the sky <span aria-hidden="true">↗</span></button><div class="secondary-actions"><button class="button secondary" id="restart-button">Restart flight</button><button class="button text-button" id="pause-menu-button">Choose a flight</button></div></div>
+      </div>
+      <div class="center-overlay" id="result-overlay" hidden>
+        <div class="overlay-card result-card"><p class="eyebrow" id="result-eyebrow">FLIGHT LOG</p><h2 id="result-title">A flight to remember.</h2><p id="result-message"></p><div class="result-score"><strong id="result-score">0</strong><span>POINTS</span></div><div class="result-stats"><span><strong id="result-gates">0 / 7</strong>Gates flown</span><span><strong id="result-time">0:00</strong>Time in the air</span><span><strong id="result-lift">0s</strong>Riding lift</span></div><p class="record-message" id="record-message"></p><button class="button primary" id="again-button">Fly again <span aria-hidden="true">↗</span></button><button class="button text-button" id="result-menu-button">Choose a flight</button></div>
+      </div>
+      <div class="center-overlay" id="error-overlay" hidden><div class="overlay-card"><p class="eyebrow">FLIGHT VIEW UNAVAILABLE</p><h2>We couldn’t open the sky.</h2><p id="canvas-error">Try reloading, or use a browser that supports Canvas.</p><button class="button primary" id="reload-button">Reload game</button></div></div>
+
+      <div class="flight-hud" id="flight-hud" hidden>
+        <div class="hud-item"><span>ALTITUDE</span><strong id="altitude">0 <small>m</small></strong><span id="clearance">Above the ground</span></div>
+        <div class="hud-item"><span>AIRSPEED</span><strong id="airspeed">0 <small>m/s</small></strong><span>Keep some speed for lift</span></div>
+        <div class="hud-item"><span id="progress-label">GATES</span><strong id="gate-progress">0 <small>/ 7</small></strong><span id="next-gate">Follow the bright ring</span></div>
+        <div class="hud-item score-item"><span>SCORE</span><strong id="score">0</strong><span id="flight-time">0:00 in the air</span></div>
+      </div>
+      <div class="touch-controls" id="touch-controls" hidden>
+        <div class="stick-area" id="stick-area" role="group" aria-label="Touch flight control. Drag up to climb, down to descend, left or right to bank."><span class="stick-cross" aria-hidden="true"></span><span id="stick-knob" class="stick-knob" aria-hidden="true"></span></div>
+        <span class="stick-hint">DRAG TO FLY</span>
+      </div>
+      <p class="flight-event" id="flight-event" aria-live="polite"></p>
+      <p class="flight-warning" id="flight-warning" role="status" hidden></p>
+      <div class="scene-coordinate" aria-hidden="true"><span>DRIFTWING / FIELD NOTES 001</span><span>THE SKY IS YOURS</span></div>
+    </section>
+
+    <div class="flight-footer">
+      <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>or arrows to fly</span><span class="footer-separator">·</span><kbd>P</kbd><span>to pause</span></p>
+      <div class="preferences"><label class="camera-option"><input type="checkbox" id="steady-camera"><span>Steady camera</span></label><button class="plain-button" id="sound-button" aria-pressed="false"><span id="sound-icon" aria-hidden="true">♪</span><span id="sound-label">Sound off</span></button></div>
+    </div>
+
+    <section class="field-notes" aria-labelledby="field-notes-heading">
+      <div class="notes-intro"><p class="eyebrow">A FEW FIELD NOTES</p><h2 id="field-notes-heading">The wind is part<br>of the adventure.</h2><p>An arcade flight game about finding a feeling. You don’t need to be a pilot.</p></div>
+      <article><span class="note-symbol" aria-hidden="true">↑</span><h3>Find a little lift</h3><p>Rising air gives you altitude. Look for the tall, flowing currents and glide through them.</p></article>
+      <article><span class="note-symbol" aria-hidden="true">↗</span><h3>Make room for the wind</h3><p>A crosswind moves you sideways. Bank into it gently to hold your line through a gate.</p></article>
+      <article><span class="note-symbol" aria-hidden="true">◎</span><h3>Find your own pace</h3><p>Fly a course for points or choose Just fly to explore. Your best completed scores stay on this device.</p></article>
+    </section>
+    <footer class="site-footer"><span>Made for a little time above it all.</span><a href="https://github.com/alvarovillalbaa/driftwing" target="_blank" rel="noopener noreferrer">Open-source flight club <span aria-hidden="true">↗</span></a><span>No accounts. No tracking.</span></footer>
+    <p id="storage-notice" class="storage-notice" role="status" hidden></p>
+  </main>
+
+  <dialog id="help-dialog" aria-labelledby="help-title"><div class="dialog-top"><p class="eyebrow">YOUR FIRST FLIGHT</p><button class="icon-button" id="close-help" aria-label="Close flight guide">×</button></div><h2 id="help-title">A few small movements.</h2><p>Fly through the bright gates. Turn early and make gentle corrections; the wind carries your airplane too.</p><dl class="control-list"><div><dt><kbd>A</kbd> / <kbd>←</kbd></dt><dd>Bank left</dd></div><div><dt><kbd>D</kbd> / <kbd>→</kbd></dt><dd>Bank right</dd></div><div><dt><kbd>W</kbd> / <kbd>↑</kbd></dt><dd>Raise the nose to climb</dd></div><div><dt><kbd>S</kbd> / <kbd>↓</kbd></dt><dd>Lower the nose to descend</dd></div><div><dt><kbd>P</kbd> / <kbd>Esc</kbd></dt><dd>Pause or resume</dd></div><div><dt><kbd>R</kbd></dt><dd>Restart while flying</dd></div></dl><p>On a touch screen, drag the round control: up to climb, down to descend, left or right to bank. Release it to level out.</p><p>Climbing costs airspeed. Updrafts lift you without the same trade-off. Missing a gate costs points; hitting the terrain or leaving the flight area ends the flight.</p><p class="guide-small">This is an arcade game. Visual flight motion is essential to play. Steady camera reduces camera movement. Scores are stored locally, and do not sync across devices. Sound is optional and starts only after you enable it.</p><button class="button primary" id="guide-done">Got it <span aria-hidden="true">↗</span></button></dialog>
+  <noscript><div class="noscript">Driftwing needs JavaScript for flight and controls. Enable JavaScript to play. No account is needed.</div></noscript>
+</body>
+</html>
