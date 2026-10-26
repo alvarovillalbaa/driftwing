@@ -1,0 +1,15 @@
+# Driftwing publication — 26 October 2026
+
+[Driftwing](https://driftwing-alvaro.vercel.app) is published from its separate personal [GitHub repository](https://github.com/alvarovillalbaa/driftwing), ID `1434961858`. The initial source `f8860da034622b3f03fb825c60337ecf58fea182` reached Vercel `READY` as deployment `dpl_7GL4DrMadRiomu5UTYDMDHbbHjEK`, project `prj_axFn1xpGeUoQMWqNbNqN9nJvD26p`. The [structured receipt](publication.json) preserves those bindings and proof limits.
+
+The source implements the [airplane/wind brief](../../../spec.md) as an original projected-world arcade game: three seven-gate courses, pitch/bank controls, real wind displacement and thermal lift, pause/restart/end states, free flight, optional sound and device-local records. Physics and shared terrain are authoritative; rendering does not move the aircraft or award scores.
+
+Hosted Node `24.22.1` ran the dependency-free source checker successfully: all five modules, native-module syntax/imports, 59 unique DOM IDs and public assets passed. The hosted install command only reported Node's version; it did not install packages. Build output completed successfully and production returned HTTP 200 for the app, game/physics/renderer modules and stylesheet, with the expected JavaScript/CSS MIME types and `Driftwing — find your flow` title. [MDN animation timing](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame), [pointer input](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events) and [page visibility](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API) informed the browser lifecycle implementation; these references do not prove its runtime behavior.
+
+The short `driftwing.vercel.app` hostname was already assigned to another project (`409 owned-on-other-team`). It was neither retried nor taken over. The distinct `driftwing-alvaro.vercel.app` hostname was added and verified; public HTTP checks use that origin.
+
+All 17 focused mechanics/record tests passed. Automated feedback pilots completed the routes in the pure simulation; no browser input or rendered play was involved in that proof. Source review also corrected an unavailable-storage message so it does not promise persistence when records are only kept for the current visit. See [the focused checks](source-checks.md).
+
+No Supabase/database, account, email, model call or external asset service was created for this game. Storage Guard's 17.7 GiB versus 34 GiB failure was respected: no local install, environment, app build or test database ran.
+
+The owner was asked for focused desktop/mobile gameplay checks under their supplied AGENTS.md section 7. Until approval and actual play, appearance, keyboard/touch, gate feedback, pause/visibility, browser-local persistence, sound, reduced camera motion, Canvas failures and performance remain unverified. This release receipt establishes source and hosted publication, not complete gameplay acceptance or completion of the overall multi-project goal.
