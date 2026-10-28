@@ -21,6 +21,8 @@ let lastEventId = 0;
 let eventUntil = 0;
 let previewTime = 0;
 let runNumber = 0;
+let soundGeneration = 0;
+let disposed = false;
 const keys = new Set();
 const stick = { bank: 0, pitch: 0, pointer: null };
 const courseButtons = new Map();
@@ -67,17 +69,13 @@ function selectCourse(id) {
   course = getCourse(id); flight = createFlight(course.id); save.course = course.id; persist(); updateMenu(); lastHud = 0;
 }
 async function start(free = false) {
+  if (disposed) return;
   runNumber++; flight = createFlight(course.id, free ? 'free' : 'course'); lastEventId = 0; eventUntil = 0;
   byId('flight-event').classList.remove('visible');
   byId('help-dialog').close(); showMode('flying'); canvas.focus({ preventScroll: true });
   deck.scrollIntoView({ behavior: 'instant', block: 'nearest' });
   updateHud();
-  if (save.sound) {
-    const forRun = runNumber;
-    const ok = await audio.setEnabled(true);
-    if (!ok) { save.sound = false; updatePreferences(); persist(); announce('Sound could not start. You can still fly.'); }
-    else if (forRun === runNumber) audio.update(flight.airspeed, Math.hypot(flight.wind.x, flight.wind.y, flight.wind.z), mode === 'flying');
-  }
+  if (save.sound) await applySound(true, 'Sound could not start. You can still fly.');
 }
 function pause(reason = 'Your flight is paused. The sky can wait.', focus = true) {
   if (mode !== 'flying') return;
@@ -96,7 +94,6 @@ function menu() {
 function endFlight() {
   if (mode !== 'flying') return;
   const finished = flight.status === 'finished';
-  if (finished) audio.chime('finish');
   const next = keepRecord(save, flight); save = next.value;
   if (next.improved) persist();
   byId('result-eyebrow').textContent = flight.mode === 'free' ? 'FREE-FLIGHT LOG' : 'FLIGHT LOG';
@@ -107,7 +104,9 @@ function endFlight() {
   byId('result-time').textContent = formatTime(flight.time);
   byId('result-lift').textContent = `${Math.round(flight.updraftSeconds)}s`;
   byId('record-message').textContent = next.improved ? storageAvailable ? 'A new personal best. Saved on this device.' : 'A new personal best for this visit.' : flight.mode === 'free' ? 'Free-flight runs don’t replace course records.' : finished ? storageAvailable ? 'Your best completed course score stays on this device.' : 'Your best completed score is kept for this visit.' : 'Only completed courses become course records.';
-  showMode('result'); byId('again-button').focus({ preventScroll: true }); updateMenu();
+  showMode('result');
+  if (finished) audio.chime('finish');
+  byId('again-button').focus({ preventScroll: true }); updateMenu();
 }
 function writeNumber(id, value, unit) {
   const element = byId(id);
@@ -143,12 +142,19 @@ function updatePreferences() {
   byId('sound-button').setAttribute('aria-pressed', String(save.sound));
   byId('sound-label').textContent = save.sound ? 'Sound on' : 'Sound off';
 }
-async function toggleSound() {
-  const next = !save.sound;
+async function applySound(next, failureMessage) {
+  const request = ++soundGeneration;
+  const forRun = runNumber;
   const ok = await audio.setEnabled(next);
-  save.sound = next && ok; updatePreferences(); persist();
-  audio.update(flight.airspeed, Math.hypot(flight.wind.x, flight.wind.y, flight.wind.z), mode === 'flying');
-  if (!ok) announce('Sound is unavailable in this browser. You can still fly.');
+  if (disposed || request !== soundGeneration || forRun !== runNumber) return;
+  if (!ok) { save.sound = false; updatePreferences(); persist(); announce(failureMessage); }
+  audio.update(flight.airspeed, Math.hypot(flight.wind.x, flight.wind.y, flight.wind.z), mode === 'flying' && !document.hidden);
+}
+async function toggleSound() {
+  if (disposed) return;
+  const next = !save.sound;
+  save.sound = next; updatePreferences(); persist();
+  await applySound(next, 'Sound is unavailable in this browser. You can still fly.');
 }
 
 for (const [index, item] of COURSES.entries()) {
@@ -172,10 +178,10 @@ byId('close-help').addEventListener('click', () => byId('help-dialog').close());
 byId('guide-done').addEventListener('click', () => byId('help-dialog').close());
 byId('reload-button').addEventListener('click', () => window.location.reload());
 document.addEventListener('visibilitychange', () => { if (document.hidden) { pause('Flight paused while this tab was away.', false); clearInput(); audio.update(0, 0, false); } });
-window.addEventListener('blur', () => { pause('Flight paused when the window lost focus.', false); clearInput(); });
+window.addEventListener('blur', () => { pause('Flight paused when the window lost focus.', false); clearInput(); audio.update(0, 0, false); });
 window.addEventListener('pagehide', event => {
   pause('Flight paused while this page was away.', false); clearInput(); audio.update(0, 0, false);
-  if (!event.persisted) { audio.destroy(); renderer?.destroy(); }
+  if (!event.persisted) { disposed = true; soundGeneration++; audio.destroy(); renderer?.destroy(); }
 });
 window.addEventListener('pageshow', event => { if (event.persisted) { lastFrame = 0; resize(); } });
 
@@ -216,7 +222,7 @@ function fail(error) {
   console.error('Driftwing flight view failed:', error instanceof Error ? error.message : 'Unknown rendering error');
 }
 function frame(timestamp) {
-  if (!renderer || mode === 'error') return;
+  if (disposed || !renderer || mode === 'error') return;
   const dt = lastFrame ? Math.min(0.1, Math.max(0, (timestamp - lastFrame) / 1000)) : 0;
   lastFrame = timestamp;
   try {
