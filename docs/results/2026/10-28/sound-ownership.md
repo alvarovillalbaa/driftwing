@@ -1,8 +1,8 @@
 # Preserve the latest sound choice
 
-28 October 2026. Status: source repair and 64 focused frontend checks passed;
-publication readback is pending. Desktop/mobile gameplay acceptance remains open.
-The all-project goal is active.
+28 October 2026. Status: source repair published, 64 focused frontend checks
+passed and exact-source hosted delivery verified. Desktop/mobile gameplay
+acceptance remains open. The all-project goal is active.
 
 Baseline: [1219e0dfc711fa012fca58c2e7a2067d61c9ed2e](https://github.com/alvarovillalbaa/driftwing/commit/1219e0dfc711fa012fca58c2e7a2067d61c9ed2e).
 Two clicks while AudioContext resume was pending both computed the same old
@@ -80,6 +80,9 @@ visibility before its callback, blur, back/forward cache, terminal disposal,
 close rejection, queued frames, finish ordering and crash-without-finish-cue.
 Independent read-only source review found no remaining scoped blocker. Owned
 immutable-baseline fixtures were removed after terminal execution.
+All 11 local links and the heading anchor across the three changed Markdown
+files resolve. Exact seven-file scope, staged/worktree identity, text hygiene and
+all 18 protected baseline blobs were checked before publication.
 
 | Frozen artifact | SHA-256 |
 | --- | --- |
@@ -94,6 +97,22 @@ immutable-baseline fixtures were removed after terminal execution.
 
 GitHub source and existing Git-linked Vercel static delivery are verified
 separately from authored frontend checks. No CI workflow is added or changed.
+
+Source [c550ef6acfdda9b3d48ba7db0961b8f2f8da643e](https://github.com/alvarovillalbaa/driftwing/commit/c550ef6acfdda9b3d48ba7db0961b8f2f8da643e)
+was pushed to personal-repository `main`. Immutable connected GitHub reads of
+all seven changed files returned their exact local Git blobs; audio is
+`6c0bfdb3fef13ae799255094eb06156e96048649` and game is
+`269df4d029049aaf5441a9e93717626e96feee8b`.
+
+Production deployment `dpl_5GhxU8MjjuS14fpXyWd2BsYiUXir` reached `READY` at
+that exact SHA and owns the canonical alias. Its logs record Node `v24.22.1`,
+the unchanged version-only install command and the successful five-module,
+59-DOM-ID source checker. Static build output completed in 306 ms; this is not a
+gameplay performance measurement. Connected GETs returned 200 for
+[the game](https://driftwing-alvaro.vercel.app/), `/src/game.js` and `/src/audio.js`.
+The HTML references the game module, and both complete module texts equal the
+immutable published source. A documentation-only follow-up retains all checked
+runtime/test bytes.
 
 No browser, native AudioContext/user activation, speaker output, real Canvas,
 keyboard/touch play, browser storage/cache lifecycle or performance check ran.
