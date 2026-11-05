@@ -10,3 +10,12 @@ An original browser airplane game where wind changes flight. Product intent is t
 - Use `apply_patch`. Preserve other work. The active user goal authorizes a separate personal GitHub repository and Vercel publication; new browser checks still require the user's explicit approval under their supplied AGENTS.md section 7.
 - Run focused source/mechanics checks and `git diff --check`. No dependency installs or local app builds after the failed Storage Guard preflight. Hosted static validation is allowed by the publication goal.
 - Keep exact source, publication, gameplay and browser proof boundaries in `docs/results/`. No native/store release, scientific flight simulation or real-world aviation claim is implied.
+- Alvaro's standing approval and 5 November "Do all the work" continuation
+  authorize the four focused journeys in `docs/proposals/gameplay-browser-checks.md`,
+  isolated temporary public CI tooling/profiles, and source publication. The
+  existing 64 mechanics/audio/VM checks are closed; do not repeat them without
+  a changed input or concrete concern. Browser results must remain distinct.
+- Pause refreshes the HUD synchronously after clearing held input. Verify actual
+  user controls, earned records and native interruptions without seeding scores
+  or replacing browser APIs. Local Storage Guard now reports 9.4 GiB against
+  34 GiB required, so builds/installs/browser execution stay on disposable CI.
