@@ -1,6 +1,10 @@
 # Real-time hosted gameplay checks
 
-**Prepared, UNRUN — 5 November 2026.** This proposal and its
+**Current status — 5 November 2026: infrastructure attempt failed; all four
+gameplay cases remain UNRUN.** The [failure and completion plan](#initial-infrastructure-failure-and-owned-log-repair)
+below supersedes the original execution schedule without granting acceptance.
+
+**Original preparation (then UNRUN) — 5 November 2026.** This proposal and its
 [inactive workflow example](gameplay-browser.workflow.yml.example) are not
 browser acceptance or an activated CI job. Alvaro's standing “I approve
 everything” / “Do all the work” authorizes this focused packet, isolated public
@@ -145,3 +149,22 @@ all course/flight trajectories, real-world aviation, scientific fidelity,
 real-time performance benchmarks, all browser/cache lifecycles, assistive
 technology or full-game/portfolio completion. Real-time input here means the
 browser clock is unmodified, not that performance or acoustic quality passed.
+
+## Initial infrastructure failure and owned-log repair
+
+The [first receipt](../results/2026/11-05/gameplay-browser-attempt-1.json), run
+`42042520853` / job `127296743438`, failed **14:11:03–14:11:43 UTC**.
+`xvfb-run` exited 2 with empty stdout: opening `/dev/stderr` failed with ENXIO.
+There was no driver report or accepted gameplay case. All four remain unrun.
+
+All 46 streams, three full source guards and nine preflight assets verified;
+22 commands exited zero, the wrapper exited 2. Observed processes disappeared
+without signals, but no Xvfb display was observed. X11 and scratch cleanup
+remain **unverified**; process absence does not close those boundaries.
+
+The controller-only repair uses a precreated owned regular 0600 error log,
+retaining bounded complete bytes/gzip/hash and checking identity/writer absence
+before cleanup. Driver, product and assertions stay unchanged. The original
+inactive example remains historical. Another 19-minute ceiling plus the first
+40 seconds is 1180 seconds, below the original 1200: work 990 s, cleanup 90 s,
+stdout 2 s; child 490 s/minimum remaining 497 s unchanged. No acceptance yet.

@@ -45,6 +45,7 @@ fs.writeFileSync(path.join(root, 'owner'), nonce, { flag: 'wx', mode: 0o600 });
 for (const name of ['tools', 'tmp', 'cache', 'config', 'browsers']) fs.mkdirSync(path.join(root, name), { mode: 0o700 });
 for (const name of ['npm-user', 'npm-global']) fs.writeFileSync(path.join(root, name), '', { flag: 'wx', mode: 0o600 });
 const tools = path.join(root, 'tools'), specFile = path.join(tools, 'gameplay-browser-driver.mjs');
+const xvfbLog = path.join(root, 'xvfb-errors.log');
 need(Buffer.byteLength(path.join(root, 'tmp')) + 64 < 108, 'chromium_socket_path_budget');
 const env = {
   PATH: `${path.dirname(process.execPath)}:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin`,
@@ -68,7 +69,7 @@ const report = {
   scope: { scenarios: TITLES, cases: 4, retries: 0, workers: 1, appBuild: false, appDependencies: false,
     accounts: false, backend: false, models: false, physicalDevice: false, old64CasesRepeated: false,
     profiles: ['headed desktop Chromium', 'headed narrow Chromium with native CDP touch', 'headed Chromium with native storage disabled'] },
-  limits: { workSeconds: 1020, cleanupSeconds: 90, browserSeconds: 490, jobMinutes: 20,
+  limits: { workSeconds: 990, cleanupSeconds: 90, browserSeconds: 490, jobMinutes: 19,
     streamBytes: STREAM_LIMIT, streamGzipBytes: 131072, allStreamsGzipBytes: 524288,
     browserJsonBytes: BROWSER_LIMIT, reportBytes: REPORT_LIMIT, assetFetchSeconds: 8 },
   commands: [], guards: [], errors: [], sourceFiles: [],
@@ -83,8 +84,9 @@ const report = {
     'Canvas crops and actual UI do not prove physical devices, speaker output, audio latency, scientific flight accuracy or complete product acceptance.',
   ],
 };
-const workEnd = Date.now() + 1020000;
+const workEnd = Date.now() + 990000;
 let cleanupEnd, interrupted = false, globalExpired = false, baseline, allGzip = 0, browserAttempted = false, assetManifest;
+let xvfbLogIdentity;
 let browserScanUncertain = false, lastBrowserScan = 0;
 const browserProcesses = new Map();
 let x11Before;
@@ -247,6 +249,35 @@ async function prepareXvfb() {
   });
   await run('xvfb_package_versions', '/usr/bin/dpkg-query', ['--show', '--showformat=${Package} ${Version}\\n', 'xvfb', 'xauth'], 15, { cwd: tools });
 }
+function createXvfbLog() {
+  owner();
+  fs.writeFileSync(xvfbLog, '', { flag: 'wx', mode: 0o600 });
+  const item = fs.lstatSync(xvfbLog);
+  need(item.isFile() && !item.isSymbolicLink() && item.uid === process.getuid() && (item.mode & 0o777) === 0o600 && item.nlink === 1, 'xvfb_log_identity');
+  xvfbLogIdentity = { dev: item.dev, ino: item.ino, uid: item.uid };
+}
+function captureXvfbLog() {
+  report.xvfbDiagnostics = { created: Boolean(xvfbLogIdentity), complete: false,
+    source: 'Owned regular file for xvfb-run/Xvfb stderr; no authentication-file contents are read.' };
+  if (!xvfbLogIdentity) { need(!browserAttempted, 'xvfb_log_missing'); report.xvfbDiagnostics.complete = true; return; }
+  owner(); const item = fs.lstatSync(xvfbLog);
+  Object.assign(report.xvfbDiagnostics, { observedBytes: item.size, byteLimit: STREAM_LIMIT });
+  need(item.isFile() && !item.isSymbolicLink() && item.dev === xvfbLogIdentity.dev && item.ino === xvfbLogIdentity.ino
+    && item.uid === xvfbLogIdentity.uid && (item.mode & 0o777) === 0o600 && item.nlink === 1, 'xvfb_log_identity');
+  const bytes = read(xvfbLog, STREAM_LIMIT), after = fs.lstatSync(xvfbLog);
+  need(after.dev === item.dev && after.ino === item.ino && after.uid === item.uid && after.mode === item.mode
+    && after.nlink === 1 && after.size === bytes.length, 'xvfb_log_changed');
+  const wrapper = report.commands.find(row => row.label === 'browser_cases');
+  const writersAbsent = Boolean(wrapper?.released && wrapper.exitObservedAndReaped && wrapper.closeObserved
+    && wrapper.pipesEOF.every(Boolean) && !wrapper.forcedDrain && wrapper.originalProcessGroupAbsent === true
+    && active.size === 0 && report.browserProcessCleanup?.passed === true);
+  const raw = compressed(bytes); allGzip += raw.compressedBytes;
+  Object.assign(report.xvfbDiagnostics, { type: 'regular-file', mode: '0600', ...xvfbLogIdentity,
+    observedBytes: bytes.length, observedSha256: sha(bytes), raw, writersAbsent, complete: writersAbsent,
+    closureBasis: 'Wrapper exit/close/pipe EOF and original group absence, plus independently verified owned browser/Xvfb process absence.' });
+  need(allGzip <= 524288, 'all_streams_gzip_limit');
+  need(writersAbsent, 'xvfb_log_writer_cleanup_unverified');
+}
 
 async function run(label, executable, args, seconds, { cleanup = false, retainFailure = false, cwd = repo, postScratch = false } = {}) {
   if (postScratch) need(cleanup && report.scratchCleanup === 'passed' && !fs.existsSync(root), 'scratch_postguard_invalid'); else owner();
@@ -277,7 +308,15 @@ async function run(label, executable, args, seconds, { cleanup = false, retainFa
   });
   let leaderClosedAt = null;
   while (true) {
-    if (label === 'browser_cases') { try { scanBrowsers(); } catch { browserScanUncertain = true; } }
+    if (label === 'browser_cases') {
+      try { scanBrowsers(); } catch { browserScanUncertain = true; }
+      try {
+        const log = fs.lstatSync(xvfbLog);
+        need(log.isFile() && !log.isSymbolicLink() && log.dev === xvfbLogIdentity.dev && log.ino === xvfbLogIdentity.ino
+          && log.uid === xvfbLogIdentity.uid && (log.mode & 0o777) === 0o600 && log.nlink === 1, 'xvfb_log_identity');
+        if (log.size > STREAM_LIMIT) control.stop('xvfb_log_output_limit');
+      } catch { control.stop('xvfb_log_identity'); }
+    }
     const now = Date.now(), absent = child.pid ? groupAbsent(child.pid) : true;
     if (closed && leaderClosedAt === null) leaderClosedAt = now;
     if (interrupted && !cleanup) control.stop('interrupted');
@@ -490,8 +529,9 @@ try {
   await verifyServedAssets('before_browser');
   await guard('before_browser');
   need(workEnd - Date.now() >= 497000, 'browser_window_unavailable');
+  createXvfbLog();
   x11Before = snapshotX11(); browserAttempted = true;
-  const browser = await run('browser_cases', '/usr/bin/xvfb-run', ['--auto-servernum', '--error-file=/dev/stderr', '--server-args=-screen 0 1600x1200x24 -nolisten tcp', process.execPath, specFile], 490, { cwd: tools, retainFailure: true });
+  const browser = await run('browser_cases', '/usr/bin/xvfb-run', ['--auto-servernum', '--error-file=' + xvfbLog, '--server-args=-screen 0 1600x1200x24 -nolisten tcp', process.execPath, specFile], 490, { cwd: tools, retainFailure: true });
   browserResults(browser.output[0]); need(browser.accepted, 'browser_cli_failed');
   await verifyServedAssets('after_browser');
   await guard('after_browser');
@@ -505,8 +545,10 @@ finally {
     basis: 'Public asset streams cancelled and reader locks released; no host-wide socket inventory.' };
   try { await cleanupBrowsers(); } catch (error) { report.errors.push(finite(error)); }
   try { await cleanupX11(); } catch (error) { report.errors.push(finite(error)); }
+  try { captureXvfbLog(); } catch (error) { report.errors.push(finite(error)); }
   try {
-    owner(); need(report.processCleanup.passed && report.browserProcessCleanup?.passed === true && report.x11Cleanup?.passed === true && report.networkCleanup.passed, 'process_cleanup_unverified');
+    owner(); need(report.processCleanup.passed && report.browserProcessCleanup?.passed === true && report.x11Cleanup?.passed === true
+      && report.xvfbDiagnostics?.complete === true && report.networkCleanup.passed, 'process_cleanup_unverified');
     fs.rmSync(root, { recursive: true }); need(!fs.existsSync(root), 'scratch_still_present'); report.scratchCleanup = 'passed';
   } catch (error) { report.scratchCleanup = 'unverified'; report.errors.push(finite(error)); }
   try { if (report.scratchCleanup === 'passed') await guard('after_cleanup', true, true); } catch (error) { report.errors.push(finite(error)); }
@@ -515,7 +557,8 @@ finally {
   if (globalExpired || Date.now() > workEnd + 90000) report.errors.push('global_deadline');
   report.interrupted = interrupted; report.completedAtUtc = new Date().toISOString();
   report.status = !report.errors.length && report.browser?.accepted === true && report.processCleanup.passed && report.browserProcessCleanup?.passed === true
-    && report.x11Cleanup?.passed === true && report.networkCleanup.passed && report.servedAssets?.length === 18 && report.servedAssets.every(row => row.matchesExpected && row.complete)
+    && report.x11Cleanup?.passed === true && report.xvfbDiagnostics?.complete === true && report.networkCleanup.passed
+    && report.servedAssets?.length === 18 && report.servedAssets.every(row => row.matchesExpected && row.complete)
     && report.scratchCleanup === 'passed' ? 'passed' : 'failed';
   let text = JSON.stringify(report);
   if (Buffer.byteLength(text) > REPORT_LIMIT) { text = JSON.stringify({ schemaVersion: report.schemaVersion, sourceCommit, expectedDeployment: deployment, status: 'failed', errors: ['report_limit'] }); report.status = 'failed'; }
