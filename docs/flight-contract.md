@@ -84,6 +84,9 @@ sound results and prevents queued frames from drawing again. Disposal is
 idempotent and handles close rejection. A back/forward-cache departure instead
 keeps resources available and the flight paused on return.
 
-These contracts have authored module/VM checks. Native user activation, WebAudio
-output and browser cache/lifecycle behavior still await browser-check approval
-and actual gameplay acceptance; see the [sound receipt](results/2026/10-28/sound-ownership.md).
+These contracts have authored module/VM checks; see the
+[sound receipt](results/2026/10-28/sound-ownership.md). The
+[four hosted journeys](results/2026/11-05/gameplay-browser-checks.md) additionally
+observe real tab hide/blur pause, frozen paused HUD, control/restart recovery,
+earned records and storage failure. Native sound-toggle UI passed; audible
+WebAudio output and back/forward-cache lifecycle acceptance remain unverified.

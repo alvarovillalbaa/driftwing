@@ -30,3 +30,8 @@ An original browser airplane game where wind changes flight. Product intent is t
   focus loss. Preserve that failure and its one-signal cleanup uncertainty.
   A replacement focus profile must retain the actual visibility/focus assertions
   and use only fresh task-owned browsers; never attach to the user's browser.
+- The fourth run accepted all four journeys. Preserve the three failed receipts;
+  do not repeat accepted journeys or the closed 64-case suite without changed
+  inputs or a concrete concern. The current receipt's deployment label is stale:
+  source-matched assets and separate READY metadata are the actual evidence.
+  Nested Chrome diagnostics retain sanitized bytes, not original stderr.

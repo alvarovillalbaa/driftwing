@@ -1,9 +1,11 @@
 # Real-time hosted gameplay checks
 
-**Current status — 5 November 2026: three attempts failed; no gameplay case
-is accepted.** D01 was attempted; D02–D04 remain unrun. The
-[current prepared profile](#current-prepared-native-default-focus-profile--unrun)
-below supersedes the earlier resource/schedule plans without granting acceptance.
+**Current status — 5 November 2026: all four journeys accepted in attempt 4.**
+The [canonical receipt](../results/2026/11-05/gameplay-browser-checks.md)
+preserves the three failures, the stale deployment label and separate actual
+READY metadata. Source-matched public bytes and canonical-site gameplay passed;
+an exact dual deployment pin is not claimed. Earlier preparation/resource plans
+below remain historical, including their then-unrun status.
 
 **Original preparation (then UNRUN) — 5 November 2026.** This proposal and its
 [inactive workflow example](gameplay-browser.workflow.yml.example) are not
@@ -244,3 +246,12 @@ signal still fails. Third-attempt uncertainty is not reclassified. No new OS
 package, paid account or local environment. This profile is prepared, unrun:
 344 seconds plus a 14-minute ceiling is 1184, below 1200; controller 700/90/2 s,
 driver 420/60/2 s and child 490 s/minimum remaining 497 s stay unchanged.
+
+## Fourth-run completion — 5 November
+
+Run `42119195058` / job `127566790075` passed D01–D04 once, with all five
+source guards, 18 asset observations and scoped cleanup. The parent input kept
+the older `dpl_5AdRq9wwfavnwXGtRsNNWFr6PF7s` label; actual source-byte matches
+and separate provider metadata must not be described as both pins matching.
+The raw receipt remains unchanged. Actual runner time across four attempts was
+539 seconds; no accepted journey or closed 64-case check was repeated.
