@@ -1,8 +1,9 @@
 # Real-time hosted gameplay checks
 
-**Current status — 5 November 2026: two setup attempts failed; all four
-gameplay cases remain UNRUN.** The [failure and completion plan](#second-setup-failure-and-preinstalled-library-profile)
-below supersedes the original execution schedule without granting acceptance.
+**Current status — 5 November 2026: three attempts failed; no gameplay case
+is accepted.** D01 was attempted; D02–D04 remain unrun. The
+[current prepared profile](#current-prepared-native-default-focus-profile--unrun)
+below supersedes the earlier resource/schedule plans without granting acceptance.
 
 **Original preparation (then UNRUN) — 5 November 2026.** This proposal and its
 [inactive workflow example](gameplay-browser.workflow.yml.example) are not
@@ -188,3 +189,58 @@ inventory; no apt/sudo fallback. Missing prerequisites or headed launch still
 fail. The owned regular-log repair remains; driver/cases are unchanged and unrun.
 The 299 seconds used plus a 14-minute ceiling is 1139 seconds, below 1200:
 work 700 s, cleanup 90 s, stdout 2 s; child 490 s/minimum 497 s unchanged.
+
+## Third failure and pending native-focus profile
+
+The [third receipt](../results/2026/11-05/gameplay-browser-attempt-3.json), run
+`42114870279` / job `127551725027`, failed **21:41:16–21:42:01 UTC**.
+Actual Chrome ELF/library checks and 53 font-inventory rows passed. D01 failed
+the hidden-and-unfocused transition; last DOM values were not captured, so its
+cause remains unproven. D02–D04 were unrun; zero cases accepted, zero JPEGs,
+zero critical browser errors.
+
+Twenty-eight commands exited zero, the browser command exited 1. All 58 streams
+were complete; the 2,348-byte Xvfb log is hash-valid but marked incomplete.
+Three source guards/nine preflight-only assets passed. The driver's one browser,
+one context and two CDP sessions closed. X11 socket/lock absence passed, but one
+supervisor TERM with zero remaining processes leaves normal browser/log/scratch
+cleanup **unverified**.
+
+A prepared two-second natural-shutdown grace precedes existing escalation;
+any supervisor signal still fails, including the historical TERM. The revised
+native-focus resource contract and peer review remain pending before activation.
+The 344 seconds used plus another 14-minute ceiling is 1184 seconds, below 1200;
+work/cleanup/stdout 700/90/2 s and driver 420/60/2 s remain unchanged.
+
+## Current prepared native-default focus profile — UNRUN
+
+D01 starts the pinned headed Chrome ELF as a fresh owned process, with its own
+short profile/artifact directories and loopback CDP port 0. An identity-checked,
+bounded `DevToolsActivePort` file identifies only that process. Public
+[`connectOverCDP`](https://playwright.dev/docs/api/class-browsertype#browser-type-connect-over-cdp)
+with `noDefaults: true` and `isLocal: true` uses its existing default context
+and initial `about:blank` page. `noDefaults`
+avoids the focus override only in that default context; it is not applied to
+new contexts. Guards attach before application navigation. No user Chrome or
+existing user profile is attached.
+
+Actual hidden/unfocused and visible/focused transitions remain required, with
+before/after/failure DOM snapshots. No synthetic events or removed assertions.
+D02–D04 keep their functional tests; D04 is labeled an isolated storage-disabled
+profile. Totals are three browsers/four contexts. Two managed CDP sessions have
+different endings: touch explicitly detaches; the browser-close session ends
+with its real browser, without claiming an explicit detach.
+
+Manual Chrome requires a `Browser.close` acknowledgement, child exit 0, reaping,
+close, both stream EOFs and original-process-group absence. Each Chrome stream
+is capped at 64 KiB and retained gzip at 48 KiB. Retained diagnostics are complete
+**sanitized** bytes with redaction metadata/hash, separately from original
+observed byte counts/SHA; original bytes are not retained or independently
+replayable. Endpoint UUIDs are excluded from logs/errors/metadata; auth contents
+are not read. Outer command streams remain original driver-report output.
+
+The two-second natural-exit grace remains inside cleanup's 90 s; any supervisor
+signal still fails. Third-attempt uncertainty is not reclassified. No new OS
+package, paid account or local environment. This profile is prepared, unrun:
+344 seconds plus a 14-minute ceiling is 1184, below 1200; controller 700/90/2 s,
+driver 420/60/2 s and child 490 s/minimum remaining 497 s stay unchanged.

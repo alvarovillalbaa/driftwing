@@ -26,3 +26,7 @@ An original browser airplane game where wind changes flight. Product intent is t
   stream flags and cleanup uncertainty. Further setup must verify preinstalled
   system tools/shared libraries and install only the pinned browser; no apt/sudo
   fallback or reduction of gameplay assertions is part of this packet.
+- The third attempt reached gameplay but did not observe native tab hiding and
+  focus loss. Preserve that failure and its one-signal cleanup uncertainty.
+  A replacement focus profile must retain the actual visibility/focus assertions
+  and use only fresh task-owned browsers; never attach to the user's browser.

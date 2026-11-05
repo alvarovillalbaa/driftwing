@@ -4,12 +4,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { gzipSync } from 'node:zlib';
+import { gzipSync, gunzipSync } from 'node:zlib';
 const REPOSITORY = 'alvarovillalbaa/driftwing';
 const BRANCH = 'refs/heads/qa/driftwing-gameplay-20261105';
 const ACTIVE = '.github/workflows/gameplay-browser.yml';
 const SPEC = 'scripts/gameplay-browser-driver.mjs';
-const SPEC_SHA = '4615582d627190127d42334c956a785d8db55ad730c84b9327f619dac140ba96';
+const SPEC_SHA = 'a6b40d7c17abefa6954e878c5458654978d42f94ad845b6150f4fa0af2ae4bcb';
 const ORIGIN = 'https://driftwing-alvaro.vercel.app';
 const TITLES = [
   'desktop controls and native interruptions preserve a paused flight',
@@ -68,7 +68,7 @@ const report = {
   runtime: { node: process.version, platform: process.platform, architecture: process.arch, tmpDirectoryBytes: Buffer.byteLength(path.join(root, 'tmp')), chromiumSocketReserveBytes: 64 },
   scope: { scenarios: TITLES, cases: 4, retries: 0, workers: 1, appBuild: false, appDependencies: false,
     accounts: false, backend: false, models: false, physicalDevice: false, old64CasesRepeated: false,
-    profiles: ['headed desktop Chromium', 'headed narrow Chromium with native CDP touch', 'headed Chromium with native storage disabled'] },
+    profiles: ['owned native-default headed desktop Chromium', 'Playwright headed desktop/narrow Chromium', 'Playwright headed Chromium with native storage disabled'] },
   limits: { workSeconds: 700, cleanupSeconds: 90, browserSeconds: 490, jobMinutes: 14,
     streamBytes: STREAM_LIMIT, streamGzipBytes: 131072, allStreamsGzipBytes: 524288,
     browserJsonBytes: BROWSER_LIMIT, reportBytes: REPORT_LIMIT, assetFetchSeconds: 8 },
@@ -77,6 +77,7 @@ const report = {
     'Four real-time public browser journeys are separate from the 64 closed mechanics/audio/VM checks, which are not repeated.',
     'Eighteen anonymous before/after observations bind eight source payloads; root and index.html share the same HTML.',
     'Native Chromium controls, interruptions, storage, touch and rendered canvas are observed without private application state or a synthetic animation clock.',
+    'D01 uses a fresh owned Chromium/default context over public noDefaults CDP; normal Browser.close must release the actual child. Nested Chrome diagnostics retain complete sanitized bytes, with original observed counts/digests recorded separately; original bytes are not archived or independently replayable.',
     'Headed Chromium uses owned Xvfb/auth storage. Selected X11 socket/lock absence is observed separately; unknown external resources are never removed.',
     'Only Playwright1.64.1 and its headed Chromium are installed in owned runner storage. Existing shared libraries, Xvfb, xauth and fonts are recorded; missing requirements fail without privileged package installation.',
     'Exit/close/EOF/groups and same-UID owned browser/Xvfb paths plus Linux starttime prove scoped cleanup, not a host-wide inventory.',
@@ -162,7 +163,10 @@ function scanBrowsers(force = false) {
   return present;
 }
 async function cleanupBrowsers() {
-  owner(); const started = Date.now(); let present = scanBrowsers(true), termSent = 0, killSent = 0;
+  owner(); const graceStarted = Date.now(), graceEnd = Math.min(graceStarted + 2000, cleanupEnd - 16500);
+  let present = scanBrowsers(true), termSent = 0, killSent = 0;
+  while (present.length && Date.now() < graceEnd) { await pause(100); present = scanBrowsers(true); }
+  const normalGraceMs = Date.now() - graceStarted, remainingAfterGrace = present.length, started = Date.now(), signalTargets = new Map();
   while (present.length && Date.now() - started < 6500 && Date.now() < cleanupEnd - 10000) {
     for (const item of present) {
       try {
@@ -170,6 +174,11 @@ async function cleanupBrowsers() {
         need(current?.owned && current.starttime === item.starttime, 'browser_pid_identity_changed');
         const signal = Date.now() - started >= 3000 ? 'SIGKILL' : 'SIGTERM';
         process.kill(item.pid, signal); if (signal === 'SIGKILL') killSent++; else termSent++;
+        const key = current.pid + ':' + current.starttime;
+        if (!signalTargets.has(key)) signalTargets.set(key, { pid: current.pid, starttime: current.starttime,
+          executable: current.executable || item.executable || browserProcesses.get(key)?.executable || '',
+          stateAtFirstSignal: current.state, termSent: 0, killSent: 0 });
+        const target = signalTargets.get(key); target[signal === 'SIGKILL' ? 'killSent' : 'termSent']++;
       } catch (error) { if (!['ENOENT', 'ESRCH'].includes(error.code)) browserScanUncertain = true; }
     }
     await pause(100); present = scanBrowsers(true);
@@ -177,7 +186,8 @@ async function cleanupBrowsers() {
   const stillPresent = scanBrowsers(true);
   report.browserProcessCleanup = { passed: !browserScanUncertain && stillPresent.length === 0 && termSent === 0 && killSent === 0,
     basis: 'Same UID, unique owned-root argv attribution and revalidated Linux kernel PID starttime; no argv/env output.',
-    observed: [...browserProcesses.values()], remaining: stillPresent, termSent, killSent, scanUncertain: browserScanUncertain };
+    observed: [...browserProcesses.values()], normalGraceMs, normalGraceLimitMs: 2000, remainingAfterGrace,
+    signals: [...signalTargets.values()], remaining: stillPresent, termSent, killSent, scanUncertain: browserScanUncertain };
   need(report.browserProcessCleanup.passed, 'browser_process_cleanup_unverified');
 }
 
@@ -504,6 +514,51 @@ function jpegDimensions(bytes) {
   }
   throw new Error('visual_jpeg_frame_missing');
 }
+function verifyOwnedChrome(value) {
+  const owned = value.ownedChrome, executable = report.runtime.chromiumExecutable;
+  need(owned?.profile === 'native-default' && owned.executableBytes === executable?.bytes && owned.executableSha256 === executable?.sha256
+    && owned.noDefaults === true && owned.isLocal === true && owned.profileIdentityUnchanged === true && owned.redactedEndpointsMatchOwned === true
+    && Number.isSafeInteger(owned.profilePathBytes) && owned.profilePathBytes > 0 && owned.profilePathBytes + 64 < 108
+    && Number.isSafeInteger(owned.profileUid) && owned.profileUid >= 0 && Number.isSafeInteger(owned.profileInode) && owned.profileInode > 0
+    && owned.startupTimeoutMs === 20000 && owned.streamLimitBytes === 65536 && owned.diagnosticGzipLimitEach === 49152, 'native_chrome_identity');
+  const transport = owned.transport;
+  need(transport?.host === '127.0.0.1' && Number.isSafeInteger(transport.port) && transport.port >= 1024 && transport.port <= 65535
+    && Number.isSafeInteger(transport.portFileBytes) && transport.portFileBytes > 0 && transport.portFileBytes <= 4096
+    && /^[a-f0-9]{64}$/.test(transport.portFileSha256) && /^[a-f0-9]{64}$/.test(transport.endpointSha256), 'native_chrome_transport');
+  need(Object.keys(transport).sort().join(',') === 'endpointSha256,host,port,portFileBytes,portFileSha256', 'native_chrome_transport_shape');
+  const p = owned.process;
+  need(p?.exitCode === 0 && p.signal === null && p.stopReason === null && p.exitObservedAndReaped === true && p.closeObserved === true
+    && Array.isArray(p.pipesEOF) && p.pipesEOF.length === 2 && p.pipesEOF.every(item => item === true)
+    && p.originalProcessGroupAbsent === true && p.termSent === false && p.killSent === false && p.forcedDrain === false
+    && Array.isArray(p.streams) && p.streams.length === 2, 'native_chrome_process_release');
+  need(p.streams.map(item => item.name).join(',') === 'stdout,stderr', 'native_chrome_stream_identity');
+  let sanitizedBytes = 0, redactions = 0;
+  for (const stream of p.streams) {
+    need(Number.isSafeInteger(stream.originalObservedBytes) && stream.originalObservedBytes >= 0 && stream.originalObservedBytes <= 65536
+      && /^[a-f0-9]{64}$/.test(stream.originalObservedSha256) && stream.originalBytesRetained === false
+      && stream.completeSanitized === true && stream.sanitizedBytesRetained === true && stream.encoding === 'gzip-base64'
+      && stream.redactionType === 'owned-DevTools-endpoint' && stream.sanitizationEncoding === 'latin1-byte-preserving'
+      && Number.isSafeInteger(stream.redactionCount) && stream.redactionCount >= 0 && stream.redactionCount <= stream.originalObservedBytes
+      && Number.isSafeInteger(stream.sanitizedBytes) && stream.sanitizedBytes >= 0 && stream.sanitizedBytes <= 65536
+      && /^[a-f0-9]{64}$/.test(stream.sanitizedSha256) && Number.isSafeInteger(stream.compressedBytes) && stream.compressedBytes > 0
+      && stream.compressedBytes <= 49152 && stream.observedCompressedBytes === stream.compressedBytes
+      && typeof stream.data === 'string' && stream.data.length <= 65536, 'native_chrome_sanitized_stream_shape');
+    const compressed = Buffer.from(stream.data, 'base64');
+    need(compressed.toString('base64') === stream.data && compressed.length === stream.compressedBytes, 'native_chrome_sanitized_gzip');
+    const bytes = gunzipSync(compressed, { maxOutputLength: 65536 });
+    need(bytes.length === stream.sanitizedBytes && sha(bytes) === stream.sanitizedSha256
+      && !/ws:\/\/127\.0\.0\.1:\d+\/devtools\/browser\/[a-f0-9-]{36}/.test(bytes.toString('latin1')), 'native_chrome_sanitized_bytes');
+    need(bytes.toString('latin1').split('[OWNED_CDP_ENDPOINT]').length - 1 === stream.redactionCount, 'native_chrome_redaction_inventory');
+    if (stream.redactionCount === 0) need(bytes.length === stream.originalObservedBytes && sha(bytes) === stream.originalObservedSha256, 'native_chrome_unredacted_identity');
+    else need(bytes.length < stream.originalObservedBytes, 'native_chrome_redaction_counts');
+    sanitizedBytes += bytes.length; redactions += stream.redactionCount;
+  }
+  const closed = owned.closeBasis;
+  need(closed?.browserCloseAcknowledged === true && closed.browserDisconnected === true && closed.defaultContextCloseObserved === true
+    && closed.defaultPagesClosed === true, 'native_chrome_close_observations');
+  report.browser.ownedChromeDiagnostics = { verifiedSanitizedStreams: 2, sanitizedBytes, redactions, originalBytesRetained: false,
+    qualification: 'Retained sanitized bytes were independently decompressed and hashed. Original observed digests are recorded but cannot be replayed without the unarchived original bytes.' };
+}
 function browserResults(bytes) {
   need(bytes.length <= BROWSER_LIMIT, 'browser_output_limit');
   const lines = bytes.toString().split('\n').filter(line => line.startsWith('DRIFTWING_BROWSER_DRIVER='));
@@ -511,10 +566,10 @@ function browserResults(bytes) {
   const value = JSON.parse(lines[0].slice('DRIFTWING_BROWSER_DRIVER='.length));
   report.browser = { accepted: false, result: value, rawSha256: sha(bytes), rawBytes: bytes.length };
   need(value.schemaVersion === 1 && value.origin === ORIGIN && value.sourceCommit === sourceCommit && value.expectedDeployment === deployment
-    && Array.isArray(value.browserVersions) && value.browserVersions.length === 2 && Array.isArray(value.cases) && value.cases.length === 4
+    && Array.isArray(value.browserVersions) && value.browserVersions.length === 3 && Array.isArray(value.cases) && value.cases.length === 4
     && value.status === 'passed' && Array.isArray(value.errors) && value.errors.length === 0, 'browser_receipt_shape');
-  need(new Set(value.browserVersions.map(item => item.profile)).size === 2
-    && value.browserVersions.every(item => ['normal', 'storage-disabled'].includes(item.profile) && typeof item.version === 'string'
+  need(new Set(value.browserVersions.map(item => item.profile)).size === 3
+    && value.browserVersions.every(item => ['native-default', 'normal', 'storage-disabled'].includes(item.profile) && typeof item.version === 'string'
       && /^\d+\.[\d.]+$/.test(item.version)), 'browser_versions');
   const seen = new Set();
   for (const item of value.cases) {
@@ -523,15 +578,20 @@ function browserResults(bytes) {
       && item.observations && typeof item.observations === 'object', 'browser_case_failure');
   }
   const focus = value.cases.find(item => item.id === 'D01').observations;
-  need(focus.focusProfile === 'Playwright focus emulation disabled on both owned tabs' && focus.focusCdpSessions === 2
+  need(focus.focusProfile === 'owned Chromium default context with public noDefaults CDP' && focus.focusCdpSessions === 0
     && focus.actualHiddenAndBlurObserved === true && focus.actualVisibleFocusReturn === true, 'native_focus_profile');
+  need(Array.isArray(focus.focusSnapshots) && focus.focusSnapshots.length >= 3 && focus.focusSnapshots.length <= 16
+    && focus.focusSnapshots.some(item => item.hidden === true && item.hasFocus === false && item.visibilityState === 'hidden')
+    && focus.focusSnapshots.some(item => item.hidden === false && item.hasFocus === true && item.visibilityState === 'visible'), 'native_focus_snapshots');
   for (const key of ['pageErrors', 'consoleErrors', 'unexpectedRequests', 'credentialRequests', 'webSockets', 'requestFailures', 'responseErrors', 'unexpectedDialogs'])
     need(value.boundaries?.[key] === 0, 'browser_boundary');
   const c = value.cleanup;
-  need(c && c.browsersCreated === 2 && c.browsersClosed === 2 && c.browserClosed === true
-    && c.contextsCreated === 4 && c.contextsClosed === 4 && c.cdpSessionsCreated === 3 && c.cdpSessionsDetached === 3
+  need(c && c.browsersCreated === 3 && c.browsersClosed === 3 && c.browserClosed === true
+    && c.contextsCreated === 4 && c.contextsClosed === 4 && c.cdpSessionsCreated === 2 && c.cdpSessionsDetached === 1
+    && c.cdpSessionsClosedWithBrowser === 1
     && c.cdpSessionsRemaining === 0 && c.lateChecksComplete === true && c.fixtureCleanup === 'passed'
     && Array.isArray(c.failures) && c.failures.length === 0, 'browser_resource_cleanup');
+  verifyOwnedChrome(value);
   need(Array.isArray(value.visuals) && value.visuals.length === 2 && new Set(value.visuals.map(item => item.caseId)).size === 2, 'visual_scope');
   for (const item of value.visuals) {
     need(['D02', 'D03'].includes(item.caseId) && item.kind === 'canvas-dom-crop' && item.width === 320 && item.height === 240

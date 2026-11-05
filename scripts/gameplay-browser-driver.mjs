@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { gzipSync } from 'node:zlib';
 
 const TITLES = [
   'desktop controls and native interruptions preserve a paused flight',
@@ -15,7 +17,7 @@ const KEY = 'driftwing.v1', SENTINEL_KEY = 'driftwing.authored-unrelated', SENTI
 const ROUTES = new Set(['/', '/styles.css', '/favicon.svg', '/src/game.js', '/src/flight.js', '/src/renderer.js', '/src/audio.js', '/src/records.js']);
 const workEnd = Date.now() + 420000;
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
-const clean = value => String(value ?? '').replace(/(?:https?:\/\/|file:\/\/)[^\s)]+/g, '[URL]').replace(/[\x00-\x1f\x7f]/g, ' ').slice(0, 1000);
+const clean = value => String(value ?? '').replace(/(?:https?:\/\/|file:\/\/|wss?:\/\/)[^\s)]+/g, '[URL]').replace(/[\x00-\x1f\x7f]/g, ' ').slice(0, 1000);
 const delay = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 const report = { schemaVersion: 1, origin: ORIGIN, sourceCommit: process.env.SOURCE_COMMIT ?? null,
   expectedDeployment: process.env.DRIFTWING_EXPECTED_DEPLOYMENT ?? null, browserVersions: [], status: 'failed',
@@ -23,15 +25,15 @@ const report = { schemaVersion: 1, origin: ORIGIN, sourceCommit: process.env.SOU
   boundaries: { pageErrors: 0, consoleErrors: 0, unexpectedRequests: 0, credentialRequests: 0, webSockets: 0,
     requestFailures: 0, responseErrors: 0, unexpectedDialogs: 0, events: [] },
   cleanup: { browsersCreated: 0, browsersClosed: 0, browserClosed: false, contextsCreated: 0, contextsClosed: 0,
-    cdpSessionsCreated: 0, cdpSessionsDetached: 0, cdpSessionsRemaining: 0, lateChecksComplete: false, fixtureCleanup: 'unverified', failures: [] },
+    cdpSessionsCreated: 0, cdpSessionsDetached: 0, cdpSessionsClosedWithBrowser: 0, cdpSessionsRemaining: 0, lateChecksComplete: false, fixtureCleanup: 'unverified', failures: [] },
   limits: { workSeconds: 420, cleanupSeconds: 60, stdoutSeconds: 2, reportBytes: 393216, visualBytesEach: 65536 },
   proofLimits: ['All flight progression uses real wall time and the actual animation loop; no clock installation, model import, state/score injection or DOM event synthesis.',
     'Headed Chromium under owned Xvfb exercises real keyboard, native tab focus/visibility and emulated touch. This is not a physical touchscreen, audible-output or performance acceptance claim.',
     'Only authored corruption of this app key and an unrelated authored sentinel are written as negative/setup data; no completed score or preference API is replaced.',
-    'D04 uses a second Chromium with its native storage-disable switch and rejects a profile that still exposes usable localStorage.',
+    'D01 uses an independently spawned owned Chromium/default context over public noDefaults CDP; the other cases use two Playwright-managed browsers. D04 rejects a profile that still exposes usable localStorage.',
     'Two small DOM screenshot crops are retained for visual inspection; pixel statistics establish drawing, not full viewport appearance or a flight-simulation certification.',
     'The outer controller independently binds hosted assets/source and verifies attributable browser/Xvfb processes before deleting its scratch.'] };
-let chromium, current, stage = 'preflight', cleanupEnd, root, child, identity, marker, interrupted = false, expired = false;
+let chromium, current, stage = 'preflight', cleanupEnd, root, child, identity, marker, interrupted = false, expired = false, nativeChrome;
 const browsers = [], contexts = [], sessions = [], jobs = new Set(), handlers = new Map();
 function track(action) {
   const task = Promise.resolve().then(action); jobs.add(task); task.then(() => jobs.delete(task), () => jobs.delete(task)); return task;
@@ -93,10 +95,159 @@ async function cdpFor(context, page, profile) {
     sessions.push(item); report.cleanup.cdpSessionsCreated++; return item;
   }, 10000, 'owned ' + profile + ' CDP');
 }
+function groupAbsent(pid) { try { process.kill(-pid, 0); return false; } catch (error) { return error.code === 'ESRCH' ? true : null; } }
+async function nativeDefaultBrowser() {
+  const executable = fs.realpathSync(chromium.executablePath()), executableIdentity = fs.lstatSync(executable);
+  assert(executable.startsWith(root + '/') && executableIdentity.isFile() && !executableIdentity.isSymbolicLink() && executableIdentity.uid === process.getuid() && executableIdentity.size <= 536870912, 'owned Chromium executable required');
+  const descriptor = fs.openSync(executable, 'r'), magic = Buffer.alloc(4);
+  try { assert.equal(fs.readSync(descriptor, magic, 0, 4, 0), 4); } finally { fs.closeSync(descriptor); }
+  assert(magic.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46])), 'owned Chromium must be ELF');
+  const binaryHash = createHash('sha256'); let executableBytes = 0;
+  await within(async () => { for await (const part of fs.createReadStream(executable)) { executableBytes += part.length; assert(executableBytes <= 536870912, 'Chromium executable bound'); binaryHash.update(part); } }, 10000, 'owned Chromium identity');
+  const executableAfter = fs.lstatSync(executable); assert(executableAfter.uid === executableIdentity.uid && executableAfter.dev === executableIdentity.dev && executableAfter.ino === executableIdentity.ino && executableAfter.size === executableIdentity.size && executableAfter.mtimeMs === executableIdentity.mtimeMs && executableAfter.ctimeMs === executableIdentity.ctimeMs && executableBytes === executableIdentity.size, 'Chromium executable changed');
+  const profile = path.join(root, 'p1'), artifacts = path.join(root, 'a1');
+  fs.mkdirSync(profile, { mode: 0o700 }); fs.mkdirSync(artifacts, { mode: 0o700 });
+  const profileIdentity = fs.lstatSync(profile); assert(profileIdentity.uid === process.getuid() && Buffer.byteLength(profile) + 64 < 108, 'owned short profile required');
+  const args = ['--remote-debugging-address=127.0.0.1', '--remote-debugging-port=0', '--user-data-dir=' + profile,
+    '--no-first-run', '--no-default-browser-check', '--disable-background-networking', '--disable-component-update', '--disable-default-apps',
+    '--disable-extensions', '--disable-sync', '--disable-features=MediaRouter,OptimizationHints,Translate', '--disable-dev-shm-usage',
+    '--no-sandbox', '--password-store=basic', '--lang=en-US', '--window-size=1440,1000', 'about:blank'];
+  const processChild = spawn(executable, args, { env: process.env, detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+  const state = nativeChrome = { processChild, profile, profileIdentity, artifacts, pid: processChild.pid, exited: false, closed: false,
+    exitCode: null, signal: null, eof: [false, false], captureFinished: false, stopReason: null, termSent: false, killSent: false,
+    forcedDrain: false, timers: [], stdout: [], stderr: [], observed: [0, 0], sanitized: [0, 0], pending: [Buffer.alloc(0), Buffer.alloc(0)],
+    digests: [createHash('sha256'), createHash('sha256')], streamProofs: [], redactions: [0, 0], redactedEndpointHashes: new Set(), released: false, accounted: false, closeRequested: false, closeAck: false, disconnected: false };
+  report.ownedChrome = { profile: 'native-default', executableBytes, executableSha256: binaryHash.digest('hex'),
+    profilePathBytes: Buffer.byteLength(profile), profileUid: profileIdentity.uid, profileInode: profileIdentity.ino,
+    noDefaults: true, isLocal: true, startupTimeoutMs: 20000, streamLimitBytes: 65536, diagnosticGzipLimitEach: 49152,
+    profileRemoval: 'delegated to outer owned-root cleanup after process verification', process: null };
+  const keep = (index, line) => {
+    const text = line.toString('latin1').replace(/ws:\/\/127\.0\.0\.1:\d{1,5}\/devtools\/browser\/[a-f0-9-]{36}/g, endpoint => { state.redactions[index]++; state.redactedEndpointHashes.add(sha(endpoint)); return '[OWNED_CDP_ENDPOINT]'; });
+    const bytes = Buffer.from(text, 'latin1'); state.sanitized[index] += bytes.length;
+    if (state.sanitized[index] > 65536) { state.stop('sanitized_diagnostic_limit'); return; }
+    (index ? state.stderr : state.stdout).push(bytes);
+  };
+  state.stop = reason => {
+    if (state.stopReason) return; state.stopReason = reason;
+    if (state.pid && groupAbsent(state.pid) !== true) { state.termSent = true; try { process.kill(-state.pid, 'SIGTERM'); } catch {} }
+    state.timers.push(setTimeout(() => { if (state.pid && groupAbsent(state.pid) !== true) { state.killSent = true; try { process.kill(-state.pid, 'SIGKILL'); } catch {} } }, 3000));
+    state.timers.push(setTimeout(() => { if (!state.closed || !state.eof.every(Boolean)) { state.forcedDrain = true; processChild.stdout.destroy(); processChild.stderr.destroy(); } }, 6000));
+  };
+  processChild.once('error', () => state.stop('spawn_failed'));
+  processChild.once('exit', (code, signal) => { state.exited = true; state.exitCode = code; state.signal = signal; });
+  processChild.once('close', () => { state.closed = true; });
+  [processChild.stdout, processChild.stderr].forEach((stream, index) => {
+    stream.once('end', () => { state.eof[index] = true; });
+    stream.on('data', bytes => {
+      if (state.captureFinished) return;
+      state.observed[index] += bytes.length; state.digests[index].update(bytes);
+      if (state.observed[index] > 65536) { state.stop('original_diagnostic_limit'); return; }
+      state.pending[index] = Buffer.concat([state.pending[index], bytes]);
+      let newline;
+      while ((newline = state.pending[index].indexOf(10)) >= 0) { keep(index, state.pending[index].subarray(0, newline + 1)); state.pending[index] = state.pending[index].subarray(newline + 1); }
+    });
+  });
+  const started = Date.now(), portFile = path.join(profile, 'DevToolsActivePort'); let endpoint;
+  await poll(async () => {
+    assert(!state.stopReason && !state.exited, 'owned Chromium stopped during startup');
+    if (!fs.existsSync(portFile)) return false;
+    const before = fs.lstatSync(portFile); assert(before.isFile() && !before.isSymbolicLink() && before.uid === process.getuid() && before.size <= 4096, 'DevTools file ownership');
+    const bytes = fs.readFileSync(portFile), after = fs.lstatSync(portFile);
+    if (before.dev !== after.dev || before.ino !== after.ino || before.size !== after.size || before.mtimeMs !== after.mtimeMs || bytes.length !== before.size) return false;
+    const parts = bytes.toString().trimEnd().split('\n');
+    if (!bytes.length || parts.length < 2 || !/^\/devtools\/browser\/[a-f0-9-]{36}$/.test(parts[1])) return false;
+    assert(parts.length === 2 && /^\d{1,5}$/.test(parts[0]), 'DevTools file shape');
+    const port = Number(parts[0]); assert(port >= 1024 && port <= 65535); endpoint = `ws://127.0.0.1:${port}${parts[1]}`;
+    report.ownedChrome.transport = { host: '127.0.0.1', port, portFileBytes: bytes.length, portFileSha256: sha(bytes), endpointSha256: sha(endpoint) };
+    assert([...state.redactedEndpointHashes].every(digest => digest === report.ownedChrome.transport.endpointSha256), 'diagnostic endpoint ownership mismatch'); return true;
+  }, 'owned loopback DevTools endpoint', 20000);
+  report.ownedChrome.startupMs = Date.now() - started;
+  const browser = await within(() => chromium.connectOverCDP(endpoint, { noDefaults: true, isLocal: true, timeout: 10000, artifactsDir: artifacts }), 12000, 'public noDefaults CDP connection'); endpoint = null;
+  const browserItem = { browser, closed: false, nativeOwned: true }; state.browserItem = browserItem; browsers.push(browserItem); report.cleanup.browsersCreated++;
+  report.browserVersions.push({ profile: 'native-default', version: browser.version() }); browser.on('disconnected', () => { state.disconnected = true; });
+  const defaults = browser.contexts(); assert.equal(defaults.length, 1); const context = defaults[0], pages = context.pages(); assert.equal(pages.length, 1); assert.equal(pages[0].url(), 'about:blank');
+  await guardContext(context); state.contextItem = contexts.find(item => item.context === context); state.contextItem.nativeOwned = true;
+  const session = await within(() => browser.newBrowserCDPSession(), 10000, 'owned browser-close CDP');
+  state.closeSession = { session, profile: 'native-browser-close', detached: false, closedWithBrowser: false }; sessions.push(state.closeSession); report.cleanup.cdpSessionsCreated++;
+  await within(() => pages[0].setViewportSize({ width: 1440, height: 1000 }), 5000, 'native profile public viewport');
+  return { context, page: pages[0] };
+}
+async function closeNativeBrowser(cleanup = false) {
+  const state = nativeChrome; if (!state || state.released) return;
+  if (!state.closeRequested && state.closeSession && !state.disconnected) {
+    state.closeRequested = true;
+    try { await within(() => state.closeSession.session.send('Browser.close'), 8000, 'owned native Browser.close', cleanup); state.closeAck = true; }
+    catch (error) { report.cleanup.failures.push(clean(error.message)); state.stop('native_close_command_failed'); }
+  } else if (!state.closeRequested) state.stop('native_startup_incomplete');
+  const end = Math.min(Date.now() + 10000, cleanup ? cleanupEnd : workEnd);
+  while (Date.now() < end && !(state.exited && state.closed && state.eof.every(Boolean) && groupAbsent(state.pid) === true)) await delay(25);
+  if (!(state.exited && state.closed && state.eof.every(Boolean) && groupAbsent(state.pid) === true)) {
+    state.stop('native_close_did_not_settle'); const drainEnd = Math.min(Date.now() + 6500, cleanup ? cleanupEnd : workEnd);
+    while (Date.now() < drainEnd && !(state.exited && state.closed && state.eof.every(Boolean) && groupAbsent(state.pid) === true)) await delay(25);
+  }
+  if (state.exited && state.closed && state.eof.every(Boolean) && groupAbsent(state.pid) === true) for (const timer of state.timers) clearTimeout(timer);
+  if (!state.processProof) {
+    state.captureFinished = true;
+    const streams = [state.stdout, state.stderr].map((parts, index) => {
+    if (state.streamProofs[index]) return state.streamProofs[index];
+    const pending = state.pending[index];
+    if (pending.length) {
+      const sanitized = Buffer.from(pending.toString('latin1').replace(/ws:\/\/127\.0\.0\.1:\d{1,5}\/devtools\/browser\/[a-f0-9-]{36}/g, endpoint => { state.redactions[index]++; state.redactedEndpointHashes.add(sha(endpoint)); return '[OWNED_CDP_ENDPOINT]'; }), 'latin1');
+      state.sanitized[index] += sanitized.length; if (state.sanitized[index] <= 65536) parts.push(sanitized); else state.stopReason ??= 'sanitized_diagnostic_limit';
+    }
+    state.pending[index] = Buffer.alloc(0); const bytes = Buffer.concat(parts), compressed = gzipSync(bytes), retained = compressed.length <= 49152;
+    if (!retained) state.stopReason ??= 'native_diagnostic_gzip_limit';
+    state.streamProofs[index] = { name: index ? 'stderr' : 'stdout', originalObservedBytes: state.observed[index], originalObservedSha256: state.digests[index].digest('hex'), originalBytesRetained: false,
+      completeSanitized: retained && state.closed && state.eof[index] && !state.forcedDrain && state.observed[index] <= 65536 && state.sanitized[index] <= 65536,
+      redactionType: 'owned-DevTools-endpoint', sanitizationEncoding: 'latin1-byte-preserving', redactionCount: state.redactions[index], sanitizedBytes: bytes.length, sanitizedSha256: sha(bytes),
+      sanitizedBytesRetained: retained, encoding: 'gzip-base64', observedCompressedBytes: compressed.length,
+      compressedBytes: retained ? compressed.length : 0, data: retained ? compressed.toString('base64') : '' };
+    return state.streamProofs[index];
+    });
+    state.processProof = { exitCode: state.exitCode, signal: state.signal, exitObservedAndReaped: state.exited, closeObserved: state.closed,
+      pipesEOF: [...state.eof], originalProcessGroupAbsent: state.pid ? groupAbsent(state.pid) : null, termSent: state.termSent, killSent: state.killSent,
+      forcedDrain: state.forcedDrain, stopReason: state.stopReason, streams };
+    report.ownedChrome.process = state.processProof;
+  }
+  const processProof = state.processProof;
+  assert([...state.redactedEndpointHashes].every(digest => digest === report.ownedChrome.transport?.endpointSha256), 'diagnostic endpoint ownership mismatch');
+  report.ownedChrome.redactedEndpointsMatchOwned = true;
+  assert(state.closeAck && state.closeRequested && state.exitCode === 0 && state.signal === null && state.exited && state.closed
+    && state.eof.every(Boolean) && processProof.originalProcessGroupAbsent === true && !state.termSent && !state.killSent && !state.forcedDrain && !state.stopReason && processProof.streams.every(item => item.completeSanitized), 'owned native Chromium normal release unverified');
+  const observedEnd = Math.min(Date.now() + 3000, cleanup ? cleanupEnd : workEnd);
+  const pagesClosed = () => state.contextItem?.pages.size > 0 && [...state.contextItem.pages].every(page => page.isClosed());
+  while (Date.now() < observedEnd && !(state.disconnected && state.contextItem?.closeObserved && pagesClosed())) await delay(25);
+  assert(state.disconnected && state.contextItem?.closeObserved && pagesClosed(), 'native default context close not observed');
+  const profileNow = fs.lstatSync(state.profile); assert(profileNow.isDirectory() && !profileNow.isSymbolicLink() && profileNow.uid === process.getuid() && profileNow.dev === state.profileIdentity.dev && profileNow.ino === state.profileIdentity.ino, 'native profile ownership changed');
+  report.ownedChrome.profileIdentityUnchanged = true; state.released = true;
+  if (!state.accounted) {
+    state.contextItem.closed = true; report.cleanup.contextsClosed++; state.browserItem.closed = true; report.cleanup.browsersClosed++;
+    state.closeSession.closedWithBrowser = true; report.cleanup.cdpSessionsClosedWithBrowser++; state.accounted = true;
+  }
+  report.ownedChrome.closeBasis = { browserCloseAcknowledged: true, browserDisconnected: true, defaultContextCloseObserved: true, defaultPagesClosed: true };
+  await within(() => state.browserItem.browser.close(), 3000, 'release ended CDP transport', cleanup);
+}
+async function focusSnapshot(page, label) {
+  const entry = current;
+  const observed = await within(() => page.evaluate(() => ({ hidden: document.hidden, visibilityState: document.visibilityState, hasFocus: document.hasFocus(),
+    mode: document.body.dataset.mode, width: innerWidth, height: innerHeight, activeTag: document.activeElement?.tagName ?? null, activeId: document.activeElement?.id ?? null })), 5000, 'native focus snapshot');
+  const item = { label, ...observed }; entry.observations.focusLast = item;
+  const rows = entry.observations.focusSnapshots ??= [], index = rows.findIndex(row => row.label === label);
+  if (index >= 0) rows[index] = item; else { assert(rows.length < 16, 'focus snapshot label bound'); rows.push(item); } return observed;
+}
+async function nativeFocusState(page, label, hidden) {
+  const entry = current; let last;
+  try { await poll(async () => { last = await focusSnapshot(page, label); return last.hidden === hidden && last.hasFocus === !hidden && last.visibilityState === (hidden ? 'hidden' : 'visible'); }, label); }
+  finally { if (last) entry.observations.focusLast = { label: label + ' final', ...last }; }
+}
 async function contextFor(browser, narrow = false) {
   const context = await within(() => browser.newContext({ viewport: narrow ? { width: 390, height: 844 } : { width: 1440, height: 1000 },
     hasTouch: narrow, isMobile: narrow, locale: 'en-US', reducedMotion: 'no-preference', serviceWorkers: 'block', acceptDownloads: false }), 10000, 'new authored context');
-  contexts.push({ context, closed: false }); report.cleanup.contextsCreated++;
+  await guardContext(context); return context;
+}
+async function guardContext(context) {
+  const item = { context, closed: false, closeObserved: false, pages: new Set() }; contexts.push(item); report.cleanup.contextsCreated++;
+  context.on('close', () => { item.closeObserved = true; });
   context.setDefaultTimeout(10000); context.setDefaultNavigationTimeout(15000);
   await within(() => context.route('**/*', async route => {
     try {
@@ -112,15 +263,16 @@ async function contextFor(browser, narrow = false) {
   await within(() => context.routeWebSocket('**/*', route => { boundary('webSockets', 'unexpected websocket'); route.close(); }), 5000, 'websocket boundary');
   context.on('requestfailed', request => boundary('requestFailures', new URL(request.url()).pathname + ' ' + request.failure()?.errorText));
   context.on('response', response => { if (response.status() >= 400) boundary('responseErrors', response.status() + ' ' + new URL(response.url()).pathname); });
-  context.on('page', page => {
+  const armPage = page => {
+    if (item.pages.has(page)) return; item.pages.add(page);
     page.on('pageerror', error => boundary('pageErrors', error.message));
     page.on('console', message => { if (message.type() === 'error') boundary('consoleErrors', message.text()); });
     page.on('dialog', dialog => { boundary('unexpectedDialogs', dialog.type()); void track(() => dialog.dismiss()).catch(error => report.errors.push(clean(error.message))); });
-  });
-  return context;
+  };
+  context.on('page', armPage); for (const page of context.pages()) armPage(page);
 }
-async function visit(context) {
-  const page = await within(() => context.newPage(), 10000, 'new game page');
+async function visit(context, existing = null) {
+  const page = existing ?? await within(() => context.newPage(), 10000, 'new game page');
   const response = await within(() => page.goto(ORIGIN + '/', { waitUntil: 'load' }), 15000, 'published game');
   assert.equal(response.status(), 200); assert.equal(response.url(), ORIGIN + '/'); await mode(page, 'menu');
   await poll(() => page.locator('#course-options button').count().then(count => count === 3), 'three actual courses');
@@ -189,9 +341,9 @@ function owner() {
     && current.uid === process.getuid() && token.isFile() && !token.isSymbolicLink() && token.uid === process.getuid() && fs.readFileSync(file, 'utf8') === marker);
   assert.deepEqual(fs.readdirSync(child), ['owner']);
 }
-const interrupt = () => { interrupted = true; for (const item of contexts) void track(() => item.context.close()).catch(() => {}); };
+const interrupt = () => { interrupted = true; nativeChrome?.stop('interrupted'); for (const item of contexts) if (!item.nativeOwned) void track(() => item.context.close()).catch(() => {}); };
 for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP']) { handlers.set(signal, interrupt); process.on(signal, interrupt); }
-const workTimer = setTimeout(() => { expired = true; for (const item of contexts) void track(() => item.context.close()).catch(() => {}); }, Math.max(1, workEnd - Date.now()));
+const workTimer = setTimeout(() => { expired = true; nativeChrome?.stop('work_deadline'); for (const item of contexts) if (!item.nativeOwned) void track(() => item.context.close()).catch(() => {}); }, Math.max(1, workEnd - Date.now()));
 try {
   assert.equal(process.env.CI, 'true'); assert(process.env.DISPLAY && process.env.DISPLAY.length < 100, 'owned headed display required');
   assert.equal(process.env.DRIFTWING_CHECK_ORIGIN, ORIGIN); assert(/^[a-f0-9]{40}$/.test(report.sourceCommit ?? '')); assert(/^dpl_[A-Za-z0-9]+$/.test(report.expectedDeployment ?? ''));
@@ -199,12 +351,10 @@ try {
   child = fs.mkdtempSync(path.join(root, 'driftwing-driver-')); fs.chmodSync(child, 0o700); identity = fs.lstatSync(child); marker = randomUUID(); fs.writeFileSync(path.join(child, 'owner'), marker, { flag: 'wx', mode: 0o600 });
   const moduleInput = process.env.DRIFTWING_PLAYWRIGHT_MODULE ?? '', moduleFile = moduleInput.startsWith('file:') ? fileURLToPath(moduleInput) : moduleInput;
   assert(path.isAbsolute(moduleFile)); const item = fs.lstatSync(moduleFile); assert(item.isFile() && !item.isSymbolicLink() && item.size <= 1048576);
-  ({ chromium } = await import(pathToFileURL(moduleFile).href)); const mainBrowser = await launch('normal');
+  ({ chromium } = await import(pathToFileURL(moduleFile).href)); let mainBrowser;
   await caseRun(0, async () => {
-    const context = await contextFor(mainBrowser), page = await visit(context); await seedSentinel(page);
-    const mainFocus = await cdpFor(context, page, 'native-focus-main');
-    await within(() => mainFocus.session.send('Emulation.setFocusEmulationEnabled', { enabled: false }), 5000, 'restore native game focus');
-    await within(() => page.bringToFront(), 5000, 'native main foreground');
+    const ownedBrowser = await nativeDefaultBrowser(), context = ownedBrowser.context, page = await visit(context, ownedBrowser.page); await seedSentinel(page);
+    const nativeDimensions = await focusSnapshot(page, 'native default ready'); assert.equal(nativeDimensions.width, 1440); assert.equal(nativeDimensions.height, 1000);
     for (const [name, position] of [['Ridge: Lean into the crosswind', '02 / 03'], ['Cloudline: Ride the changing breeze', '03 / 03'], ['Coast: Find the rising air', '01 / 03']]) {
       await click(page, `#course-options button[aria-label="${name}"]`); await text(page, '#course-position', position);
       assert.equal(await page.locator(`#course-options button[aria-label="${name}"]`).getAttribute('aria-pressed'), 'true');
@@ -214,7 +364,7 @@ try {
     const soundOutcome = await page.locator('#sound-button').getAttribute('aria-pressed') === 'true' ? 'on-then-off-ui-only' : 'explicit-native-unavailability';
     if (soundOutcome === 'on-then-off-ui-only') await click(page, '#sound-button');
     await text(page, '#sound-label', 'Sound off'); assert.equal(JSON.parse(await rawSaved(page)).sound, false);
-    await start(page); await poll(() => page.evaluate(() => !document.hidden && document.hasFocus()), 'native initial focus');
+    await start(page); await nativeFocusState(page, 'native initial focus', false);
     const initial = await hud(page); await within(() => page.keyboard.down('ArrowUp'), 5000, 'real climb key');
     await poll(async () => (await hud(page)).altitude >= initial.altitude + 5, 'real climb response', 8000);
     await within(() => page.keyboard.up('ArrowUp'), 5000, 'release climb key'); const climbed = await hud(page); assert(climbed.airspeed < 34);
@@ -228,21 +378,22 @@ try {
     await click(page, '#help-button'); assert.equal(await page.locator('#help-dialog').evaluate(element => element.open && element.matches(':modal')), true);
     const guidePaused = await freezePaused(page); await click(page, '#guide-done'); await mode(page, 'paused'); await click(page, '#resume-button'); await mode(page, 'flying');
     mark('real owned-tab visibility and blur interruption');
+    await focusSnapshot(page, 'before other native tab');
     const other = await within(() => context.newPage(), 10000, 'owned blank tab'); await within(() => other.goto('about:blank'), 10000, 'owned blank navigation');
-    const otherFocus = await cdpFor(context, other, 'native-focus-blank');
-    await within(() => otherFocus.session.send('Emulation.setFocusEmulationEnabled', { enabled: false }), 5000, 'restore native other-tab focus');
     await within(() => other.bringToFront(), 5000, 'native other tab foreground');
-    await poll(() => page.evaluate(() => document.hidden && !document.hasFocus()), 'actual hidden and unfocused transition');
+    await nativeFocusState(page, 'actual hidden and unfocused transition', true);
     const hiddenPaused = await freezePaused(page);
-    await within(() => page.bringToFront(), 5000, 'native return to game tab'); await poll(() => page.evaluate(() => !document.hidden && document.hasFocus()), 'actual visible focused return'); await mode(page, 'paused');
-    await within(() => otherFocus.session.detach(), 5000, 'blank focus CDP detach'); otherFocus.detached = true; report.cleanup.cdpSessionsDetached++;
+    await focusSnapshot(page, 'before native return');
+    await within(() => page.bringToFront(), 5000, 'native return to game tab'); await nativeFocusState(page, 'actual visible focused return', false); await mode(page, 'paused');
     await within(() => other.close(), 5000, 'close owned blank tab'); await click(page, '#resume-button'); await mode(page, 'flying');
     await poll(async () => (await hud(page)).timeSeconds >= restarted.timeSeconds + 1, 'flight continues after actual interruption');
     const pixels = await drawing(page); await click(page, '#pause-button'); await mode(page, 'paused'); await click(page, '#pause-menu-button'); await mode(page, 'menu'); await sentinel(page);
+    await focusSnapshot(page, 'before native Browser.close'); await closeNativeBrowser();
     return { profile: 'headed-desktop1440x1000-realtime', courseChoices: 3, initial, climbed, banked, restarted, paused, guidePaused, hiddenPaused,
-      actualHiddenAndBlurObserved: true, actualVisibleFocusReturn: true, focusProfile: 'Playwright focus emulation disabled on both owned tabs', focusCdpSessions: 2,
+      actualHiddenAndBlurObserved: true, actualVisibleFocusReturn: true, focusProfile: 'owned Chromium default context with public noDefaults CDP', focusCdpSessions: 0, nativeDimensions,
       nativeSoundOutcome: soundOutcome, acousticOutputVerified: false, pixels, unrelatedStoragePreserved: true };
   });
+  mainBrowser = await launch('normal');
   await caseRun(1, async () => {
     const context = await contextFor(mainBrowser), page = await visit(context); await seedSentinel(page); await chooseCoast(page); await start(page);
     await within(() => page.keyboard.down('ArrowRight'), 5000, 'initial held bank'); await within(() => page.keyboard.down('ArrowUp'), 5000, 'initial held pitch');
@@ -309,27 +460,28 @@ try {
     const afterReload = await nativeStorageProbe(page); assert(afterReload.getterUnavailable && afterReload.writeUnavailable);
     await text(page, '#record-note', 'No account. Just you and the air.'); assert.equal(await page.locator('#storage-notice').isVisible(), true);
     await start(page); await poll(async () => (await hud(page)).timeSeconds >= 1, 'still playable after unavailable-storage reload'); await click(page, '#pause-button'); await mode(page, 'paused');
-    return { profile: 'second-headed-Chromium-native-disable-local-storage-realtime', nativeStorage: unavailable, completed, visitOnlyMessageObserved: true,
+    return { profile: 'isolated-headed-Chromium-native-disable-local-storage-realtime', nativeStorage: unavailable, completed, visitOnlyMessageObserved: true,
       noSavedClaim: true, afterReload, recordAbsentAfterReload: true, playAfterReload: true, pixels: await drawing(page) };
   });
 } catch (error) { report.errors.push(clean(error.message)); }
 finally {
   cleanupEnd = Math.min(Date.now() + 60000, workEnd + 60000); current = null;
-  for (const item of sessions) if (!item.detached) {
+  try { await closeNativeBrowser(true); } catch (error) { report.cleanup.failures.push(clean(error.message)); }
+  for (const item of sessions) if (!item.detached && !item.closedWithBrowser) {
     try { await within(() => item.session.detach(), 4000, 'remaining touch CDP detach', true); item.detached = true; report.cleanup.cdpSessionsDetached++; }
     catch (error) { report.cleanup.failures.push(clean(error.message)); }
   }
-  for (const item of [...contexts].reverse()) {
+  for (const item of [...contexts].reverse()) if (!item.closed && !item.nativeOwned) {
     try { await within(() => item.context.close(), 8000, 'context close', true); item.closed = true; report.cleanup.contextsClosed++; }
     catch (error) { report.cleanup.failures.push(clean(error.message)); }
   }
-  for (const item of [...browsers].reverse()) {
+  for (const item of [...browsers].reverse()) if (!item.closed && !item.nativeOwned) {
     try { await within(() => item.browser.close(), 10000, 'browser close', true); item.closed = true; report.cleanup.browsersClosed++; }
     catch (error) { report.cleanup.failures.push(clean(error.message)); }
   }
   const settleEnd = Math.min(Date.now() + 5000, cleanupEnd); while (jobs.size && Date.now() < settleEnd) await delay(25);
   await new Promise(resolve => setImmediate(resolve)); await new Promise(resolve => setImmediate(resolve));
-  report.cleanup.cdpSessionsRemaining = sessions.filter(item => !item.detached).length;
+  report.cleanup.cdpSessionsRemaining = sessions.filter(item => !item.detached && !item.closedWithBrowser).length;
   report.cleanup.browserClosed = browsers.length > 0 && browsers.every(item => item.closed); report.cleanup.lateChecksComplete = jobs.size === 0;
   if (child && report.cleanup.browserClosed && contexts.every(item => item.closed) && jobs.size === 0 && report.cleanup.cdpSessionsRemaining === 0) {
     try { owner(); fs.rmSync(child, { recursive: true }); assert(!fs.existsSync(child)); report.cleanup.fixtureCleanup = 'passed'; }
@@ -339,8 +491,9 @@ finally {
   if (interrupted || expired || Date.now() > workEnd + 60000) report.errors.push(interrupted ? 'interrupted' : 'work or cleanup deadline');
   if (report.cleanup.browsersCreated !== report.cleanup.browsersClosed || report.cleanup.contextsCreated !== report.cleanup.contextsClosed
     || !report.cleanup.browserClosed || !report.cleanup.lateChecksComplete || report.cleanup.cdpSessionsRemaining || report.cleanup.fixtureCleanup !== 'passed' || report.cleanup.failures.length) report.errors.push('resource cleanup unverified');
-  if (report.cases.every(item => item.accepted) && (report.cleanup.browsersCreated !== 2 || report.cleanup.contextsCreated !== 4
-    || report.cleanup.cdpSessionsCreated !== 3 || report.cleanup.cdpSessionsDetached !== 3 || report.visuals.length !== 2)) report.errors.push('full scope not observed');
+  if (report.cases.every(item => item.accepted) && (report.cleanup.browsersCreated !== 3 || report.cleanup.contextsCreated !== 4
+    || report.cleanup.cdpSessionsCreated !== 2 || report.cleanup.cdpSessionsDetached !== 1 || report.cleanup.cdpSessionsClosedWithBrowser !== 1
+    || !nativeChrome?.released || report.visuals.length !== 2)) report.errors.push('full scope not observed');
   report.status = report.cases.every(item => item.accepted) && !report.errors.length ? 'passed' : 'failed';
   let result = JSON.stringify(report);
   if (Buffer.byteLength(result) > 393216) { report.status = 'failed'; result = JSON.stringify({ schemaVersion: 1, origin: ORIGIN, status: 'failed', cases: report.cases.map(({ id, title }) => ({ id, title, accepted: false, error: 'report limit', observations: {} })), errors: ['report limit'], cleanup: report.cleanup }); }
