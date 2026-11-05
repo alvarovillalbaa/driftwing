@@ -80,6 +80,7 @@ async function start(free = false) {
 function pause(reason = 'Your flight is paused. The sky can wait.', focus = true) {
   if (mode !== 'flying') return;
   byId('pause-reason').textContent = reason; showMode('paused');
+  updateHud();
   if (focus && !document.hidden) byId('resume-button').focus({ preventScroll: true });
 }
 function resume() {

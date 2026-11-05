@@ -55,6 +55,10 @@ The renderer owns canvas dimensions and drawing only. Use `terrainHeight` for sc
 
 Root-owned `game.js` will provide the DOM shell, controls, state machine, animation-frame timing, sound, HUD and records. Renderer/core owners should message root before changing this contract. Keep sources and controls independent of browser-only globals so mechanics can be checked with Node.
 
+Pausing clears held controls and refreshes the HUD in the same transition. A
+paused display must reflect the last simulated position immediately, without a
+later throttled frame changing the visible values after the flight has stopped.
+
 ## Sound and browser lifecycle
 
 `audio.js` returns `setEnabled(next)`, `update(airspeed, wind, flying)`,
