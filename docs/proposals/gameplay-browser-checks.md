@@ -1,7 +1,7 @@
 # Real-time hosted gameplay checks
 
-**Current status — 5 November 2026: infrastructure attempt failed; all four
-gameplay cases remain UNRUN.** The [failure and completion plan](#initial-infrastructure-failure-and-owned-log-repair)
+**Current status — 5 November 2026: two setup attempts failed; all four
+gameplay cases remain UNRUN.** The [failure and completion plan](#second-setup-failure-and-preinstalled-library-profile)
 below supersedes the original execution schedule without granting acceptance.
 
 **Original preparation (then UNRUN) — 5 November 2026.** This proposal and its
@@ -168,3 +168,23 @@ before cleanup. Driver, product and assertions stay unchanged. The original
 inactive example remains historical. Another 19-minute ceiling plus the first
 40 seconds is 1180 seconds, below the original 1200: work 990 s, cleanup 90 s,
 stdout 2 s; child 490 s/minimum remaining 497 s unchanged. No acceptance yet.
+
+## Second setup failure and preinstalled-library profile
+
+The [second receipt](../results/2026/11-05/gameplay-browser-attempt-2.json), run
+`42111314143` / job `127539298949`, failed **21:17:46–21:22:05 UTC**.
+Fourteen commands exited zero; the installer timed out at 240 s, with a six-second
+forced drain, TERM/KILL and unverified privileged-descendant group closure.
+All 30 captured byte/hash records validate, but two installer streams lack
+complete EOF/close evidence. Two source guards passed; no assets, browser or
+Xvfb started. Scratch cleanup remains **unverified**. Installer stdout reported
+shared libraries already installed while nine extra font downloads stalled.
+
+The prepared profile uses pinned Playwright `install --no-shell chromium`,
+without `--with-deps`; [the official browser documentation](https://playwright.dev/docs/browsers#chromium-headless-shell)
+distinguishes the regular browser from its headless shell. It requires actual
+Chrome ELF hash/fully resolved `ldd`, preinstalled Xvfb/xauth and recorded font/tool
+inventory; no apt/sudo fallback. Missing prerequisites or headed launch still
+fail. The owned regular-log repair remains; driver/cases are unchanged and unrun.
+The 299 seconds used plus a 14-minute ceiling is 1139 seconds, below 1200:
+work 700 s, cleanup 90 s, stdout 2 s; child 490 s/minimum 497 s unchanged.

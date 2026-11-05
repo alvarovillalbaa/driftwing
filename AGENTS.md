@@ -20,5 +20,9 @@ An original browser airplane game where wind changes flight. Product intent is t
   or replacing browser APIs. Local Storage Guard now reports 9.4 GiB against
   34 GiB required, so builds/installs/browser execution stay on disposable CI.
 - The first CI wrapper failed before producing gameplay results. Preserve its
-  raw receipt and unverified X11/scratch cleanup. Only repair the wrapper's
+  raw receipt and unverified X11/scratch cleanup. Its wrapper repair uses a
   task-owned error log; keep all four journeys and the aggregate budget intact.
+- The second setup stalled on optional font downloads. Preserve its incomplete
+  stream flags and cleanup uncertainty. Further setup must verify preinstalled
+  system tools/shared libraries and install only the pinned browser; no apt/sudo
+  fallback or reduction of gameplay assertions is part of this packet.

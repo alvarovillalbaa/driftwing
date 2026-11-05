@@ -69,7 +69,7 @@ const report = {
   scope: { scenarios: TITLES, cases: 4, retries: 0, workers: 1, appBuild: false, appDependencies: false,
     accounts: false, backend: false, models: false, physicalDevice: false, old64CasesRepeated: false,
     profiles: ['headed desktop Chromium', 'headed narrow Chromium with native CDP touch', 'headed Chromium with native storage disabled'] },
-  limits: { workSeconds: 990, cleanupSeconds: 90, browserSeconds: 490, jobMinutes: 19,
+  limits: { workSeconds: 700, cleanupSeconds: 90, browserSeconds: 490, jobMinutes: 14,
     streamBytes: STREAM_LIMIT, streamGzipBytes: 131072, allStreamsGzipBytes: 524288,
     browserJsonBytes: BROWSER_LIMIT, reportBytes: REPORT_LIMIT, assetFetchSeconds: 8 },
   commands: [], guards: [], errors: [], sourceFiles: [],
@@ -78,13 +78,13 @@ const report = {
     'Eighteen anonymous before/after observations bind eight source payloads; root and index.html share the same HTML.',
     'Native Chromium controls, interruptions, storage, touch and rendered canvas are observed without private application state or a synthetic animation clock.',
     'Headed Chromium uses owned Xvfb/auth storage. Selected X11 socket/lock absence is observed separately; unknown external resources are never removed.',
-    'Only Playwright1.64.1 is installed in owned runner storage. Chromium and any missing xvfb/xauth Linux packages belong to the disposable runner.',
+    'Only Playwright1.64.1 and its headed Chromium are installed in owned runner storage. Existing shared libraries, Xvfb, xauth and fonts are recorded; missing requirements fail without privileged package installation.',
     'Exit/close/EOF/groups and same-UID owned browser/Xvfb paths plus Linux starttime prove scoped cleanup, not a host-wide inventory.',
     'Deployment ID is a parent-supplied metadata label; served bytes do not independently fetch provider metadata or identify an internal backend.',
     'Canvas crops and actual UI do not prove physical devices, speaker output, audio latency, scientific flight accuracy or complete product acceptance.',
   ],
 };
-const workEnd = Date.now() + 990000;
+const workEnd = Date.now() + 700000;
 let cleanupEnd, interrupted = false, globalExpired = false, baseline, allGzip = 0, browserAttempted = false, assetManifest;
 let xvfbLogIdentity;
 let browserScanUncertain = false, lastBrowserScan = 0;
@@ -237,17 +237,59 @@ async function cleanupX11() {
 }
 async function prepareXvfb() {
   const names = ['/usr/bin/xvfb-run', '/usr/bin/Xvfb', '/usr/bin/xauth'];
-  const missing = names.filter(file => { try { fs.accessSync(file, fs.constants.X_OK); return false; } catch { return true; } });
-  report.runtime.xvfbSystemPackagesInstalled = missing.length > 0;
-  if (missing.length) {
-    await run('install_xvfb_package_index', '/usr/bin/sudo', ['-n', '/usr/bin/apt-get', 'update'], 90, { cwd: tools });
-    await run('install_xvfb_and_xauth', '/usr/bin/sudo', ['-n', '/usr/bin/apt-get', 'install', '--yes', '--no-install-recommends', 'xvfb', 'xauth'], 150, { cwd: tools });
-  }
+  report.runtime.xvfbSystemPackagesInstalled = false;
+  report.runtime.preinstalledSystemToolsRequired = true;
   report.runtime.xvfbTools = names.map(file => {
     fs.accessSync(file, fs.constants.X_OK); const bytes = read(file);
     return { path: file, bytes: bytes.length, sha256: sha(bytes) };
   });
   await run('xvfb_package_versions', '/usr/bin/dpkg-query', ['--show', '--showformat=${Package} ${Version}\\n', 'xvfb', 'xauth'], 15, { cwd: tools });
+}
+async function verifyChromiumProfile() {
+  const query = `const { chromium } = await import(${JSON.stringify(env.DRIFTWING_PLAYWRIGHT_MODULE)}); process.stdout.write(JSON.stringify({ executable: chromium.executablePath() }));`;
+  const located = await run('chromium_executable_path', process.execPath, ['--input-type=module', '--eval', query], 15, { cwd: tools });
+  const value = JSON.parse(located.output[0].toString()), executable = value.executable, browserRoot = path.join(root, 'browsers');
+  need(typeof executable === 'string' && path.isAbsolute(executable) && executable === path.resolve(executable)
+    && executable.startsWith(browserRoot + '/') && fs.realpathSync(executable) === executable, 'chromium_executable_identity');
+  for (let at = path.dirname(executable); at !== root; at = path.dirname(at)) {
+    const item = fs.lstatSync(at); need(item.isDirectory() && !item.isSymbolicLink() && item.uid === process.getuid(), 'chromium_executable_ancestor');
+  }
+  const before = fs.lstatSync(executable), maximum = 536870912;
+  need(before.isFile() && !before.isSymbolicLink() && before.uid === process.getuid() && (before.mode & 0o111)
+    && before.size > 4 && before.size <= maximum, 'chromium_executable_type');
+  const digest = createHash('sha256'), fd = fs.openSync(executable, 'r'), buffer = Buffer.alloc(65536);
+  let bytes = 0;
+  try {
+    while (true) {
+      const count = fs.readSync(fd, buffer, 0, buffer.length, null); if (!count) break;
+      if (!bytes) need(buffer[0] === 0x7f && buffer[1] === 0x45 && buffer[2] === 0x4c && buffer[3] === 0x46, 'chromium_elf_required');
+      bytes += count; need(bytes <= maximum, 'chromium_executable_bound'); digest.update(buffer.subarray(0, count));
+    }
+  } finally { fs.closeSync(fd); }
+  const after = fs.lstatSync(executable);
+  need(before.dev === after.dev && before.ino === after.ino && before.size === after.size && before.mtimeMs === after.mtimeMs
+    && before.ctimeMs === after.ctimeMs && bytes === before.size, 'chromium_executable_changed');
+  report.runtime.chromiumExecutable = { path: scrub(executable, 250), bytes, sha256: digest.digest('hex'), elf: true };
+  fs.accessSync('/usr/bin/ldd', fs.constants.X_OK);
+  report.runtime.lddSha256 = sha(read(fs.realpathSync('/usr/bin/ldd'), 1048576));
+  await run('shared_library_runtime_version', '/usr/bin/ldd', ['--version'], 15, { cwd: tools });
+  const linked = await run('chromium_shared_libraries', '/usr/bin/ldd', [executable], 30, { cwd: tools });
+  const libraries = Buffer.concat(linked.output).toString();
+  need(libraries.length > 0 && !/\bnot found\b/i.test(libraries), 'chromium_shared_library_missing');
+  report.runtime.chromiumSharedLibraries = { passed: true, missing: [], stdoutBytes: linked.output[0].length, stdoutSha256: sha(linked.output[0]),
+    qualification: 'ldd resolves this installed ELF against the current runner. The actual headed launch is additionally required; no dependency validation is disabled.' };
+  const version = await run('chromium_binary_version', executable, ['--version'], 15, { cwd: tools });
+  const versionText = version.output[0].toString().trim();
+  need(versionText.length > 0 && Buffer.byteLength(versionText) <= 200, 'chromium_version_invalid');
+  report.runtime.chromiumExecutable.reportedVersion = versionText;
+  fs.accessSync('/usr/bin/fc-list', fs.constants.X_OK);
+  report.runtime.fontListExecutableSha256 = sha(read(fs.realpathSync('/usr/bin/fc-list'), 1048576));
+  await run('fontconfig_version', '/usr/bin/fc-list', ['--version'], 15, { cwd: tools });
+  const fonts = await run('actual_font_families', '/usr/bin/fc-list', ['--format=%{family}|%{style}\\n'], 15, { cwd: tools });
+  const families = [...new Set(fonts.output[0].toString().split('\n').filter(Boolean))].sort();
+  need(families.length > 0 && families.length <= 4096, 'font_inventory_invalid');
+  report.runtime.fonts = { familyStyleRows: families.length, sortedFamilyStyleSha256: sha(JSON.stringify(families)), stdoutBytes: fonts.output[0].length,
+    stdoutSha256: sha(fonts.output[0]), qualification: 'Existing runner font families/styles are retained in the raw command stream; no font packages are installed or equality with earlier profiles claimed.' };
 }
 function createXvfbLog() {
   owner();
@@ -523,8 +565,9 @@ try {
   });
   const cli = path.join(tools, 'node_modules/playwright/cli.js'); report.runtime.playwright = '1.64.1';
   report.runtime.playwrightCliSha256 = sha(read(cli, 1048576));
-  await run('install_chromium_and_runner_libraries', process.execPath, [cli, 'install', '--with-deps', 'chromium'], 240, { cwd: tools });
+  await run('install_headed_chromium', process.execPath, [cli, 'install', '--no-shell', 'chromium'], 180, { cwd: tools });
   await prepareXvfb();
+  await verifyChromiumProfile();
   generate();
   await verifyServedAssets('before_browser');
   await guard('before_browser');
