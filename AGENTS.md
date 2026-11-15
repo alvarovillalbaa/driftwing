@@ -16,13 +16,18 @@ An original browser airplane game where wind changes flight. Product intent is t
   total. Actual source/native job use was 1,325 / 1,800 seconds before H01, retaining every failed job.
   H01 passed at 50284d8 / run 43705190548: all eight anonymous production
   payloads/headers and real 320px entry/flight/pause/menu/reload match release
-  62d6e10 / READY dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn. Current CI is 1,350 /
-  1,800 seconds; only owned QA retirement remains. No closed checks are rerun.
+  62d6e10 / READY dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn. Final CI is 1,361 /
+  1,800 seconds (22m41s). The owned QA ref was deleted with 204/404 readback;
+  no current generated QA deployment or active main workflow remains. All source,
+  native and hosted scopes are closed; do not replay them unchanged.
   Source publication must restore production JSON without publishing it on QA;
   remove active temporary workflows from main and keep exact source boundaries.
   Do not repeat accepted cases, reset the cap or borrow Fallline approval.
   Local storage last measured about 2.6 GiB / 34 GiB required: bounded source and
   evidence only, no heavy local execution. Preserve dirty work/index/local refs.
+  Remote publication/evidence includes the current local11 build inputs; local
+  HEAD/index/refs intentionally remain b38a158. Never reset/pull the dirty tree
+  or publish its stale Git snapshot over the delivered remote history.
 
 - GEN-3659 (14 November) supersedes the three authored scenes. The current local
   edition generates six biomes from versioned seed/level IDs, saves replayable

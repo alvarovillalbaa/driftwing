@@ -3,7 +3,7 @@
 15 November 2026. Owner: [GEN-3659](https://app.notion.com/p/418a1ee8bd0680c99343ea23eb42d0dd).
 **Published at [Driftwing](https://driftwing-alvaro.vercel.app), with 61 distinct
 source cases, four independently closed native journeys and anonymous production
-H01 accepted. Only owned QA retirement remains.**
+H01 accepted. The owned QA ref is retired and no active main workflow remains.**
 
 Six seeded environments replace authored scenes. Native map creation/replay,
 first-finish progression through level 50, faster launch, stronger gusts, denser
@@ -57,10 +57,10 @@ inode-checked scratch removal. Final teardown alone never accepts a failed case.
 
 The user explicitly [authorized ten extra minutes](v5-authorization.md) for
 Driftwing only, thirty total. Actual job use is 539 historical + 15 Node + 6 + 41
-+ 42 + 42 + 267 + 76 + 297 + 25 = **1,350 / 1,800 seconds (22m30s)**. All failures remain
++ 42 + 42 + 267 + 76 + 297 + 25 + 11 = **1,361 / 1,800 seconds (22m41s)**. All failures remain
 under native-1 through native-7. This is job wall time, not billing. Closed source
-or native cases must not be replayed unchanged. H01 used 25 seconds of its one-minute maximum; the remaining one-minute
-retirement must fit the actual remainder when activated.
+or native cases must not be replayed unchanged. H01 used 25 seconds and the [owned retirement](retirement-1/result.md) used
+11 seconds of their separate one-minute maxima. No closed check was replayed.
 
 ## Exact published boundary
 
@@ -82,9 +82,13 @@ and owned scratch removal all passed. No bypass, account or private record.
 The QA overlay was verified separately from the exact production configuration.
 The four native journeys and 61 source cases were not replayed.
 
-The owned QA ref still requires identity-checked deletion/readback; a final
-documentation commit must preserve all eleven application/build blobs and no
-active main workflow. It cannot be reported as a new browser execution.
+The [owned QA retirement](retirement-1/retirement.json) verified the exact accepted
+main/build blobs, read its unique head immediately before DELETE 204, then read
+GET 404 and unchanged main. Separate connector readback returned no matching ref.
+The final documentation/evidence commit retains all eleven application/build
+blobs and no active workflow, and preserves QA source in parent history. It is
+not another browser execution. All current generated QA heads disabled Git
+deployments before publication; no deployment for that branch was created.
 
 Original dirty Mac work/index/local refs and all old source/native evidence are
 preserved. No local heavy installation/build/browser/database ran under the failed

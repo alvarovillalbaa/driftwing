@@ -11,8 +11,8 @@ jobs:
     timeout-minutes: 1
     env:
       DRIFTWING_APPROVAL: driftwing-native-v5-10m
-      DRIFTWING_PRIOR_CI_SECONDS: '1028'
-      DRIFTWING_EXPECTED_MAIN: 'PIN_FINAL_ACCEPTED_MAIN'
+      DRIFTWING_PRIOR_CI_SECONDS: '1350'
+      DRIFTWING_EXPECTED_MAIN: 'd8e52bc1fc6af440298006f3ea57ec0b7c561ccc'
     steps:
       - name: Define owned output
         shell: bash

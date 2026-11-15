@@ -1,6 +1,11 @@
 # Generated native V5: bounded continuation approval
 
-**Status: explicitly authorized on 15 November 2026; activation is limited to the scope below.**
+**Status: authorized and delivered on 15 November 2026.**
+
+L02, anonymous production H01 and owned QA retirement all passed. Final actual CI
+is 1,361 / 1,800 seconds (22m41s). The QA ref is deleted and no active main workflow
+remains. Keep the approved scope and original evidence below as history; do not
+reactivate or replay these closed checks unchanged.
 
 The user answered "Autorizar 10 min adicionales" to the exact ten-minute
 extension question. The aggregate cap is now 1,800 seconds. Prior measured use

@@ -21,7 +21,8 @@ complete six-map/progression/replay journey. Each has normal native closure on
 its linked source. The generated edition is published, with anonymous H01
 matching all eight production resources and the current 320px native flow.
 The original failed packets and physical-device/audio/performance limits remain
-explicit in the receipt.
+explicit in the receipt. Temporary QA is retired; actual total CI was 22m41s of
+the approved 30-minute cap.
 
 Run `npm run check` for focused source checks and `npm test` for flight mechanics, records and authored sound/lifecycle boundary checks. No install is needed. Serve `public/` through a static HTTP server for play only after the applicable browser/dev-server authorization. A local filesystem URL does not support native module loading reliably.
 
