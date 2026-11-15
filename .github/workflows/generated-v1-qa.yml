@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 3
     env:
       DRIFTWING_GENERATED_CASES: L03
-      DRIFTWING_PRIOR_CI_SECONDS: '554'
+      DRIFTWING_PRIOR_CI_SECONDS: '560'
     steps:
       - name: Define owned output
         shell: bash

@@ -241,6 +241,8 @@ try:
     receipt["passed"]=True
 except Exception as error:
     receipt["error"]=type(error).__name__+": "+str(error)[:1500]
+    frame=__import__("traceback").extract_tb(error.__traceback__)[-1]
+    receipt["failureAt"]={"file":Path(frame.filename).name,"line":frame.lineno,"source":frame.line}
 finally:
     try:
         if server and not server["closed"]:

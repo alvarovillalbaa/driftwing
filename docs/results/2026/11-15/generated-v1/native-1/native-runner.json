@@ -1,0 +1,56 @@
+{
+  "schema": "driftwing.generated-native.v1",
+  "source": "a97bf991acc08eda9cbc35383c7663bf51e23152",
+  "run": "43698484967",
+  "attempt": "1",
+  "cases": [
+    "L03"
+  ],
+  "passed": false,
+  "commands": [
+    {
+      "label": "node-version",
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "pid": 2453,
+      "stdout": "01-node-version.stdout.txt",
+      "stderr": "01-node-version.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.103,
+      "streamsComplete": true,
+      "stdoutSha256": "6a0cec2e157365c1a8ac6d1715733b7c3321a7c5565862a701ca71ef00359d04",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "priorCiSeconds": 554,
+  "capCiSeconds": 1200,
+  "limits": {
+    "workSeconds": 60,
+    "cleanupSeconds": 60,
+    "jobMinutes": 3
+  },
+  "appInstall": false,
+  "appBuild": false,
+  "database": false,
+  "accounts": false,
+  "forcedSignals": [],
+  "sourceStable": true,
+  "gitClean": true,
+  "scratchRemoved": true,
+  "node": "v24.22.2",
+  "storage": {
+    "freeBytes": 91520024576,
+    "requiredBytes": 36507222016,
+    "estimateBytes": 4294967296
+  },
+  "error": "AssertionError: ",
+  "processes": {
+    "seen": [],
+    "present": [],
+    "scanUncertain": []
+  }
+}
