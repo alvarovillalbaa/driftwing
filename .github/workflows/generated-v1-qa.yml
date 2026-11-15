@@ -1,9 +1,9 @@
-name: Temporary Driftwing V5 anonymous hosted readback
+name: Temporary Driftwing V5 leased QA retirement
 on:
   push:
     branches: [qa/driftwing-generated-20261115]
 permissions:
-  contents: read
+  contents: write
 jobs:
   generated-v5:
     if: github.ref == 'refs/heads/qa/driftwing-generated-20261115'
@@ -11,10 +11,8 @@ jobs:
     timeout-minutes: 1
     env:
       DRIFTWING_APPROVAL: driftwing-native-v5-10m
-      DRIFTWING_PRIOR_CI_SECONDS: '1325'
-      DRIFTWING_HOSTED_ORIGIN: 'https://driftwing-alvaro.vercel.app'
-      DRIFTWING_RELEASE_SOURCE: '62d6e1045e7e676fd2f8c2edcba1f62743e62b78'
-      DRIFTWING_DEPLOYMENT: 'dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn'
+      DRIFTWING_PRIOR_CI_SECONDS: '1350'
+      DRIFTWING_EXPECTED_MAIN: 'd8e52bc1fc6af440298006f3ea57ec0b7c561ccc'
     steps:
       - name: Define owned output
         shell: bash
@@ -25,8 +23,10 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
           node-version: '24.22.2'
-      - name: Temporary Driftwing V5 anonymous hosted readback
-        run: python3 tests/scripts/generated-hosted-v1.py
+      - name: Temporary Driftwing V5 leased QA retirement
+        run: python3 tests/scripts/generated-retire-v1.py
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Preserve original output
         if: always()
         run: node tests/scripts/emit-generated-hosted.mjs
