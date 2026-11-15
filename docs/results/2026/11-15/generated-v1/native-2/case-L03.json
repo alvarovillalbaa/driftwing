@@ -1,0 +1,24 @@
+{
+  "id": "L03",
+  "title": "narrow real touch roll stick release and corrupt preference recovery",
+  "accepted": false,
+  "error": "Actual native touch roll must complete",
+  "observations": {
+    "stage": "setup L03",
+    "actualPointerEvents": [
+      {
+        "type": "pointerdown",
+        "pointerType": "touch",
+        "isPrimary": false,
+        "at": 8599.200000000012
+      },
+      {
+        "type": "pointerup",
+        "pointerType": "touch",
+        "isPrimary": false,
+        "at": 8697.600000000006
+      }
+    ]
+  },
+  "durationMs": 21451
+}

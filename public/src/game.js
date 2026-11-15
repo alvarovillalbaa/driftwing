@@ -194,7 +194,12 @@ byId('free-button').addEventListener('click', () => void start(true));
 byId('new-map-button').addEventListener('click', () => selectCourse(course.map));
 byId('saved-levels').addEventListener('change', event => selectCourse(event.target.value));
 byId('next-level-button').addEventListener('click', () => { if (disposed) return; showMode('menu'); selectCourse(course.map); void start(); });
-byId('trick-button').addEventListener('click', () => { if (mode === 'flying' && !disposed) trickRequested = true; });
+const trickButton = byId('trick-button');
+trickButton.addEventListener('click', () => { if (mode === 'flying' && !disposed) trickRequested = true; });
+trickButton.addEventListener('pointerdown', event => {
+  if (event.pointerType !== 'touch' || event.isPrimary !== false || trickButton.disabled || mode !== 'flying' || disposed) return;
+  event.preventDefault(); trickRequested = true;
+});
 byId('pause-button').addEventListener('click', () => pause());
 byId('resume-button').addEventListener('click', resume);
 byId('restart-button').addEventListener('click', () => void start(flight.mode === 'free'));

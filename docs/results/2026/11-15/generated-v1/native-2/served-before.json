@@ -1,0 +1,130 @@
+[
+  {
+    "url": "http://127.0.0.1:36213/favicon.svg",
+    "status": 200,
+    "bytes": 253,
+    "sha256": "ced9d59c0cd0b1252e63a8666b78e864da532b1f1c07181020cf4374ceb9c941",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "image/svg+xml",
+      "content-length": "253",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/index.html",
+    "status": 200,
+    "bytes": 11175,
+    "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "11175",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/src/audio.js",
+    "status": 200,
+    "bytes": 3509,
+    "sha256": "c824e61425ee4d344a72c426722c22533ff8f42e9034d121beae070d83cc3bdf",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/javascript; charset=utf-8",
+      "content-length": "3509",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/src/flight.js",
+    "status": 200,
+    "bytes": 16314,
+    "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/javascript; charset=utf-8",
+      "content-length": "16314",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/src/game.js",
+    "status": 200,
+    "bytes": 18136,
+    "sha256": "f0db418522cc6017cfad97928e01a6403ee92a65fb299a78e0da77dcb02322c6",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/javascript; charset=utf-8",
+      "content-length": "18136",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/src/records.js",
+    "status": 200,
+    "bytes": 4014,
+    "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/javascript; charset=utf-8",
+      "content-length": "4014",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/src/renderer.js",
+    "status": 200,
+    "bytes": 28198,
+    "sha256": "954c35db22559b4b23926980b1fd6d768bbbe04f7741ecf47bad2ad09c2d11ca",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/javascript; charset=utf-8",
+      "content-length": "28198",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  },
+  {
+    "url": "http://127.0.0.1:36213/styles.css",
+    "status": 200,
+    "bytes": 19378,
+    "sha256": "c550efdab574521025c4a9a17561eeff03331f4d4df804bf9d65f7bd61bd14ac",
+    "headers": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "no-referrer",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      "content-type": "text/css; charset=utf-8",
+      "content-length": "19378",
+      "date": "Sun, 15 Nov 2026 09:20:05 GMT",
+      "connection": "close"
+    }
+  }
+]

@@ -337,11 +337,14 @@ async function capture(page,name){
  const bytes=await within(()=>page.screenshot({type:'png',fullPage:false}),10000,'original viewport screenshot');
  assert.ok(bytes.length>0&&bytes.length<=2097152);
  const file=name+'.png';fs.writeFileSync(path.join(proof,file),bytes,{flag:'wx'});
- report.visuals.push({caseId:current.id,file,kind:'original-native-full-viewport',bytes:bytes.length,sha256:sha(bytes),viewport:page.viewportSize(),hud:await hud(page)});return file;
+ const canvas=await page.locator('#sky').evaluate(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return{rect:{x:r.x,y:r.y,width:r.width,height:r.height},width:e.width,height:e.height,display:s.display,visibility:s.visibility,opacity:s.opacity};});
+ report.visuals.push({caseId:current.id,file,kind:'original-native-full-viewport',bytes:bytes.length,sha256:sha(bytes),viewport:page.viewportSize(),canvas,hud:await hud(page),drawing:await drawing(page)});return file;
 }
 async function fit(page){
+ const canvas=await page.locator('#sky').boundingBox();current.observations.canvasBounds=canvas;
  const f=await within(()=>page.evaluate(()=>{const r=document.getElementById('flight-deck').getBoundingClientRect();return{width:innerWidth,height:innerHeight,scrollWidth:document.documentElement.scrollWidth,deck:{x:r.x,y:r.y,width:r.width,height:r.height},stick:(()=>{const e=document.getElementById('stick-area'),r=e.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height,visible:!!e.getClientRects().length&&!e.closest('[hidden]')};})()};}),5000,'actual screen bounds');
  assert.ok(f.scrollWidth<=f.width);assert.equal(f.deck.x,0);assert.equal(f.deck.y,0);assert.ok(Math.abs(f.deck.height-f.height)<=1);
+ assert.ok(canvas&&Math.abs(canvas.x-f.deck.x)<=1&&Math.abs(canvas.y-f.deck.y)<=1&&Math.abs(canvas.width-f.deck.width)<=1&&Math.abs(canvas.height-f.deck.height)<=1,'actual visible Canvas must fill the flight deck');
  if(f.stick.visible)assert.ok(f.stick.x>=0&&f.stick.y>=0&&f.stick.x+f.stick.width<=f.width&&f.stick.y+f.stick.height<=f.height);return{...f,pixels:await drawing(page)};
 }
 async function menu(page,touch=false){
@@ -457,7 +460,7 @@ try {
   });
   await caseRun(2,async()=>{
    const browser=await launch('L03-narrow-native-touch'),context=await contextFor(browser,true);
-   await context.addInitScript(({key,sentinelKey,sentinel})=>{if(!sessionStorage.getItem('dw-negative-seeded')){localStorage.setItem(key,'{authored-corrupt');localStorage.setItem(sentinelKey,sentinel);sessionStorage.setItem('dw-negative-seeded','1');}},{key:KEY,sentinelKey:SENTINEL_KEY,sentinel:SENTINEL});
+   await context.addInitScript(({key,sentinelKey,sentinel,origin})=>{if(location.origin!==origin)return;if(!sessionStorage.getItem('dw-negative-seeded')){localStorage.setItem(key,'{authored-corrupt');localStorage.setItem(sentinelKey,sentinel);sessionStorage.setItem('dw-negative-seeded','1');}},{key:KEY,sentinelKey:SENTINEL_KEY,sentinel:SENTINEL,origin:ORIGIN});
    const page=await visit(context);await page.setViewportSize({width:320,height:844});await page.evaluate(()=>{window.__dwPointerTrace=[];for(const type of ['pointerdown','pointerup','pointercancel','click'])document.getElementById('trick-button').addEventListener(type,event=>{if(window.__dwPointerTrace.length<32)window.__dwPointerTrace.push({type,pointerType:event.pointerType??null,isPrimary:event.isPrimary??null,at:performance.now()});},{passive:true});});const initialRaw=await rawSaved(page);assert.equal(initialRaw,'{authored-corrupt');await choose(page,0,true);await page.locator('#steady-camera').check();assert.ok(JSON.parse(await rawSaved(page)).progress.levels.length);await sentinel(page);await start(page,false,true);
    const session=await cdpFor(context,page,'L03-touch-control');
    let contact=false,last=null,started=false,sawRoll=false,rollDone=false;

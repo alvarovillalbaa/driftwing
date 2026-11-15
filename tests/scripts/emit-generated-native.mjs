@@ -3,7 +3,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {gzipSync} from 'node:zlib';
 const root=process.env.DRIFTWING_OUTPUT;if(!root)throw Error('Owned proof root');
-const allowed=new Set(['native-runner.json','identity.json','tools-lock.json','source-before.json','source-after.json','served-before.json','served-after.json','x11-before.json','x11-after.json','xvfb-observed.json','xvfb-errors.txt','generated-browser.json']);
+const allowed=new Set(['native-runner.json','identity.json','tools-lock.json','source-before.json','source-after.json','focused-node-inputs.json','served-before.json','served-after.json','x11-before.json','x11-after.json','xvfb-observed.json','xvfb-errors.txt','generated-browser.json']);
 let total=0;
 for(const name of (await readdir(root)).sort()){
  const p=path.join(root,name),s=await lstat(p),png=/^l0[1-4]-[a-z0-9-]+\.png$/.test(name);

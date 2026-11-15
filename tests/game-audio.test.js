@@ -337,3 +337,41 @@ test('releasing the flight stick does not discard a separately requested touch r
   h.runNextFrame(1020);
   assert.equal(h.app.state().flight.trickActive, true);
 });
+
+test('a secondary touch starts a roll without relying on a compatibility click', async () => {
+  const h = environment(); await h.app.start();
+  const id = h.app.state().save.course, course = flightApi.getCourse(id);
+  h.app.replaceFlight({ ...flightApi.createFlight(id, 'free'), z: 181, y: course.bounds.ceiling - 35 });
+  h.runNextFrame(1000);
+  const stick = h.nodes.get('stick-area'), button = h.nodes.get('trick-button');
+  stick.dispatch('pointerdown', { pointerId: 1, clientX: 460, clientY: 320 });
+  let prevented = false;
+  button.dispatch('pointerdown', { pointerType: 'touch', isPrimary: false, preventDefault() { prevented = true; } });
+  stick.dispatch('pointerup', { pointerId: 1 });
+  h.runNextFrame(1004); assert.equal(h.app.state().flight.trickActive, false);
+  h.runNextFrame(1020); assert.equal(h.app.state().flight.trickActive, true);
+  assert.equal(prevented, true);
+});
+
+test('primary touch and mouse pointer presses keep their existing click activation', async () => {
+  for (const event of [{ pointerType: 'touch', isPrimary: true }, { pointerType: 'mouse', isPrimary: false }]) {
+    const h = environment(); await h.app.start();
+    const id = h.app.state().save.course, course = flightApi.getCourse(id);
+    h.app.replaceFlight({ ...flightApi.createFlight(id, 'free'), z: 181, y: course.bounds.ceiling - 35 });
+    h.runNextFrame(1000); h.nodes.get('trick-button').dispatch('pointerdown', event);
+    h.runNextFrame(1020); assert.equal(h.app.state().flight.trickActive, false);
+    h.click('trick-button'); h.runNextFrame(1040); assert.equal(h.app.state().flight.trickActive, true);
+  }
+});
+
+test('a disabled secondary touch cannot queue a roll, and pause clears a valid press', async () => {
+  const h = environment(); await h.app.start();
+  const id = h.app.state().save.course, course = flightApi.getCourse(id), button = h.nodes.get('trick-button');
+  h.app.replaceFlight({ ...flightApi.createFlight(id, 'free'), z: 181, y: course.bounds.ceiling - 35 });
+  h.runNextFrame(1000); button.disabled = true;
+  button.dispatch('pointerdown', { pointerType: 'touch', isPrimary: false });
+  h.runNextFrame(1020); assert.equal(h.app.state().flight.trickActive, false);
+  button.disabled = false; button.dispatch('pointerdown', { pointerType: 'touch', isPrimary: false });
+  h.click('pause-button'); h.click('resume-button');
+  h.runNextFrame(1040); assert.equal(h.app.state().flight.trickActive, false);
+});

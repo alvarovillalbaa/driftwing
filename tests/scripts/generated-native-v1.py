@@ -43,6 +43,7 @@ receipt={"schema":"driftwing.generated-native.v1","source":os.environ["GITHUB_SH
     "capCiSeconds":1200,"limits":{"workSeconds":work_seconds,"cleanupSeconds":60,"jobMinutes":3 if short else 9},
     "appInstall":False,"appBuild":False,"database":False,"accounts":False,"forcedSignals":[],
     "sourceStable":False,"gitClean":False,"scratchRemoved":False}
+assert receipt["priorCiSeconds"]+(180 if short else 540)<=1200
 active=[];seen={};scan_uncertain=[];x11_before=None;server=None;before=None
 def sha(b):return hashlib.sha256(b).hexdigest()
 def write(name,value): (out/name).write_text(json.dumps(value,indent=2)+"\n")
@@ -119,6 +120,8 @@ def finish(item,seconds=30,allow_failure=False):
             row["failure"]="deadline/output bound";force_group(child,row["failure"]);break
         time.sleep(.1)
     row["exit"]=child.wait()
+    group_end=min(time.monotonic()+2,global_end-8)
+    while not group_absent(child.pid) and time.monotonic()<group_end:time.sleep(.05)
     for f in item["handles"]:f.close()
     item["closed"]=True
     row["groupAbsent"]=group_absent(child.pid)
@@ -155,7 +158,7 @@ try:
     receipt["node"]=run("node-version",["node","--version"]).strip();assert receipt["node"]=="v24.22.2"
     usage=shutil.disk_usage(root);receipt["storage"]={"freeBytes":usage.free,"requiredBytes":34*1024**3,"estimateBytes":4*1024**3}
     assert usage.free>=34*1024**3
-    inputs=json.loads((repo/"docs/qualification/generated-v1-build-inputs.json").read_text())
+    inputs=json.loads((repo/"docs/qualification/generated-v2-build-inputs.json").read_text())
     assert len(inputs)==11
     production_bytes=safe_read(repo/"docs/qualification/generated-v1-production-vercel.json")
     assert len(production_bytes)==691 and sha(production_bytes)=="a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8"
@@ -164,18 +167,20 @@ try:
     assert qa.pop("git")=={"deploymentEnabled":False} and qa==production
     bind([r for r in inputs if r["path"]!="vercel.json"])
     assert next(r for r in inputs if r["path"]=="vercel.json")["sha256"]==sha(production_bytes)
-    manifest=json.loads((repo/"docs/qualification/generated-v1-public.json").read_text())
+    manifest=json.loads((repo/"docs/qualification/generated-v2-public.json").read_text())
     assert len(manifest)==8
     bind([dict(r,path="public/"+r["path"]) for r in manifest])
     n=repo/"docs/results/2026/11-15/generated-v1/node-1"
     node=json.loads((n/"node-runner.json").read_text())
     assert node["source"]=="d95340e4ab7f9388dd06520833885dbf4a7490c2" and node["passed"] and node["sourceStable"] and node["gitClean"] and node["node"]=="v24.22.2"
     assert node["nodeCases"]=={"tests":58,"pass":58,"fail":0,"skipped":0,"cancelled":0,"generatedCombinations":48}
-    ni=json.loads((n/"node-inputs.json").read_text());assert len(ni)==9;bind(ni)
+    ni=json.loads((n/"node-inputs.json").read_text());assert len(ni)==9
+    changed={"public/src/game.js","tests/game-audio.test.js"}
+    bind([r for r in ni if r["path"] not in changed])
     original=json.loads((n/"source-before.json").read_text())
     assert original==json.loads((n/"source-after.json").read_text())
     bind([next(r for r in original if r["path"]==p) for p in
-        ["scripts/check.mjs","package.json","vercel.json","public/index.html","public/src/game.js",
+        ["scripts/check.mjs","package.json","vercel.json","public/index.html",
          "public/src/flight.js","public/src/records.js","public/src/renderer.js","public/src/audio.js"]])
     for c in node["commands"]:
         assert c["exit"]==0 and c["groupAbsent"] and c["streamsComplete"] and c["failure"] is None
@@ -184,7 +189,33 @@ try:
     assert sha(tap)=="f7b849cb4cca6a99e82ba429722a9a800562ee96c5930b26072d5395104a7661"
     for key,value in [("tests",58),("pass",58),("fail",0),("skipped",0),("cancelled",0)]:
         assert re.search(rb"^# "+key.encode()+b" "+str(value).encode()+rb"$",tap,re.M)
-    receipt["carriedNode"]={"run":43695792249,"source":node["source"],"cases":58,"rawTapSha256":sha(tap),"exactInputs":ni,"rerun":False}
+    receipt["carriedNode"]={"run":43695792249,"source":node["source"],"originalCases":58,"carriedUnchangedCases":26,
+        "supersededGameVmCases":32,"changedInputs":sorted(changed),"rawTapSha256":sha(tap),"exactOriginalInputs":ni,"rerun":False}
+    focused_inputs=json.loads((repo/"docs/qualification/generated-v2-node-inputs.json").read_text())
+    assert len(focused_inputs)==9;bind(focused_inputs);write("focused-node-inputs.json",focused_inputs)
+    carry=os.environ.get("DRIFTWING_CARRY_FOCUSED")
+    if carry:
+        assert re.fullmatch(r"native-[3-9]",carry)
+        previous=repo/"docs/results/2026/11-15/generated-v1"/carry
+        qualified=json.loads((previous/"native-runner.json").read_text())
+        assert qualified["sourceStable"] and qualified["gitClean"] and qualified["node"]=="v24.22.2" and qualified["focusedNode"]["passed"] and qualified["focusedNode"]["tests"]==35
+        assert json.loads((previous/"focused-node-inputs.json").read_text())==focused_inputs
+        prior_vector=json.loads((previous/"source-before.json").read_text())
+        assert prior_vector==json.loads((previous/"source-after.json").read_text())
+        bind([next(r for r in prior_vector if r["path"]==p) for p in ["scripts/check.mjs","vercel.json"]+[r["path"] for r in focused_inputs]])
+        carried_commands=[c for c in qualified["commands"] if c["label"] in ["focused-source-check","focused-game-vm"]]
+        assert len(carried_commands)==2 and {c["label"] for c in carried_commands}=={"focused-source-check","focused-game-vm"}
+        for c in carried_commands:
+            assert c["exit"]==0 and c["groupAbsent"] and c["streamsComplete"] and c["failure"] is None
+            for key in ["stdout","stderr"]:assert sha(safe_read(previous/c[key]))==c[key+"Sha256"]
+        receipt["focusedNode"]={**qualified["focusedNode"],"carriedFrom":carry,"carriedSource":qualified["source"],"rerun":False}
+    else:
+        run("focused-source-check",["node","scripts/check.mjs"],8)
+        focused=run("focused-game-vm",["node","--test","--test-reporter=tap","tests/game-audio.test.js"],12)
+        for key,value in [("tests",35),("pass",35),("fail",0),("skipped",0),("cancelled",0)]:
+            assert re.search(r"^# "+key+r" "+str(value)+r"$",focused,re.M)
+        receipt["focusedNode"]={"passed":True,"tests":35,"pass":35,"fail":0,"skipped":0,"cancelled":0,
+            "newRegressionCases":3,"tapSha256":sha(focused.encode()),"rerun":True}
     write("identity.json",{"buildInputs":inputs,"public":manifest,"productionConfigGitBlob":"8138ba426bea84cb719bf8129dba9b5ab01ed4ca"})
     for name in ["Xvfb","xvfb-run","xauth","ldd"]:
         binary=Path(shutil.which(name) or "");assert binary.is_file(),name+" preinstalled"
