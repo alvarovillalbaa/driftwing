@@ -1,5 +1,21 @@
 # Flight module contract
 
+Last updated: 2026-11-14
+
+## Generated-level edition
+
+`MAPS` owns biome identities; `levelId(map,seed,level)` / `parseLevel(id)` validate canonical `v2-<map>-<uint32 seed>-<1..50 level>` identities. `getCourse` reconstructs immutable seeded geometry through a bounded 64-entry cache. `COURSES` contains generated previews, never authored coordinate scenes. New runtime courses always use a full generated identity; plain biome IDs remain preview/old-record identities.
+
+Courses additionally carry `map`, `seed`, `level`, `phase`, `startSpeed` and `obstacles: [{id,x,z,radius,base,height}]`. `getWorld(course,zMin,zMax,mode)` supplies bounded obstacle/thermal queries for physics and rendering; free mode reconstructs only queried deterministic chunks. `sampleWind` takes an optional sixth `mode` argument so free-flight gusts and thermals agree with its world.
+
+Flight state adds `tricks`, `trickAngle`, `trickActive`, `nextTrickZ` and a held-input latch. `stepFlight` accepts boolean `trick`. The roll's visual angle does not replace the pilot's bank input; its speed cost and completion points are authoritative mechanics. Spire collisions sweep the movement segment through an expanded vertical cylinder and stop position/time/lift at first contact before awarding any roll completion. Rendering reads the same base, height and radius.
+
+Queued touch-roll requests survive frames without a physics substep. Releasing the flight stick clears only that stick; pause, hide, blur and mode changes clear all held/queued input. A second touch action must not disappear because the steering finger was released.
+
+`records.js` normalizes `progress: {level,levels,completed}` and exports `rememberLevel(save,id)`. Generated finishes require all gate crossings and valid record fields. Campaign advancement is separate from best-score replacement, occurs once per identity and caps at level 50. `writeSave` checks literal readback. Storage remains `driftwing.v1`; the generator version is encoded in each new level identity. Old records remain separate from generated-map scores within the bounded record store.
+
+The existing coordinate, input, lifecycle and sound contracts below continue to apply. Historical authored-course descriptions and browser receipts do not prove this changed edition.
+
 All modules are native ESM. Coordinates are metres: x right, y altitude, z forward. Inputs are normalized to -1..1: `bank` positive turns right, `pitch` positive raises the nose. Time is seconds; roll/pitch are radians and velocities are metres/second.
 
 `public/src/flight.js` exports:

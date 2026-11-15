@@ -1,5 +1,7 @@
 # Driftwing
 
+Last updated: 2026-11-14
+
 A little airplane. A wide-open sky. An original browser flight game where wind currents move the aircraft.
 
 [Play Driftwing](https://driftwing-alvaro.vercel.app) · [Source](https://github.com/alvarovillalbaa/driftwing)
@@ -7,6 +9,10 @@ A little airplane. A wide-open sky. An original browser flight game where wind c
 Source intent and implementation choices are recorded in [the product contract](docs/spec.md); the module boundary is in [the flight contract](docs/flight-contract.md).
 
 The app uses native JavaScript modules and original Canvas/SVG geometry. There are no runtime dependencies, accounts, analytics, external assets or backend services. Course records and preferences stay on the current browser/device. This is an arcade game rather than a real-world aviation simulation.
+
+The current local edition generates courses in six environments instead of using three fixed scenes. Choose new terrain or replay a saved seed/level. First completion advances difficulty through 50: faster launch, stronger gusts, narrower rings and denser rock spires. Space / touch Roll performs a barrel roll when height and distance allow; completing it without impact earns 250 points. Free flight generates obstacles and thermals beyond the course finish and grows harder with distance. The game fills the screen, with map selection and level replay inside its menu.
+
+The [current implementation receipt](docs/results/2026/11-14/generated-levels.md) distinguishes local mechanics/VM checks from browser qualification and publication. The public app and the historical hosted results below still represent the earlier edition.
 
 Run `npm run check` for focused source checks and `npm test` for flight mechanics, records and authored sound/lifecycle boundary checks. No install is needed. Serve `public/` through a static HTTP server for play only after the applicable browser/dev-server authorization. A local filesystem URL does not support native module loading reliably.
 

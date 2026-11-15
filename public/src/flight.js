@@ -15,96 +15,130 @@ function freeze(value) {
   return Object.freeze(value);
 }
 
-export const COURSES = freeze([
-  {
-    id: 'coast', name: 'Coast', subtitle: 'Find the rising air', difficulty: 'Beginner',
-    description: 'A forgiving coastal route. Gentle columns of warm air lift the glider between broad rings.',
-    colors: { sky: '#A9D3DE', horizon: '#F2DBB3', sea: '#4A9FA9', land: '#8A9D71', accent: '#F1AC67' },
-    start: { x: 0, y: 78, z: 0 },
-    gates: [
-      { x: 8, y: 76, z: 180, radius: 26 },
-      { x: 22, y: 74, z: 360, radius: 25 },
-      { x: 35, y: 78, z: 550, radius: 26 },
-      { x: 24, y: 82, z: 750, radius: 25 },
-      { x: 6, y: 80, z: 950, radius: 27 },
-      { x: 18, y: 77, z: 1160, radius: 27 },
-      { x: 32, y: 75, z: 1380, radius: 28 },
-    ],
-    thermals: [
-      { x: 32, z: 540, radius: 100, strength: 3.3, base: 0, top: 170 },
-      { x: 4, z: 990, radius: 110, strength: 3.8, base: 0, top: 180 },
-    ],
-    wind: { x: 0, z: 0, gust: 0 }, bounds: { halfWidth: 230, ceiling: 220 }, limitSeconds: 120,
-  },
-  {
-    id: 'ridge', name: 'Ridge', subtitle: 'Lean into the crosswind', difficulty: 'Easy',
-    description: 'Bank gently against the breeze and follow a broad valley above the rolling ridge.',
-    colors: { sky: '#BCCDDD', horizon: '#F4D8B0', sea: '#7CABA9', land: '#7A8B68', accent: '#E5A16B' },
-    start: { x: -12, y: 112, z: 0 },
-    gates: [
-      { x: -20, y: 108, z: 200, radius: 27 },
-      { x: -32, y: 112, z: 390, radius: 26 },
-      { x: -18, y: 120, z: 590, radius: 26 },
-      { x: 6, y: 118, z: 790, radius: 26 },
-      { x: 20, y: 112, z: 990, radius: 27 },
-      { x: 0, y: 108, z: 1200, radius: 28 },
-      { x: -18, y: 110, z: 1430, radius: 29 },
-    ],
-    thermals: [
-      { x: -30, z: 460, radius: 120, strength: 4.1, base: 25, top: 225 },
-      { x: 14, z: 1100, radius: 110, strength: 4.5, base: 25, top: 235 },
-    ],
-    wind: { x: -2.6, z: -1.2, gust: 1.6 }, bounds: { halfWidth: 260, ceiling: 260 }, limitSeconds: 130,
-  },
-  {
-    id: 'cloudline', name: 'Cloudline', subtitle: 'Ride the changing breeze', difficulty: 'Easy+',
-    description: 'A higher, roomy course with changing crosswinds and longer stretches of rising air.',
-    colors: { sky: '#B8CBE1', horizon: '#F0DFD3', sea: '#719CA9', land: '#8F9C88', accent: '#D99A84' },
-    start: { x: 0, y: 145, z: 0 },
-    gates: [
-      { x: 10, y: 142, z: 220, radius: 29 },
-      { x: 30, y: 148, z: 430, radius: 28 },
-      { x: 44, y: 157, z: 650, radius: 28 },
-      { x: 24, y: 166, z: 870, radius: 29 },
-      { x: 0, y: 160, z: 1100, radius: 29 },
-      { x: -18, y: 150, z: 1340, radius: 30 },
-      { x: 8, y: 146, z: 1580, radius: 31 },
-    ],
-    thermals: [
-      { x: 28, z: 580, radius: 140, strength: 5.2, base: 25, top: 285 },
-      { x: -8, z: 1120, radius: 150, strength: 4.2, base: 25, top: 295 },
-    ],
-    wind: { x: 3.2, z: 0.5, gust: 2 }, bounds: { halfWidth: 280, ceiling: 310 }, limitSeconds: 140,
-  },
+export const MAPS = freeze([
+  { id: 'coast', name: 'Coast', sky: '#A9D3DE', horizon: '#F2DBB3', land: '#8A9D71', altitude: 112 },
+  { id: 'ridge', name: 'High Ridge', sky: '#BCCDDD', horizon: '#F4D8B0', land: '#7A8B68', altitude: 140 },
+  { id: 'cloudline', name: 'Cloudline', sky: '#B8CBE1', horizon: '#F0DFD3', land: '#8F9C88', altitude: 155 },
+  { id: 'canyon', name: 'Red Canyon', sky: '#B9CED7', horizon: '#EFC2A0', land: '#B67B60', altitude: 140 },
+  { id: 'islands', name: 'Emerald Isles', sky: '#9BD5D5', horizon: '#DFEBC5', land: '#659B77', altitude: 112 },
+  { id: 'aurora', name: 'Afterglow', sky: '#A7ADC9', horizon: '#E4BFCF', land: '#777C99', altitude: 155 },
 ]);
-
+const generated = new Map();
+function random(index, seed) {
+  let hash = Math.imul((index | 0) ^ seed, 0x45d9f3b);
+  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+  return ((hash ^ (hash >>> 16)) >>> 0) / 4294967296;
+}
+export function levelId(map, seed, level) {
+  return MAPS.some(item => item.id === map) && Number.isInteger(seed) && seed >= 1 && seed <= 0xffffffff
+    && Number.isInteger(level) && level >= 1 && level <= 50 ? `v2-${map}-${seed}-${level}` : null;
+}
+export function parseLevel(id) {
+  const match = typeof id === 'string' && /^v2-([a-z]+)-(\d{1,10})-(\d{1,2})$/.exec(id);
+  return match && levelId(match[1], Number(match[2]), Number(match[3])) === id
+    ? { map: match[1], seed: Number(match[2]), level: Number(match[3]) } : null;
+}
+function generateCourse(map, seed, level, id) {
+  const biome = MAPS.find(item => item.id === map), difficulty = (level - 1) / 49;
+  const phase = random(seed, 71 + MAPS.findIndex(item => item.id === map) * 37) * Math.PI * 2;
+  const spacing = 205 - difficulty * 45, count = 8 + Math.floor(difficulty * 8);
+  const gates = Array.from({ length: count }, (_, index) => {
+    const z = 250 + index * spacing;
+    return { x: Math.sin(z / 250 + phase) * (25 + difficulty * 10),
+      y: biome.altitude + Math.sin(z / 310 + phase) * 14, z, radius: 25 - difficulty * 10 };
+  });
+  const line = z => {
+    const next = gates.find(gate => gate.z >= z);
+    if (!next) return gates.at(-1).x;
+    const previous = gates[gates.indexOf(next) - 1] || { x: 0, z: 0 };
+    return previous.x + (next.x - previous.x) * (z - previous.z) / (next.z - previous.z);
+  };
+  const course = { id, map, seed, level, phase, name: biome.name, subtitle: 'A new sky every seed', difficulty: `Level ${level}`,
+    colors: { sky: biome.sky, horizon: biome.horizon, sea: '#4A9FA9', land: biome.land, accent: '#F1AC67' },
+    start: { x: 0, y: biome.altitude, z: 0 }, startSpeed: 48 + difficulty * 22,
+    gates, thermals: [], obstacles: [], wind: { x: map === 'ridge' ? -2.6 : 1.2, z: -0.5, gust: 2 + difficulty * 3.5 },
+    bounds: { halfWidth: map === 'canyon' ? 190 : 240, ceiling: biome.altitude + 150 }, limitSeconds: 120 };
+  const density = 3 + Math.floor(difficulty * 3);
+  for (let chunk = 1; chunk * 150 < gates.at(-1).z - 65; chunk++) {
+    for (let index = 0; index < density; index++) {
+      const z = chunk * 150 + random(chunk * 13 + index, seed) * 55;
+      const radius = 5 + random(chunk * 17 + index, seed + 1) * 4;
+      let x = (random(chunk * 19 + index, seed + 2) - 0.5) * course.bounds.halfWidth * 1.6;
+      const clearance = 28 + radius;
+      if (Math.abs(x - line(z)) < clearance) x = line(z) + (x < line(z) ? -1 : 1) * clearance;
+      course.obstacles.push({ id: `${id}-spire-${chunk}-${index}`, x, z, radius,
+        base: terrainHeight(course, x, z), height: biome.altitude + 15 + random(chunk, seed + index) * 60 });
+    }
+  }
+  for (let index = 1; index < gates.length; index += 2) {
+    const gate = gates[index];
+    course.thermals.push({ x: gate.x + 22, z: gate.z - 55, radius: 110, strength: 3.5 + difficulty * 2.5, base: 0, top: course.bounds.ceiling });
+  }
+  course.description = `${count} rings · ${course.obstacles.length} rock spires · ${(course.startSpeed).toFixed(0)} m/s launch · changing gusts`;
+  return freeze(course);
+}
+export const COURSES = freeze(MAPS.map((map, index) => generateCourse(map.id, index + 1, 1, map.id)));
 export function getCourse(id) {
-  return COURSES.find(course => course.id === String(id).toLowerCase()) || COURSES[0];
+  const base = COURSES.find(course => course.id === String(id).toLowerCase());
+  if (base) return base;
+  const parts = parseLevel(id);
+  if (!parts) return COURSES[0];
+  if (!generated.has(id)) {
+    if (generated.size >= 64) generated.delete(generated.keys().next().value);
+    generated.set(id, generateCourse(parts.map, parts.seed, parts.level, id));
+  }
+  return generated.get(id);
 }
 
 export function terrainHeight(course, x, z) {
   const selected = course && typeof course === 'object' ? course : getCourse(course);
   x = bounded(x); z = bounded(z);
-  if (selected.id === 'ridge') {
-    const ridge = Math.exp(-(((x + 95 + 18 * Math.sin(z * 0.003)) / 75) ** 2));
-    return 24 + 8 * (1 + Math.sin(z * 0.005)) + 27 * ridge;
+  const phase = finite(selected.phase);
+  if (selected.map === 'ridge' || selected.map === 'canyon') {
+    const ridge = Math.exp(-(((x + 95 + 18 * Math.sin(z * 0.003 + phase)) / 75) ** 2));
+    return 24 + 8 * (1 + Math.sin(z * 0.005 + phase)) + 27 * ridge;
   }
-  if (selected.id === 'cloudline') {
-    return 12 + 12 * (0.5 + 0.5 * Math.sin(z * 0.004))
-      + 8 * (0.5 + 0.5 * Math.sin(x * 0.014 + z * 0.002));
+  if (selected.map === 'cloudline' || selected.map === 'aurora') {
+    return 12 + 12 * (0.5 + 0.5 * Math.sin(z * 0.004 + phase))
+      + 8 * (0.5 + 0.5 * Math.sin(x * 0.014 + z * 0.002 + phase));
   }
-  return smooth(55, 145, x) * (9 + 4 * Math.sin(z * 0.008) + 3 * Math.sin(x * 0.02 + z * 0.003));
+  return smooth(55, 145, x) * (9 + 4 * Math.sin(z * 0.008 + phase) + 3 * Math.sin(x * 0.02 + z * 0.003 + phase));
 }
 
-export function sampleWind(course, x, y, z, time) {
+export function getWorld(course, zMin, zMax, mode = 'course') {
+  let low = bounded(zMin), high = bounded(zMax);
+  if (high < low) [low, high] = [high, low];
+  high = Math.min(high, low + 4000);
+  if (mode !== 'free') return {
+    obstacles: course.obstacles.filter(item => item.z + item.radius >= low && item.z - item.radius <= high),
+    thermals: course.thermals.filter(item => item.z + item.radius >= low && item.z - item.radius <= high),
+  };
+  const obstacles = [], thermals = [];
+  for (let chunk = Math.max(1, Math.floor((low - 120) / 240)); chunk <= Math.floor((high + 120) / 240); chunk++) {
+    const density = 3 + Math.min(4, Math.floor(course.level / 12) + Math.floor(chunk / 15));
+    for (let index = 0; index < density; index++) {
+      const z = chunk * 240 + random(chunk * 13 + index, course.seed) * 100;
+      const x = (random(chunk * 17 + index, course.seed + 1) - 0.5) * course.bounds.halfWidth * 1.5;
+      const radius = 5 + random(chunk, course.seed + index) * 4;
+      if (z + radius >= low && z - radius <= high) obstacles.push({ id: `${course.id}-free-${chunk}-${index}`, x, z, radius,
+        base: terrainHeight(course, x, z), height: course.start.y + 25 + random(chunk, course.seed + index + 3) * 55 });
+    }
+    const z = chunk * 240 + 160;
+    if (z + 110 >= low && z - 110 <= high) thermals.push({ x: (random(chunk, course.seed + 41) - 0.5) * 120,
+      z, radius: 110, strength: 4, base: 0, top: course.bounds.ceiling });
+  }
+  return { obstacles, thermals };
+}
+
+export function sampleWind(course, x, y, z, time, mode = 'course') {
   const selected = course && typeof course === 'object' ? course : getCourse(course);
   x = bounded(x); y = bounded(y); z = bounded(z); time = bounded(time);
-  const gust = clamp(finite(selected.wind?.gust), 0, 8);
+  const gust = clamp(finite(selected.wind?.gust) + (mode === 'free' ? Math.max(0, z) / 5000 : 0), 0, 8);
   const wx = clamp(finite(selected.wind?.x), -12, 12)
-    + gust * (Math.sin(time * 0.45 + z * 0.002) + 0.35 * Math.sin(time * 1.3 + x * 0.012));
+    + gust * (Math.sin(time * 0.7 + z * 0.004 + finite(selected.phase)) + 0.35 * Math.sin(time * 1.8 + x * 0.012));
   const wz = clamp(finite(selected.wind?.z), -8, 8) + gust * 0.35 * Math.sin(time * 0.37 + z * 0.004);
   let wy = 0;
-  for (const thermal of selected.thermals || []) {
+  for (const thermal of getWorld(selected, z - 120, z + 120, mode).thermals) {
     const radius = finite(thermal.radius);
     const base = finite(thermal.base); const top = finite(thermal.top);
     if (radius <= 0 || top <= base || y < base || y > top) continue;
@@ -123,12 +157,13 @@ export function sampleWind(course, x, y, z, time) {
 
 export function createFlight(courseId, mode = 'course') {
   const course = getCourse(courseId);
-  const wind = sampleWind(course, course.start.x, course.start.y, course.start.z, 0);
+  const wind = sampleWind(course, course.start.x, course.start.y, course.start.z, 0, mode);
   return {
     courseId: course.id, mode: mode === 'free' ? 'free' : 'course', status: 'flying',
-    ...course.start, vx: wind.x, vy: -0.55 + wind.y, vz: 34 + wind.z,
-    roll: 0, pitch: 0, airspeed: 34, time: 0,
+    ...course.start, vx: wind.x, vy: -0.55 + wind.y, vz: course.startSpeed + wind.z,
+    roll: 0, pitch: 0, airspeed: course.startSpeed, time: 0,
     score: 0, gateIndex: 0, passed: 0, missed: 0, streak: 0, bestStreak: 0, updraftSeconds: 0,
+    tricks: 0, trickAngle: 0, trickActive: false, nextTrickZ: 180, _trickHeld: false,
     wind, lastEvent: null, _remainder: 0, _eventId: 0,
   };
 }
@@ -143,13 +178,19 @@ function crash(state, text) {
   event(state, 'crash', text);
 }
 
-function integrate(state, course, bank, pitch) {
-  const before = { x: state.x, y: state.y, z: state.z };
-  const wind = sampleWind(course, state.x, state.y, state.z, state.time);
+function integrate(state, course, bank, pitch, trick) {
+  const before = { x: state.x, y: state.y, z: state.z, time: state.time, updraftSeconds: state.updraftSeconds };
+  const wind = sampleWind(course, state.x, state.y, state.z, state.time, state.mode);
+  if (trick && !state._trickHeld && !state.trickActive && state.z >= state.nextTrickZ
+    && state.y - terrainHeight(course, state.x, state.z) > 35 && state.y < course.bounds.ceiling - 25) {
+    state.trickActive = true; state.trickAngle = 0; state.nextTrickZ = state.z + 200;
+  }
+  state._trickHeld = trick;
   state.roll += (bank * 0.85 - state.roll) * (1 - Math.exp(-4.5 * STEP));
   state.pitch += (pitch * 0.32 - state.pitch) * (1 - Math.exp(-3.8 * STEP));
-  const trim = clamp(34 - state.pitch * 13 - Math.abs(state.roll) * 1.8, 23, 43);
-  state.airspeed = clamp(state.airspeed + (trim - state.airspeed) * (1 - Math.exp(-0.65 * STEP)), 21, 48);
+  const freeSpeed = state.mode === 'free' ? Math.min(12, Math.max(0, state.z) / 1500) : 0;
+  const trim = clamp(course.startSpeed + freeSpeed - state.pitch * 13 - Math.abs(state.roll) * 1.8 - (state.trickActive ? 8 : 0), 30, 86);
+  state.airspeed = clamp(state.airspeed + (trim - state.airspeed) * (1 - Math.exp(-0.65 * STEP)), 25, 90);
   const targetX = state.airspeed * Math.sin(state.roll) * 0.36 + wind.x;
   const targetY = state.airspeed * Math.sin(state.pitch) - 0.55 + wind.y;
   const targetZ = state.airspeed * Math.cos(state.pitch) * (1 - 0.08 * Math.abs(Math.sin(state.roll))) + wind.z;
@@ -159,7 +200,35 @@ function integrate(state, course, bank, pitch) {
   state.x += state.vx * STEP; state.y += state.vy * STEP; state.z += state.vz * STEP;
   state.time += STEP;
   if (wind.y > 0.5) state.updraftSeconds += STEP;
-  state.wind = sampleWind(course, state.x, state.y, state.z, state.time);
+  state.wind = sampleWind(course, state.x, state.y, state.z, state.time, state.mode);
+
+  let impact = 2;
+  for (const object of getWorld(course, before.z - 15, state.z + 15, state.mode).obstacles) {
+    const dx = state.x - before.x, dz = state.z - before.z, dy = state.y - before.y;
+    const ox = before.x - object.x, oz = before.z - object.z, radius = object.radius + CLEARANCE;
+    const a = dx * dx + dz * dz, b = 2 * (ox * dx + oz * dz), c = ox * ox + oz * oz - radius * radius;
+    let entry = 0, exit = 1;
+    if (a < 1e-15) { if (c > 0) continue; }
+    else {
+      const discriminant = b * b - 4 * a * c;
+      if (discriminant < 0) continue;
+      entry = Math.max(0, (-b - Math.sqrt(discriminant)) / (2 * a));
+      exit = Math.min(1, (-b + Math.sqrt(discriminant)) / (2 * a));
+    }
+    const bottom = object.base - CLEARANCE, top = object.base + object.height + CLEARANCE;
+    if (Math.abs(dy) < 1e-15) { if (before.y < bottom || before.y > top) continue; }
+    else {
+      const first = (bottom - before.y) / dy, last = (top - before.y) / dy;
+      entry = Math.max(entry, Math.min(first, last)); exit = Math.min(exit, Math.max(first, last));
+    }
+    if (entry <= exit) impact = Math.min(impact, entry);
+  }
+  if (impact <= 1) {
+    for (const key of ['x', 'y', 'z', 'time']) state[key] = before[key] + (state[key] - before[key]) * impact;
+    state.updraftSeconds = before.updraftSeconds + (state.updraftSeconds - before.updraftSeconds) * impact;
+    state.wind = sampleWind(course, state.x, state.y, state.z, state.time, state.mode);
+    crash(state, 'Rock spire contact. Bank around it or climb above the summit.'); return;
+  }
 
   if (state.y <= terrainHeight(course, state.x, state.z) + CLEARANCE) {
     crash(state, 'Ground contact. Keep a little more height next time.'); return;
@@ -169,6 +238,13 @@ function integrate(state, course, bank, pitch) {
   }
   if (state.y >= course.bounds.ceiling) {
     crash(state, 'Above the flying area. Ease the nose down next time.'); return;
+  }
+  if (state.trickActive) {
+    state.trickAngle += Math.PI * 2 * STEP / 1.05;
+    if (state.trickAngle + 1e-9 >= Math.PI * 2) {
+      state.trickActive = false; state.trickAngle = 0; state.tricks++; state.score += 250;
+      event(state, 'trick', 'Barrel roll complete · +250 points');
+    }
   }
   if (state.mode === 'free') return;
 
@@ -210,7 +286,7 @@ export function stepFlight(state, controls = {}, dt = 0) {
   // A carried fixed-step remainder keeps equal input histories independent of
   // ordinary render-frame partitioning. Excess elapsed time is intentionally dropped.
   while (remaining + 1e-12 >= STEP && next.status === 'flying') {
-    integrate(next, course, bank, pitch);
+    integrate(next, course, bank, pitch, controls?.trick === true);
     remaining -= STEP;
   }
   next._remainder = next.status === 'flying' ? Math.max(0, remaining) : 0;

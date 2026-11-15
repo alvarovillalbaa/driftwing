@@ -9,8 +9,8 @@ function fly(state, seconds, controls = {}) {
 }
 const near = (actual, expected, tolerance = 1e-8) => assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} should be within ${tolerance} of ${expected}`);
 
-test('three authored beginner routes have ordered, reachable rings and safe starts', () => {
-  assert.deepEqual(COURSES.map(course => course.id), ['coast', 'ridge', 'cloudline']);
+test('six generated map previews have ordered, reachable rings and safe starts', () => {
+  assert.deepEqual(COURSES.map(course => course.id), ['coast', 'ridge', 'cloudline', 'canyon', 'islands', 'aurora']);
   for (const course of COURSES) {
     assert.ok(course.gates.length >= 6 && course.gates.length <= 8);
     assert.ok(course.start.y > terrainHeight(course, course.start.x, course.start.z) + 20);
@@ -26,20 +26,18 @@ test('three authored beginner routes have ordered, reachable rings and safe star
   assert.equal(getCourse('COAST'), COURSES[0]);
 });
 
-test('crosswind changes the actual unsteered trajectory compared with calm air', () => {
+test('different gust fields change actual unsteered trajectories during the clear opening', () => {
   const start = createFlight('coast');
-  const calm = fly(start, 8);
-  const windy = fly({ ...createFlight('ridge'), ...start, courseId: 'ridge' }, 8);
+  const calm = fly(start, 3);
+  const windy = fly({ ...createFlight('ridge'), ...start, courseId: 'ridge' }, 3);
   assert.equal(calm.status, 'flying'); assert.equal(windy.status, 'flying');
-  near(calm.x, 0);
-  assert.ok(windy.x < calm.x - 10, 'Crosswind should carry the aircraft left, rather than just change the HUD.');
-  assert.ok(Math.abs(windy.vx) > 1);
-  assert.ok(windy.z < calm.z, 'The ridge headwind should also alter forward travel.');
+  assert.ok(Math.abs(calm.x) > 0.1 && Math.abs(windy.x - calm.x) > 1, 'Gusts must move the aircraft, not only the HUD.');
+  assert.ok(Math.abs(windy.vx - calm.vx) > 0.2);
 });
 
 test('thermal lift changes altitude and accumulated updraft time', () => {
   const course = getCourse('coast'); const thermal = course.thermals[0];
-  const start = { ...createFlight('coast', 'free'), x: thermal.x, z: thermal.z - 25, y: 85, vx: 0, vy: -0.55 };
+  const start = { ...createFlight('coast'), x: thermal.x, z: thermal.z - 25, y: course.bounds.ceiling - 20, vx: 0, vy: -0.55 };
   const rising = fly(start, 2);
   const outside = fly({ ...start, x: -180 }, 2);
   assert.equal(rising.status, 'flying'); assert.equal(outside.status, 'flying');
@@ -53,7 +51,8 @@ test('bank direction steers and pitch changes climb and airspeed', () => {
   const start = createFlight('coast', 'free');
   const right = fly(start, 4, { bank: 0.8 }); const left = fly(start, 4, { bank: -0.8 });
   assert.ok(right.x > 12 && left.x < -12);
-  near(right.x, -left.x);
+  const neutral = fly(start, 4);
+  assert.ok(right.x > neutral.x + 12 && left.x < neutral.x - 12, 'Steering works against a moving wind baseline.');
   assert.ok(right.roll > 0 && left.roll < 0);
   const climbing = fly(start, 4, { pitch: 0.6 }); const diving = fly(start, 4, { pitch: -0.6 });
   assert.ok(climbing.y > start.y + 8); assert.ok(diving.y < start.y - 8);
@@ -92,9 +91,9 @@ test('a missed ring resets the streak without crashing or awarding a pass', () =
 
 test('the final ring can be passed before reaching the finish and terminal states stay stable', () => {
   const course = getCourse('coast'); const last = course.gates.at(-1);
-  const start = { ...createFlight('coast'), x: last.x, y: last.y, z: last.z - 0.1, gateIndex: course.gates.length - 1, passed: 6, vx: 0, vy: 0 };
+  const start = { ...createFlight('coast'), x: last.x, y: last.y, z: last.z - 0.1, gateIndex: course.gates.length - 1, passed: course.gates.length - 1, vx: 0, vy: 0 };
   const passed = stepFlight(start, {}, 1 / 60);
-  assert.equal(passed.passed, 7); assert.equal(passed.status, 'flying');
+  assert.equal(passed.passed, course.gates.length); assert.equal(passed.status, 'flying');
   const finished = fly(passed, 4);
   assert.equal(finished.status, 'finished'); assert.equal(finished.lastEvent.type, 'finish');
   assert.equal(finished.gateIndex, course.gates.length);
@@ -115,7 +114,7 @@ test('ground, lateral boundary and ceiling contact crash consistently with share
 
 test('free flight ignores ring, finish and time-limit rules', () => {
   const course = getCourse('coast');
-  const start = { ...createFlight('coast', 'free'), z: course.gates.at(-1).z + 100, time: course.limitSeconds + 5 };
+  const start = { ...createFlight('coast', 'free'), z: course.gates.at(-1).z + 100, y: course.bounds.ceiling - 20, time: course.limitSeconds + 5 };
   const next = fly(start, 2);
   assert.equal(next.status, 'flying'); assert.ok(next.z > start.z); assert.ok(next.time > course.limitSeconds);
   assert.equal(next.gateIndex, 0); assert.equal(next.passed, 0); assert.equal(next.missed, 0);
@@ -151,7 +150,7 @@ test('wind and terrain sampling are deterministic and remain finite for invalid 
   assert.notEqual(sampleWind(course, 0, 100, 0, 0).x, sampleWind(course, 0, 100, 0, 4).x);
 });
 
-test('a simple feedback pilot can finish every authored course with all rings', () => {
+test('a simple feedback pilot can finish every generated map preview with all rings', () => {
   const limit = (n, bound) => Math.max(-bound, Math.min(bound, n));
   for (const course of COURSES) {
     let state = createFlight(course.id);

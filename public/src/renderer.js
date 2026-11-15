@@ -1,4 +1,4 @@
-import { terrainHeight } from './flight.js';
+import { terrainHeight, getWorld } from './flight.js';
 
 const TAU = Math.PI * 2;
 const NEAR = 7;
@@ -289,7 +289,7 @@ export function createRenderer(canvas) {
   }
 
   function landmarks(state, course, camera, p) {
-    if (course.id !== 'coast') return;
+    if (course.map !== 'coast' && course.map !== 'islands') return;
     const baseZ = Math.floor(number(state.z) / 900) * 900;
     // Shore beacons sit beyond the playable corridor, on the shared ground.
     for (let index = 3; index >= 0; index--) {
@@ -311,6 +311,21 @@ export function createRenderer(canvas) {
       }
       const light = project({ x, y: top - 1.5, z }, camera);
       if (light) { ctx.fillStyle = color(p.sand, 0.8 * (1 - fog)); ctx.beginPath(); ctx.arc(light.x, light.y, clamp(camera.focal / light.depth, 0.8, 2), 0, TAU); ctx.fill(); }
+    }
+  }
+
+  function spires(objects, camera, p) {
+    for (const object of [...objects].sort((a, b) => b.z - a.z)) {
+      const top = object.base + object.height;
+      for (let side = 0; side < 12; side++) {
+        const a = side / 12 * TAU, b = (side + 1) / 12 * TAU;
+        const first = { x: object.x + Math.cos(a) * object.radius, z: object.z + Math.sin(a) * object.radius };
+        const second = { x: object.x + Math.cos(b) * object.radius, z: object.z + Math.sin(b) * object.radius };
+        const fog = clamp(inCamera({ x: object.x, y: top, z: object.z }, camera).z / FAR, 0, 0.85);
+        polygon([{ ...first, y: object.base }, { ...second, y: object.base }, { ...second, y: top }, { ...first, y: top }],
+          camera, color(tint(tint(p.land, p.navy, side / 22), p.horizon, fog)));
+        polygon([{ ...first, y: top }, { ...second, y: top }, { x: object.x, y: top, z: object.z }], camera, color(tint(p.land, p.white, 0.35)));
+      }
     }
   }
 
@@ -384,7 +399,7 @@ export function createRenderer(canvas) {
   }
 
   function plane(state, course, camera, p) {
-    const pitch = clamp(number(state.pitch), -0.7, 0.7), roll = clamp(number(state.roll), -1.35, 1.35);
+    const pitch = clamp(number(state.pitch), -0.7, 0.7), roll = clamp(number(state.roll), -1.35, 1.35) + number(state.trickAngle);
     const yaw = clamp(Math.atan2(number(state.vx), Math.max(1, number(state.vz, 30))) * 0.45, -0.5, 0.5);
     const transform = vertex => {
       const y = vertex[1] * Math.cos(pitch) + vertex[2] * Math.sin(pitch);
@@ -425,7 +440,9 @@ export function createRenderer(canvas) {
     sky(camera, p); distantCoast(state, course, camera, p); clouds(state, camera, p); ocean(state, course, camera, p); terrain(state, course, camera, p);
     landmarks(state, course, camera, p);
     boundaries(state, course, camera, p, preview);
-    const fields = [...course.thermals].sort((a, b) => b.z - a.z);
+    const world = getWorld(course, state.z - 100, state.z + FAR, state.mode);
+    spires(world.obstacles, camera, p);
+    const fields = [...world.thermals].sort((a, b) => b.z - a.z);
     for (const field of fields) thermal(field, state, camera, p);
     if (state.mode !== 'free') gates(state, course, camera, p, preview);
     wind(state, camera, p); plane(state, course, camera, p);

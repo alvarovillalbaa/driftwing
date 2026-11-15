@@ -1,7 +1,7 @@
-import { COURSES, getCourse, createFlight, stepFlight, sampleWind, terrainHeight } from './flight.js';
+import { MAPS, levelId, parseLevel, getCourse, createFlight, stepFlight, sampleWind, terrainHeight } from './flight.js';
 import { createRenderer } from './renderer.js';
 import { createFlightAudio } from './audio.js';
-import { loadSave, writeSave, keepRecord } from './records.js';
+import { loadSave, writeSave, keepRecord, rememberLevel } from './records.js';
 
 const byId = id => document.getElementById(id);
 const canvas = byId('sky');
@@ -11,7 +11,8 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 let storage;
 try { storage = window.localStorage; } catch { storage = null; }
 let { value: save, available: storageAvailable } = loadSave(storage, motionPreference.matches);
-let course = getCourse(save.course);
+const newSeed = () => globalThis.crypto?.getRandomValues(new Uint32Array(1))[0] || Math.floor(Math.random() * 0xfffffffe) + 1;
+let course = getCourse(parseLevel(save.course) ? save.course : levelId(getCourse(save.course).map, newSeed(), save.progress.level));
 let flight = createFlight(course.id);
 let mode = 'menu';
 let renderer;
@@ -25,6 +26,7 @@ let soundGeneration = 0;
 let disposed = false;
 const keys = new Set();
 const stick = { bank: 0, pitch: 0, pointer: null };
+let trickRequested = false;
 const courseButtons = new Map();
 const formatTime = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.floor(Math.max(0, seconds) % 60)).padStart(2, '0')}`;
 
@@ -33,12 +35,16 @@ function storageNotice() {
   byId('storage-notice').textContent = 'Your browser could not save game preferences or records. You can still play; this visit’s results may not be kept.';
 }
 function persist() { storageAvailable = writeSave(storage, save); storageNotice(); }
-function clearInput() {
-  keys.clear(); stick.bank = 0; stick.pitch = 0;
-  if (stick.pointer !== null) {
-    try { byId('stick-area').releasePointerCapture(stick.pointer); } catch { /* Capture may already be gone. */ }
+function releaseStick() {
+  const pointer = stick.pointer;
+  stick.pointer = null; stick.bank = 0; stick.pitch = 0;
+  if (pointer !== null) {
+    try { byId('stick-area').releasePointerCapture(pointer); } catch { /* Capture may already be gone. */ }
   }
-  stick.pointer = null; byId('stick-knob').style.transform = 'translate(0px, 0px)';
+  byId('stick-knob').style.transform = 'translate(0px, 0px)';
+}
+function clearInput() {
+  keys.clear(); trickRequested = false; releaseStick();
 }
 function announce(text, milliseconds = 2400) {
   byId('flight-event').textContent = text;
@@ -58,19 +64,31 @@ function showMode(next) {
   audio.update(flight.airspeed, Math.hypot(flight.wind.x, flight.wind.y, flight.wind.z), next === 'flying');
 }
 function updateMenu() {
-  courseButtons.forEach((button, id) => button.setAttribute('aria-pressed', String(id === course.id)));
-  byId('course-position').textContent = `0${COURSES.findIndex(item => item.id === course.id) + 1} / 0${COURSES.length}`;
+  courseButtons.forEach((button, id) => button.setAttribute('aria-pressed', String(id === course.map)));
+  byId('course-position').textContent = `L${course.level} · #${course.seed}`;
+  byId('campaign-level').textContent = `Next challenge: level ${save.progress.level}`;
+  byId('start-button').firstChild.textContent = `Take flight · level ${course.level} `;
   byId('course-description').textContent = course.description;
   const best = save.records[course.id];
   byId('record-note').textContent = best ? `${storageAvailable ? 'Your best completed flight' : 'Your best this visit'}: ${best.score.toLocaleString()} points · ${formatTime(best.time)}` : 'No account. Just you and the air.';
   byId('course-tag').textContent = course.name;
+  const select = byId('saved-levels'); select.replaceChildren();
+  for (const id of [...new Set([course.id, ...save.progress.levels.slice().reverse()])]) {
+    const level = getCourse(id), option = document.createElement('option');
+    option.value = id; option.textContent = `${level.name} · L${level.level} · #${level.seed}${save.progress.completed.includes(id) ? ' ✓' : ''}`;
+    select.append(option);
+  }
+  select.value = course.id;
 }
 function selectCourse(id) {
-  course = getCourse(id); flight = createFlight(course.id); save.course = course.id; persist(); updateMenu(); lastHud = 0;
+  if (disposed || mode !== 'menu') return;
+  course = getCourse(MAPS.some(map => map.id === id) ? levelId(id, newSeed(), save.progress.level) : id);
+  flight = createFlight(course.id); save = rememberLevel(save, course.id); persist(); updateMenu(); lastHud = 0;
 }
 async function start(free = false) {
   if (disposed) return;
   runNumber++; flight = createFlight(course.id, free ? 'free' : 'course'); lastEventId = 0; eventUntil = 0;
+  save = rememberLevel(save, course.id); persist();
   byId('flight-event').classList.remove('visible');
   byId('help-dialog').close(); showMode('flying'); canvas.focus({ preventScroll: true });
   deck.scrollIntoView({ behavior: 'instant', block: 'nearest' });
@@ -95,8 +113,10 @@ function menu() {
 function endFlight() {
   if (mode !== 'flying') return;
   const finished = flight.status === 'finished';
-  const next = keepRecord(save, flight); save = next.value;
-  if (next.improved) persist();
+  const next = keepRecord(save, flight), changed = next.value !== save; save = next.value;
+  if (changed) persist();
+  byId('next-level-button').hidden = !finished || flight.mode === 'free';
+  byId('next-level-button').textContent = `Next challenge · level ${save.progress.level}`;
   byId('result-eyebrow').textContent = flight.mode === 'free' ? 'FREE-FLIGHT LOG' : 'FLIGHT LOG';
   byId('result-title').textContent = finished ? 'A flight to remember.' : 'Every flight teaches you.';
   byId('result-message').textContent = finished ? `You found your way through ${course.name}. There’s always another line to try.` : flight.lastEvent?.text || 'The flight ended. Try a gentler turn and watch your altitude.';
@@ -104,6 +124,7 @@ function endFlight() {
   byId('result-gates').textContent = flight.mode === 'free' ? 'Free flight' : `${flight.passed} / ${course.gates.length}`;
   byId('result-time').textContent = formatTime(flight.time);
   byId('result-lift').textContent = `${Math.round(flight.updraftSeconds)}s`;
+  byId('result-tricks').textContent = `${flight.tricks} barrel rolls · ${flight.tricks * 250} trick points`;
   byId('record-message').textContent = next.improved ? storageAvailable ? 'A new personal best. Saved on this device.' : 'A new personal best for this visit.' : flight.mode === 'free' ? 'Free-flight runs don’t replace course records.' : finished ? storageAvailable ? 'Your best completed course score stays on this device.' : 'Your best completed score is kept for this visit.' : 'Only completed courses become course records.';
   showMode('result');
   if (finished) audio.chime('finish');
@@ -136,6 +157,9 @@ function updateHud() {
   const next = course.gates[flight.gateIndex];
   byId('next-gate').textContent = flight.mode === 'free' ? 'Find your own line' : next ? `Next ring ${Math.max(0, Math.round(next.z - flight.z))} m` : 'Keep flying to the finish';
   byId('score').textContent = flight.score.toLocaleString(); byId('flight-time').textContent = `${formatTime(flight.time)} in the air`;
+  const ready = flight.z >= flight.nextTrickZ && flight.y - ground > 35 && flight.y < course.bounds.ceiling - 25;
+  byId('trick-status').textContent = flight.trickActive ? 'BARREL ROLL' : ready ? 'SPACE / ROLL · +250' : 'GAIN HEIGHT & DISTANCE TO ROLL';
+  byId('trick-button').disabled = !ready || flight.trickActive;
   updateWind(flight);
 }
 function updatePreferences() {
@@ -158,15 +182,19 @@ async function toggleSound() {
   await applySound(next, 'Sound is unavailable in this browser. You can still fly.');
 }
 
-for (const [index, item] of COURSES.entries()) {
+for (const [index, item] of MAPS.entries()) {
   const button = document.createElement('button'); button.type = 'button'; button.className = 'course-option';
-  const label = document.createElement('span'); label.textContent = `0${index + 1} · ${item.difficulty}`;
+  const label = document.createElement('span'); label.textContent = `0${index + 1} · GENERATED`;
   const title = document.createElement('strong'); title.textContent = item.name;
-  button.append(label, title); button.setAttribute('aria-label', `${item.name}: ${item.subtitle}`);
+  button.append(label, title); button.setAttribute('aria-label', `${item.name}: generate a new map`);
   button.addEventListener('click', () => selectCourse(item.id)); byId('course-options').append(button); courseButtons.set(item.id, button);
 }
 byId('start-button').addEventListener('click', () => void start());
 byId('free-button').addEventListener('click', () => void start(true));
+byId('new-map-button').addEventListener('click', () => selectCourse(course.map));
+byId('saved-levels').addEventListener('change', event => selectCourse(event.target.value));
+byId('next-level-button').addEventListener('click', () => { if (disposed) return; showMode('menu'); selectCourse(course.map); void start(); });
+byId('trick-button').addEventListener('click', () => { if (mode === 'flying' && !disposed) trickRequested = true; });
 byId('pause-button').addEventListener('click', () => pause());
 byId('resume-button').addEventListener('click', resume);
 byId('restart-button').addEventListener('click', () => void start(flight.mode === 'free'));
@@ -186,7 +214,7 @@ window.addEventListener('pagehide', event => {
 });
 window.addEventListener('pageshow', event => { if (event.persisted) { lastFrame = 0; resize(); } });
 
-const flightKeys = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'KeyW', 'KeyA', 'KeyS', 'KeyD']);
+const flightKeys = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'KeyW', 'KeyA', 'KeyS', 'KeyD', 'Space']);
 window.addEventListener('keydown', event => {
   if (byId('help-dialog').open || ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName) || event.metaKey || event.ctrlKey || event.altKey) return;
   if ((event.code === 'KeyP' || event.code === 'Escape') && (mode === 'flying' || mode === 'paused')) {
@@ -211,7 +239,7 @@ stickArea.addEventListener('pointerdown', event => {
   event.preventDefault(); stick.pointer = event.pointerId; stickArea.setPointerCapture(event.pointerId); moveStick(event);
 });
 stickArea.addEventListener('pointermove', event => { if (event.pointerId === stick.pointer) { event.preventDefault(); moveStick(event); } });
-for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) stickArea.addEventListener(type, event => { if (event.pointerId === stick.pointer) clearInput(); });
+for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) stickArea.addEventListener(type, event => { if (event.pointerId === stick.pointer) releaseStick(); });
 
 function resize() {
   if (!renderer) return;
@@ -230,7 +258,10 @@ function frame(timestamp) {
     if (mode === 'flying') {
       const bank = stick.pointer !== null ? stick.bank : Number(keys.has('ArrowRight') || keys.has('KeyD')) - Number(keys.has('ArrowLeft') || keys.has('KeyA'));
       const pitch = stick.pointer !== null ? stick.pitch : Number(keys.has('ArrowUp') || keys.has('KeyW')) - Number(keys.has('ArrowDown') || keys.has('KeyS'));
-      flight = stepFlight(flight, { bank, pitch }, dt);
+      const trick = keys.has('Space') || trickRequested;
+      const previousTime = flight.time;
+      flight = stepFlight(flight, { bank, pitch, trick }, dt);
+      if (flight.time > previousTime) trickRequested = false;
       if (flight.lastEvent && flight.lastEvent.id !== lastEventId) {
         lastEventId = flight.lastEvent.id; announce(flight.lastEvent.text);
         if (flight.lastEvent.type === 'pass') audio.chime('pass');

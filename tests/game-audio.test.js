@@ -24,6 +24,7 @@ function environment(initial = preferences()) {
   const storage = new Map([['driftwing.v1', JSON.stringify(initial)], ['unrelated-game', 'preserve this value']]);
   const writes = [], audioCalls = [], updates = [], events = [], errors = [];
   let destroyed = 0, rendererDestroyed = 0, rendererRendered = 0, frameID = 0;
+  let seed = 421337;
   function element(tag = 'div', id = '') {
     const attributes = new Map(), classes = new Set(), listeners = new Map(), small = { textContent: '' };
     const node = {
@@ -35,6 +36,7 @@ function environment(initial = preferences()) {
       },
       setAttribute(name, value) { attributes.set(name, String(value)); }, getAttribute(name) { return attributes.get(name) ?? null; },
       append(...items) { node.children.push(...items); },
+      replaceChildren(...items) { node.children = [...items]; },
       addEventListener(name, callback) { const values = listeners.get(name) || []; values.push(callback); listeners.set(name, values); },
       dispatch(name, detail = {}) { return (listeners.get(name) || []).map(callback => callback({ target: node, currentTarget: node, preventDefault() {}, ...detail })); },
       focus() { document.activeElement = node; }, scrollIntoView() {},
@@ -67,6 +69,7 @@ function environment(initial = preferences()) {
   };
   const context = vm.createContext({
     ...flightApi, ...recordApi, document, Math, Map, Set, String, Number, Boolean, Object, JSON, structuredClone,
+    crypto: { getRandomValues(array) { array[0] = seed++; return array; } },
     performance: { now: () => 1000 },
     console: { error(...args) { errors.push(args); } },
     window: {
@@ -86,7 +89,7 @@ function environment(initial = preferences()) {
     fetch() { throw new Error('Network is forbidden in in-memory game checks.'); },
   });
   const stripped = source.replace(/^import [^\n]+;\s*$/gm, '');
-  vm.runInContext(stripped + '\nglobalThis.actualGame = { start, toggleSound, pause, resume, menu, selectCourse, endFlight, replaceFlight: next => { flight = next; }, state: () => ({ save: structuredClone(save), mode, runNumber }) };',
+  vm.runInContext(stripped + '\nglobalThis.actualGame = { start, toggleSound, pause, resume, menu, selectCourse, endFlight, replaceFlight: next => { flight = next; }, state: () => ({ save: structuredClone(save), flight: structuredClone(flight), mode, runNumber }) };',
     context, { filename: String(gamePath) });
   assert.deepEqual(errors, [], 'The actual game must complete bootstrap through controlled platform boundaries.');
   return {
@@ -168,7 +171,7 @@ test('a current enable failure resets preference, persists it and announces the 
 
 test('sound transitions preserve course, camera, every record and unrelated storage', async () => {
   const initial = preferences(), h = environment(initial), pending = h.app.toggleSound(); h.audioCalls[0].resolve(false); await pending;
-  const { sound, ...expected } = initial;
+  const { sound, ...expected } = recordApi.normalizeSave(initial);
   for (const written of h.writes) { const { sound: ignored, ...actual } = written; assert.deepEqual(actual, expected); }
   assert.equal(h.storage.get('unrelated-game'), 'preserve this value');
 });
@@ -281,4 +284,56 @@ test('window blur explicitly mutes a finished result cue even when there is no a
   h.app.replaceFlight(terminalFlight('finished')); h.app.endFlight(); const updates = h.updates.length;
   h.windowEvent('blur'); assert.equal(h.app.state().mode, 'result');
   assert.equal(h.updates.slice(updates).some(update => update.flying === false), true);
+});
+
+test('actual map, completion, next-level and replay callbacks retain exact generated identities and old records', async () => {
+  const h = environment(), previousRecords = plain(h.app.state().save.records);
+  assert.equal(h.nodes.get('course-options').children.length, 6);
+  h.click('new-map-button'); const firstId = h.app.state().save.course;
+  assert.equal(flightApi.parseLevel(firstId).level, 1);
+  await h.app.start();
+  const first = flightApi.getCourse(firstId);
+  h.app.replaceFlight({ ...flightApi.createFlight(firstId), status: 'finished', passed: first.gates.length,
+    gateIndex: first.gates.length, missed: 0, score: 2000, time: 80 });
+  h.app.endFlight();
+  assert.equal(h.app.state().save.progress.level, 2); assert.equal(h.nodes.get('next-level-button').hidden, false);
+  h.click('next-level-button'); const next = h.app.state();
+  assert.equal(next.mode, 'flying'); assert.equal(flightApi.parseLevel(next.save.course).level, 2);
+  assert.ok(next.save.progress.levels.includes(firstId) && next.save.progress.levels.includes(next.save.course));
+  h.click('pause-button'); h.click('pause-menu-button');
+  h.nodes.get('saved-levels').value = firstId; h.nodes.get('saved-levels').dispatch('change'); h.click('start-button');
+  assert.equal(h.app.state().flight.courseId, firstId); assert.equal(h.app.state().save.progress.level, 2);
+  for (const [id, record] of Object.entries(previousRecords)) assert.deepEqual(plain(h.app.state().save.records[id]), record);
+  assert.equal(JSON.parse(h.storage.get('driftwing.v1')).course, firstId);
+});
+
+test('a touch roll click survives render frames shorter than a physics step', async () => {
+  const h = environment(); await h.app.start();
+  const id = h.app.state().save.course, course = flightApi.getCourse(id);
+  h.app.replaceFlight({ ...flightApi.createFlight(id, 'free'), z: 181, y: course.bounds.ceiling - 35 });
+  h.runNextFrame(1000); h.click('trick-button'); h.runNextFrame(1004);
+  assert.equal(h.app.state().flight.trickActive, false);
+  h.runNextFrame(1009);
+  assert.equal(h.app.state().flight.trickActive, true); assert.equal(h.app.state().flight.tricks, 0);
+});
+
+test('pause discards queued roll input before the resumed flight simulates', async () => {
+  const h = environment(); await h.app.start();
+  const id = h.app.state().save.course, course = flightApi.getCourse(id);
+  h.app.replaceFlight({ ...flightApi.createFlight(id, 'free'), z: 181, y: course.bounds.ceiling - 35 });
+  h.click('trick-button'); h.click('pause-button'); h.click('resume-button');
+  h.runNextFrame(1000); h.runNextFrame(1020);
+  assert.equal(h.app.state().flight.trickActive, false); assert.equal(h.app.state().flight.tricks, 0);
+});
+
+test('releasing the flight stick does not discard a separately requested touch roll', async () => {
+  const h = environment(); await h.app.start();
+  const id = h.app.state().save.course, course = flightApi.getCourse(id);
+  h.app.replaceFlight({ ...flightApi.createFlight(id, 'free'), z: 181, y: course.bounds.ceiling - 35 });
+  h.runNextFrame(1000);
+  const stick = h.nodes.get('stick-area');
+  stick.dispatch('pointerdown', { pointerId: 1, clientX: 460, clientY: 320 });
+  h.click('trick-button'); stick.dispatch('pointerup', { pointerId: 1 });
+  h.runNextFrame(1020);
+  assert.equal(h.app.state().flight.trickActive, true);
 });
