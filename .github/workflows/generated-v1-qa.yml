@@ -1,0 +1,33 @@
+name: Temporary Driftwing generated source qualification
+on:
+  push:
+    branches: [qa/driftwing-generated-20261115]
+permissions:
+  contents: read
+jobs:
+  generated-node24:
+    if: github.ref == 'refs/heads/qa/driftwing-generated-20261115'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    steps:
+      - name: Define owned output
+        shell: bash
+        run: echo "DRIFTWING_OUTPUT=$RUNNER_TEMP/driftwing-generated-proof-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24.22.2'
+      - name: Changed source and actual target-runtime cases
+        run: python3 tests/scripts/generated-node24-v1.py
+      - name: Preserve original output
+        if: always()
+        run: node tests/scripts/emit-generated-node24.mjs
+      - name: Preserve original artifact
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: driftwing-generated-node24-proof
+          path: ${{ env.DRIFTWING_OUTPUT }}
+          retention-days: 7

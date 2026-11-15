@@ -1,0 +1,193 @@
+{
+  "base": "b38a15859c3441807637eb96092920bb321fc48e",
+  "product": "60b6ec10b8a3590cd6eb5225864ee5f242e3cbe7",
+  "localDirtySnapshot": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 4182,
+      "sha256": "b9dc353151a567a893c8effc687762fbe66db4bfa3d6b067cdea9ffa492965ea"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3022,
+      "sha256": "d6fa3963d682e2ba28335017cba9f0103f400ef7685694c16796e18164cfdc19"
+    },
+    {
+      "path": "docs/flight-contract.md",
+      "bytes": 7102,
+      "sha256": "fd82bc262fcbb98c813f8cb2db0c96c1fb4b5b92ed10fee3512734f28d9d0b73"
+    },
+    {
+      "path": "docs/results/2026/11-14/generated-levels.md",
+      "bytes": 5277,
+      "sha256": "0ce3449211eb7e0b34c12938bcb3175392947882c728eb02567eb4a65198b68b"
+    },
+    {
+      "path": "docs/spec.md",
+      "bytes": 4410,
+      "sha256": "66ac907ac7746bba7b39408c33bee349edf260a89d18dae91bda543eeba03eb9"
+    },
+    {
+      "path": "package.json",
+      "bytes": 360,
+      "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 11175,
+      "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255"
+    },
+    {
+      "path": "public/src/flight.js",
+      "bytes": 16314,
+      "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911"
+    },
+    {
+      "path": "public/src/game.js",
+      "bytes": 18136,
+      "sha256": "f0db418522cc6017cfad97928e01a6403ee92a65fb299a78e0da77dcb02322c6"
+    },
+    {
+      "path": "public/src/records.js",
+      "bytes": 4014,
+      "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178"
+    },
+    {
+      "path": "public/src/renderer.js",
+      "bytes": 28198,
+      "sha256": "954c35db22559b4b23926980b1fd6d768bbbe04f7741ecf47bad2ad09c2d11ca"
+    },
+    {
+      "path": "public/styles.css",
+      "bytes": 19378,
+      "sha256": "c550efdab574521025c4a9a17561eeff03331f4d4df804bf9d65f7bd61bd14ac"
+    },
+    {
+      "path": "tests/flight.test.js",
+      "bytes": 9968,
+      "sha256": "11645b071e4eaec257ff453e4d72dc79f31ca358f09c432e139ac8c11fe84aad"
+    },
+    {
+      "path": "tests/game-audio.test.js",
+      "bytes": 23207,
+      "sha256": "e530dd1cc561e2d09d9b6e9019fe222d2c7054bad204e70941902242c31e3b41"
+    },
+    {
+      "path": "tests/unit/generated-levels.test.js",
+      "bytes": 9210,
+      "sha256": "4fed26735187a0409f4f0d685b2d22168293d783644928058d609ee3f10476fa"
+    }
+  ],
+  "nodePhaseInputs": [
+    {
+      "path": "package.json",
+      "bytes": 360,
+      "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 11175,
+      "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255"
+    },
+    {
+      "path": "public/src/game.js",
+      "bytes": 18136,
+      "sha256": "f0db418522cc6017cfad97928e01a6403ee92a65fb299a78e0da77dcb02322c6"
+    },
+    {
+      "path": "public/src/flight.js",
+      "bytes": 16314,
+      "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911"
+    },
+    {
+      "path": "public/src/records.js",
+      "bytes": 4014,
+      "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178"
+    },
+    {
+      "path": "tests/flight.test.js",
+      "bytes": 9968,
+      "sha256": "11645b071e4eaec257ff453e4d72dc79f31ca358f09c432e139ac8c11fe84aad"
+    },
+    {
+      "path": "tests/records.test.js",
+      "bytes": 1694,
+      "sha256": "55046519b5ee61a40413b440fd714d3778cb448977d7fbc8a54059b262f5a789"
+    },
+    {
+      "path": "tests/game-audio.test.js",
+      "bytes": 23207,
+      "sha256": "e530dd1cc561e2d09d9b6e9019fe222d2c7054bad204e70941902242c31e3b41"
+    },
+    {
+      "path": "tests/unit/generated-levels.test.js",
+      "bytes": 9210,
+      "sha256": "4fed26735187a0409f4f0d685b2d22168293d783644928058d609ee3f10476fa"
+    }
+  ],
+  "appBuildInputs": [
+    {
+      "path": "package.json",
+      "bytes": 360,
+      "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009"
+    },
+    {
+      "path": "public/favicon.svg",
+      "bytes": 253,
+      "sha256": "ced9d59c0cd0b1252e63a8666b78e864da532b1f1c07181020cf4374ceb9c941"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 11175,
+      "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255"
+    },
+    {
+      "path": "public/src/audio.js",
+      "bytes": 3509,
+      "sha256": "c824e61425ee4d344a72c426722c22533ff8f42e9034d121beae070d83cc3bdf"
+    },
+    {
+      "path": "public/src/flight.js",
+      "bytes": 16314,
+      "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911"
+    },
+    {
+      "path": "public/src/game.js",
+      "bytes": 18136,
+      "sha256": "f0db418522cc6017cfad97928e01a6403ee92a65fb299a78e0da77dcb02322c6"
+    },
+    {
+      "path": "public/src/records.js",
+      "bytes": 4014,
+      "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178"
+    },
+    {
+      "path": "public/src/renderer.js",
+      "bytes": 28198,
+      "sha256": "954c35db22559b4b23926980b1fd6d768bbbe04f7741ecf47bad2ad09c2d11ca"
+    },
+    {
+      "path": "public/styles.css",
+      "bytes": 19378,
+      "sha256": "c550efdab574521025c4a9a17561eeff03331f4d4df804bf9d65f7bd61bd14ac"
+    },
+    {
+      "path": "scripts/check.mjs",
+      "bytes": 1701,
+      "sha256": "f948bfb97cbf65ff4b3350f5d54ebce45f9d6f2e634b5d9bc1120e1387d42f07"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 691,
+      "sha256": "a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8"
+    }
+  ],
+  "localStorageGuard": {
+    "freeGiB": 2.6,
+    "requiredGiB": 34,
+    "exit": 2
+  },
+  "priorCiSeconds": 539,
+  "ciTotalCapSeconds": 1200,
+  "phase": "prepared Node24 only; no browser/publication acceptance"
+}
