@@ -1,0 +1,247 @@
+﻿2026-11-15T08:42:59.3635450Z Current runner version: '2.338.2'
+2026-11-15T08:42:59.3660694Z ##[group]Runner Image Provisioner
+2026-11-15T08:42:59.3661582Z Hosted Compute Agent
+2026-11-15T08:42:59.3662175Z Version: 20261103.629
+2026-11-15T08:42:59.3662805Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-15T08:42:59.3663856Z Build Date: 2026-11-03T17:26:59Z
+2026-11-15T08:42:59.3664602Z Worker ID: {70e0cfbd-759e-4aa5-831e-67892a10403d}
+2026-11-15T08:42:59.3665335Z Region: us-east-1
+2026-11-15T08:42:59.3666194Z Cloud: AWS
+2026-11-15T08:42:59.3666768Z ##[endgroup]
+2026-11-15T08:42:59.3668370Z ##[group]Operating System
+2026-11-15T08:42:59.3669010Z Ubuntu
+2026-11-15T08:42:59.3669508Z 24.04.5
+2026-11-15T08:42:59.3670082Z LTS
+2026-11-15T08:42:59.3670590Z ##[endgroup]
+2026-11-15T08:42:59.3671131Z ##[group]Runner Image
+2026-11-15T08:42:59.3671764Z Image: ubuntu-24.04
+2026-11-15T08:42:59.3672378Z Version: 20261111.127.1
+2026-11-15T08:42:59.3674003Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.127/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-15T08:42:59.3675656Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.127
+2026-11-15T08:42:59.3676698Z ##[endgroup]
+2026-11-15T08:42:59.3677867Z ##[group]GITHUB_TOKEN Permissions
+2026-11-15T08:42:59.3680274Z Contents: read
+2026-11-15T08:42:59.3680898Z Metadata: read
+2026-11-15T08:42:59.3681457Z ##[endgroup]
+2026-11-15T08:42:59.3684019Z Secret source: Actions
+2026-11-15T08:42:59.3684959Z Cache mode: write
+2026-11-15T08:42:59.3685805Z Prepare workflow directory
+2026-11-15T08:42:59.4012837Z Prepare all required actions
+2026-11-15T08:42:59.4065929Z Getting action download info
+2026-11-15T08:42:59.5988257Z Download action repository 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-11-15T08:43:00.8080161Z Download action repository 'actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+2026-11-15T08:43:00.9091247Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-11-15T08:43:01.0950181Z Complete job name: generated-node24
+2026-11-15T08:43:01.1502983Z ##[group]Run echo "DRIFTWING_OUTPUT=$RUNNER_TEMP/driftwing-generated-proof-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
+2026-11-15T08:43:01.1504972Z [36;1mecho "DRIFTWING_OUTPUT=$RUNNER_TEMP/driftwing-generated-proof-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"[0m
+2026-11-15T08:43:01.3123010Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-15T08:43:01.3124718Z ##[endgroup]
+2026-11-15T08:43:01.3523962Z ##[group]Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+2026-11-15T08:43:01.3525320Z with:
+2026-11-15T08:43:01.3526085Z   persist-credentials: false
+2026-11-15T08:43:01.3527113Z   repository: alvarovillalbaa/driftwing
+2026-11-15T08:43:01.3534909Z   token: ***
+2026-11-15T08:43:01.3535707Z   ssh-strict: true
+2026-11-15T08:43:01.3536536Z   ssh-user: git
+2026-11-15T08:43:01.3537385Z   clean: true
+2026-11-15T08:43:01.3538309Z   sparse-checkout-cone-mode: true
+2026-11-15T08:43:01.3539390Z   fetch-depth: 1
+2026-11-15T08:43:01.3540341Z   fetch-tags: false
+2026-11-15T08:43:01.3541530Z   show-progress: true
+2026-11-15T08:43:01.3543234Z   lfs: false
+2026-11-15T08:43:01.3544233Z   submodules: false
+2026-11-15T08:43:01.3545081Z   set-safe-directory: true
+2026-11-15T08:43:01.3546063Z   allow-unsafe-pr-checkout: false
+2026-11-15T08:43:01.3547044Z env:
+2026-11-15T08:43:01.3548279Z   DRIFTWING_OUTPUT: /home/runner/work/_temp/driftwing-generated-proof-43695792249-1
+2026-11-15T08:43:01.3549819Z ##[endgroup]
+2026-11-15T08:43:04.0857830Z Syncing repository: alvarovillalbaa/driftwing
+2026-11-15T08:43:04.0859293Z ##[group]Getting Git version info
+2026-11-15T08:43:04.0859750Z Working directory is '/home/runner/work/driftwing/driftwing'
+2026-11-15T08:43:04.0860411Z [command]/usr/bin/git version
+2026-11-15T08:43:04.2930952Z git version 2.56.1
+2026-11-15T08:43:04.2952715Z ##[endgroup]
+2026-11-15T08:43:04.2964374Z Temporarily overriding HOME='/home/runner/work/_temp/cc745f1e-3945-494c-bcdb-e52d6bcc43b9' before making global git config changes
+2026-11-15T08:43:04.2965333Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T08:43:04.2969003Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/driftwing/driftwing
+2026-11-15T08:43:04.3336359Z Deleting the contents of '/home/runner/work/driftwing/driftwing'
+2026-11-15T08:43:04.3339888Z ##[group]Determining repository object format
+2026-11-15T08:43:04.3341832Z ##[endgroup]
+2026-11-15T08:43:04.3342553Z ##[group]Initializing the repository
+2026-11-15T08:43:04.3345888Z [command]/usr/bin/git init /home/runner/work/driftwing/driftwing
+2026-11-15T08:43:04.3452630Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-15T08:43:04.3453392Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-15T08:43:04.3453897Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-15T08:43:04.3454309Z hint: call:
+2026-11-15T08:43:04.3454547Z hint:
+2026-11-15T08:43:04.3454899Z hint: 	git config --global init.defaultBranch <name>
+2026-11-15T08:43:04.3455246Z hint:
+2026-11-15T08:43:04.3455563Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-15T08:43:04.3456048Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-15T08:43:04.3456407Z hint:
+2026-11-15T08:43:04.3456682Z hint: 	git branch -m <name>
+2026-11-15T08:43:04.3457023Z hint:
+2026-11-15T08:43:04.3457375Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-15T08:43:04.3460124Z Initialized empty Git repository in /home/runner/work/driftwing/driftwing/.git/
+2026-11-15T08:43:04.3467721Z [command]/usr/bin/git remote add origin https://github.com/alvarovillalbaa/driftwing
+2026-11-15T08:43:04.3504942Z ##[endgroup]
+2026-11-15T08:43:04.3505424Z ##[group]Disabling automatic garbage collection
+2026-11-15T08:43:04.3507579Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-15T08:43:04.3528927Z ##[endgroup]
+2026-11-15T08:43:04.3529507Z ##[group]Setting up auth
+2026-11-15T08:43:04.3529830Z Removing SSH command configuration
+2026-11-15T08:43:04.3533600Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T08:43:04.3561481Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T08:43:04.6835063Z Removing HTTP extra header
+2026-11-15T08:43:04.6840701Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T08:43:04.6866389Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T08:43:04.7010790Z Removing includeIf entries pointing to credentials config files
+2026-11-15T08:43:04.7016196Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T08:43:04.7041954Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T08:43:04.7190979Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-15T08:43:04.7219136Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/driftwing/driftwing/.git.path /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:04.7239843Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/driftwing/driftwing/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:04.7261849Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:04.7294502Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:04.7311423Z ##[endgroup]
+2026-11-15T08:43:04.7318034Z ##[group]Fetching the repository
+2026-11-15T08:43:04.7319119Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d95340e4ab7f9388dd06520833885dbf4a7490c2:refs/remotes/origin/qa/driftwing-generated-20261115
+2026-11-15T08:43:05.0829241Z From https://github.com/alvarovillalbaa/driftwing
+2026-11-15T08:43:05.0829914Z  * [new ref]         d95340e4ab7f9388dd06520833885dbf4a7490c2 -> origin/qa/driftwing-generated-20261115
+2026-11-15T08:43:05.0837817Z [command]/usr/bin/git branch --list --remote origin/qa/driftwing-generated-20261115
+2026-11-15T08:43:05.0869293Z   origin/qa/driftwing-generated-20261115
+2026-11-15T08:43:05.0875903Z [command]/usr/bin/git rev-parse refs/remotes/origin/qa/driftwing-generated-20261115
+2026-11-15T08:43:05.0893339Z d95340e4ab7f9388dd06520833885dbf4a7490c2
+2026-11-15T08:43:05.0896158Z ##[endgroup]
+2026-11-15T08:43:05.0897281Z ##[group]Determining the checkout info
+2026-11-15T08:43:05.0897971Z ##[endgroup]
+2026-11-15T08:43:05.0901309Z [command]/usr/bin/git sparse-checkout disable
+2026-11-15T08:43:05.0945022Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-15T08:43:05.0964422Z ##[group]Checking out the ref
+2026-11-15T08:43:05.0967386Z [command]/usr/bin/git checkout --progress --force -B qa/driftwing-generated-20261115 refs/remotes/origin/qa/driftwing-generated-20261115
+2026-11-15T08:43:05.1047682Z Switched to a new branch 'qa/driftwing-generated-20261115'
+2026-11-15T08:43:05.1053719Z branch 'qa/driftwing-generated-20261115' set up to track 'origin/qa/driftwing-generated-20261115'.
+2026-11-15T08:43:05.1056510Z ##[endgroup]
+2026-11-15T08:43:05.1086500Z [command]/usr/bin/git log -1 --format=%H
+2026-11-15T08:43:05.1104134Z d95340e4ab7f9388dd06520833885dbf4a7490c2
+2026-11-15T08:43:05.1113865Z ##[group]Removing auth
+2026-11-15T08:43:05.1114369Z Removing SSH command configuration
+2026-11-15T08:43:05.1114871Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T08:43:05.1134714Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T08:43:05.1282268Z Removing HTTP extra header
+2026-11-15T08:43:05.1284747Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T08:43:05.1305611Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T08:43:05.1447333Z Removing includeIf entries pointing to credentials config files
+2026-11-15T08:43:05.1452389Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T08:43:05.1469718Z includeif.gitdir:/home/runner/work/driftwing/driftwing/.git.path
+2026-11-15T08:43:05.1470415Z includeif.gitdir:/home/runner/work/driftwing/driftwing/.git/worktrees/*.path
+2026-11-15T08:43:05.1470890Z includeif.gitdir:/github/workspace/.git.path
+2026-11-15T08:43:05.1471365Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-15T08:43:05.1475567Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/driftwing/driftwing/.git.path
+2026-11-15T08:43:05.1491821Z /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1498850Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/driftwing/driftwing/.git.path /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1522508Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/driftwing/driftwing/.git/worktrees/*.path
+2026-11-15T08:43:05.1539159Z /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1544735Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/driftwing/driftwing/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1575701Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-15T08:43:05.1593370Z /github/runner_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1598051Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1621003Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-15T08:43:05.1637126Z /github/runner_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1641686Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config
+2026-11-15T08:43:05.1664035Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T08:43:05.1806346Z Removing credentials config '/home/runner/work/_temp/git-credentials-24b8dbb8-a805-4296-935b-501a3474ddff.config'
+2026-11-15T08:43:05.1811392Z ##[endgroup]
+2026-11-15T08:43:05.1960920Z ##[group]Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+2026-11-15T08:43:05.1961269Z with:
+2026-11-15T08:43:05.1961501Z   node-version: 24.22.2
+2026-11-15T08:43:05.1961735Z   check-latest: false
+2026-11-15T08:43:05.1963780Z   token: ***
+2026-11-15T08:43:05.1964083Z   package-manager-cache: true
+2026-11-15T08:43:05.1964337Z env:
+2026-11-15T08:43:05.1964661Z   DRIFTWING_OUTPUT: /home/runner/work/_temp/driftwing-generated-proof-43695792249-1
+2026-11-15T08:43:05.1965029Z ##[endgroup]
+2026-11-15T08:43:05.4004256Z Found in cache @ /opt/hostedtoolcache/node/24.22.2/x64
+2026-11-15T08:43:05.4006006Z ##[group]Environment details
+2026-11-15T08:43:08.9788477Z node: v24.22.2
+2026-11-15T08:43:08.9789187Z npm: 11.19.1
+2026-11-15T08:43:08.9789642Z yarn: 1.22.22
+2026-11-15T08:43:08.9790376Z ##[endgroup]
+2026-11-15T08:43:08.9877727Z ##[group]Run python3 tests/scripts/generated-node24-v1.py
+2026-11-15T08:43:08.9878156Z [36;1mpython3 tests/scripts/generated-node24-v1.py[0m
+2026-11-15T08:43:09.0632310Z shell: /usr/bin/bash -e {0}
+2026-11-15T08:43:09.0632657Z env:
+2026-11-15T08:43:09.0633377Z   DRIFTWING_OUTPUT: /home/runner/work/_temp/driftwing-generated-proof-43695792249-1
+2026-11-15T08:43:09.0633824Z ##[endgroup]
+2026-11-15T08:43:11.0125530Z {"source": "d95340e4ab7f9388dd06520833885dbf4a7490c2", "nodeCases": {"tests": 58, "pass": 58, "fail": 0, "skipped": 0, "cancelled": 0, "generatedCombinations": 48}, "passed": true, "appInstall": false, "appBuild": false, "browser": false, "database": false, "priorCiSeconds": 539, "node": "v24.22.2", "sourceStable": true, "gitClean": true}
+2026-11-15T08:43:11.0195058Z ##[group]Run node tests/scripts/emit-generated-node24.mjs
+2026-11-15T08:43:11.0195482Z [36;1mnode tests/scripts/emit-generated-node24.mjs[0m
+2026-11-15T08:43:11.0222321Z shell: /usr/bin/bash -e {0}
+2026-11-15T08:43:11.0222633Z env:
+2026-11-15T08:43:11.0222985Z   DRIFTWING_OUTPUT: /home/runner/work/_temp/driftwing-generated-proof-43695792249-1
+2026-11-15T08:43:11.0223555Z ##[endgroup]
+2026-11-15T08:43:11.0552638Z DRIFTWING_GENERATED_FILE {"name":"01-node-version.stderr.txt","bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0554509Z DRIFTWING_GENERATED_CHUNK {"name":"01-node-version.stderr.txt","index":0,"data":"H4sIAAAAAAACAwMAAAAAAAAAAAA="}
+2026-11-15T08:43:11.0558468Z DRIFTWING_GENERATED_FILE {"name":"01-node-version.stdout.txt","bytes":9,"sha256":"6a0cec2e157365c1a8ac6d1715733b7c3321a7c5565862a701ca71ef00359d04","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0560315Z DRIFTWING_GENERATED_CHUNK {"name":"01-node-version.stdout.txt","index":0,"data":"H4sIAAAAAAACAyszMtEzMtIz4gIAvxJnfQkAAAA="}
+2026-11-15T08:43:11.0561771Z DRIFTWING_GENERATED_FILE {"name":"02-source-check.stderr.txt","bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0562953Z DRIFTWING_GENERATED_CHUNK {"name":"02-source-check.stderr.txt","index":0,"data":"H4sIAAAAAAACAwMAAAAAAAAAAAA="}
+2026-11-15T08:43:11.0564884Z DRIFTWING_GENERATED_FILE {"name":"02-source-check.stdout.txt","bytes":85,"sha256":"2c57e22c0f411fc8acb8e115c313e7360d66e420d72d54e1216a8666e9c2d6d7","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0566709Z DRIFTWING_GENERATED_CHUNK {"name":"02-source-check.stdout.txt","index":0,"data":"H4sIAAAAAAACAwXBOw6AIBAFwN5TvAMQOynsTGgsjCacAGULEn6yrNHbO3Ms1s6YkF0PDyEVL5FYgYu0i8Bf7u5VCKmW1llBa0gOtxDMvmE1DJc9qpwxXHDM1HkcfjrKbt9VAAAA"}
+2026-11-15T08:43:11.0568586Z DRIFTWING_GENERATED_FILE {"name":"03-node24-generated.stderr.txt","bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0569767Z DRIFTWING_GENERATED_CHUNK {"name":"03-node24-generated.stderr.txt","index":0,"data":"H4sIAAAAAAACAwMAAAAAAAAAAAA="}
+2026-11-15T08:43:11.0573651Z DRIFTWING_GENERATED_FILE {"name":"03-node24-generated.stdout.txt","bytes":13066,"sha256":"f7b849cb4cca6a99e82ba429722a9a800562ee96c5930b26072d5395104a7661","codec":"gzip-base64","chunks":2}
+2026-11-15T08:43:11.0592445Z DRIFTWING_GENERATED_CHUNK {"name":"03-node24-generated.stdout.txt","index":0,"data":"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"}
+2026-11-15T08:43:11.0611187Z DRIFTWING_GENERATED_CHUNK {"name":"03-node24-generated.stdout.txt","index":1,"data":"9VDYsIpL32dKXSzis7R8XILdlnTk3YNQB2OHa6Pq2uSiaOHfdXgQkwpzdAUxoA8JWfK4pC7KfAXfMTS80Akv5jwsNU2xxZ6ce7ncwsag5akWu5fe0qDEK56DHYHVPEHYoj1ZnlcrrirUeQYtKsF53egjLkBWi5fVwzgEB/jXSVrqnzqO7DguV4QLmKeJXMgEeZ41K9AhTnWSWyB2jpfUztup9RF034ylAcVAmUKFhCcZhuVIsRmUbwYbBzHyAZZEXz5vhftIX2yzumnSx7Q85JCDJOZhkV0qetILaKNboY2WrVCxWcxzPPGWPVgSZudOGO5sSp44eaLMhYNNmypZASK9PBKxD7KuLTv2mzBi5K3RR7Q8hupeQAtrDfcnL/O0HWoX7sy8aONMUEns5lOEL0zs1kVd1I/Jt+X52a8T8rALT4r9PA4y7/cez3wz3+MNp5iDkKkZm0rE5dlyFzvXRGAfQ+tI4d8apaTj6w7nzQjCg3vD0c9jZS88tPUn/jBAF4Za6Su6FT0cZCsplk5oPfskzxTTeBQbT/zlL1puYWqjaMpdvmYE2FpUnHjdXChEGhLHRIly0k0wDe3yYF7bQ4+qi5wlEM+ArD1eBsM66fxlN0Kv6JMXuu8b1bbcJWXzGMvDMMKVGr9EfCV0uUHdGVYP0jq/uZJxGK05WnQ85R9pKji0Uij5J+vDO0Fs6fNXWgC/qtnVK6rUUF66l++GFwU38QJV4EGwOf/O1dilXTJa000tNRGGUcijvq1mSiJXnyV/EQKrXbJiRIQH2ux5Hv67OOlJWJrpvkJSBG7fWzMd50Eyns+dS+79mUZ0ubVLGBBMJz72qYssjKk19bbKd8VS0zjdbsvmy29A3zngRzdJKrSTL7/xqHH4ki5U+KuWok0p7PiTe5U07cnP3nSGH240ALrJ2hZNk5fVl/8B+90UZwozAAA="}
+2026-11-15T08:43:11.0615334Z DRIFTWING_GENERATED_FILE {"name":"node-inputs.json","bytes":1319,"sha256":"3c6aea26023572d6454e8ab14b87ffaa6502646292dd9a7ced9d9985321070ea","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0619530Z DRIFTWING_GENERATED_CHUNK {"name":"node-inputs.json","index":0,"data":"H4sIAAAAAAACA43Uz27bNwwH8Luf4gef24akKIrsqww9UCSVuHWTIXaKFsPeffC2XmYn60nQH0AffEnwt922/bHbtm3b/+7nh/3Hyxpf/L4+fD49Pe7f/XM3f5zrtP+4NYF/T04PTl0u72EA2GyIohWjs/VRnLZYoU0LcZUyMxkMlEpEKn1wTeS2EMD2u237890Nx8s8HuLu8Jj1/cPD+evxvxhEHP2Kc3Ew0mQwrT6x6WwFs6ZVc/Vghl7mhWmJ2VTZlJusydCFev8fzuk57u796yWeK49ikyvPgpyM2okiBHDE8rRhpAXowtCqjFz6mmTmQwvSx8iYQI0o5Bc863i4fzjfEklDvk4oygerQ+vcKzJbVNRyinKbCl4BE6x0SMRatEpiUGtIQt0Qf0H0XPH0nKcbJIYbogKKcA2CWGaSNtTCAS4/StmgbJlNsNcEryxaVoI0faYgDn1NdK7T+fQznsvmBshM9FYTcZ8wsLi8gvpYi3srzkEZw1bD8NZ1gQU3KmzmoYG4Stk93wb9TOcVEYpdR9Q7sHS02asEnYGxTWZYOZCzjaExmdXGyLFmqHeGbpOEVveh9rbo0tHv/SUPT6+hqBGM68L1BpkY0QWLEixtShmgrSKipBjQeXoScA0wRgMipmhYbTK+rXp5PJzv7uuxnv1c+f5Y3+r4ampGeD2beFWSjNZRhwODLV6Qon1SEqEoWcuhTZiNFLqmgFVdBhMPWf63b/dp9xdslhw0JwUAAA=="}
+2026-11-15T08:43:11.0622964Z DRIFTWING_GENERATED_FILE {"name":"node-runner.json","bytes":2102,"sha256":"3d12bc15a8919480ff150ba3ab9ba962fd5c41a5a0815e7c7296c8b172553ac0","codec":"gzip-base64","chunks":1}
+2026-11-15T08:43:11.0627069Z DRIFTWING_GENERATED_CHUNK {"name":"node-runner.json","index":0,"data":"H4sIAAAAAAACA8VVTW/kNgy9z68wfI4dfX8E6KGdU885Fj1QEj3xrsc2JDldYJH/XsieOjObZhcLpOiRj48UxUdRXw9VVadpiR7rh6oOVnJBUIDTneXGhECUZMRwbowMrhOghSWe1XclbpwCHiFhqh+qr4eqqqo6Y8rFlOZuA2ZIN3YH/VA/VORips/9PGO4QjyMHofhBjvhiBEyhuN0dv0IuZ/GklWYQ1W9rLWUc9aYHBdcEZjn38eUYSjndTCkHf5t6YdwA7o4/ZUw3mABMjhIeAPOsZ/isX9EP41hvRi3q8NP5zNs0B9r0VtDqqoewGEpYW1X84wx9dNY3/3jhnh63oNWpPB2f1XVzR50wf7cg1MO05JLckKb6/zt5mnzl1xfszHGd9gY4y0bv/T5VYOiQpyW+VeXcMxXfd4y7/0gLZE7XMReYunguAzDVR0R4ZyO03keMOObZGvpj0/ApCrFKiAePUMqNVfSUzDgVaC62NxpzzmjoL2UShrFQBPqQVPsCOHSBiK+bcBrZuSOeCGYNZ2nngoLneuEN9aqzlkmmAYUFIUS1lkuPAgrraVOG8mckXIT5OXuHcG3d9X4J/Sff0bw5GM/53S/BrbnT+m7wrPm+pwfCf+W/WHCU0k/WHnmpUbGPOkEpZ034J1BSqXnlKPmigSlUDASNAtSIGVUgVFKofUsqKD/N+WLokw0+976uedeluhbpIk4TzFj/CXDfO1ed+59N/Snp9wWo/2U3voj+imG9D7hBGdsYAn99D5nGft8v9+qGfAZh9eU35tS3nzbkx9N6r9HfNC00lYT+8HT2mlnhPVOeA8KrEXDHAhmNWNgwRAiFUO0ykvLiWOKlKnlVlIiQCtF//NpPVy02UbuoaqfmWgZay/f+bYYHjO44fqu9anPxwFhvGCHl8PfhD1THTYIAAA="}
+2026-11-15T08:43:11.0630376Z DRIFTWING_GENERATED_FILE {"name":"source-after.json","bytes":6535,"sha256":"c12991933bf3b0326d58707ce4b3122f70ce3cb8fb87c66b56ee8e394d661f54","codec":"gzip-base64","chunks":2}
+2026-11-15T08:43:11.0642220Z DRIFTWING_GENERATED_CHUNK {"name":"source-after.json","index":0,"data":"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"}
+2026-11-15T08:43:11.0652357Z DRIFTWING_GENERATED_CHUNK {"name":"source-after.json","index":1,"data":"6DUkUudiwyLrqA0TuXdRkXLRVSRtNiSestYo6a2vJQTeGaziJ02++u9X/wfw/6UYhxkAAA=="}
+2026-11-15T08:43:11.0653566Z DRIFTWING_GENERATED_FILE {"name":"source-before.json","bytes":6535,"sha256":"c12991933bf3b0326d58707ce4b3122f70ce3cb8fb87c66b56ee8e394d661f54","codec":"gzip-base64","chunks":2}
+2026-11-15T08:43:11.0665536Z DRIFTWING_GENERATED_CHUNK {"name":"source-before.json","index":0,"data":"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"}
+2026-11-15T08:43:11.0675693Z DRIFTWING_GENERATED_CHUNK {"name":"source-before.json","index":1,"data":"6DUkUudiwyLrqA0TuXdRkXLRVSRtNiSestYo6a2vJQTeGaziJ02++u9X/wfw/6UYhxkAAA=="}
+2026-11-15T08:43:11.0721728Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-11-15T08:43:11.0722128Z with:
+2026-11-15T08:43:11.0722362Z   name: driftwing-generated-node24-proof
+2026-11-15T08:43:11.0722768Z   path: /home/runner/work/_temp/driftwing-generated-proof-43695792249-1
+2026-11-15T08:43:11.0723345Z   retention-days: 7
+2026-11-15T08:43:11.0723600Z   if-no-files-found: warn
+2026-11-15T08:43:11.0723846Z   compression-level: 6
+2026-11-15T08:43:11.0724065Z   overwrite: false
+2026-11-15T08:43:11.0724310Z   include-hidden-files: false
+2026-11-15T08:43:11.0724566Z   archive: true
+2026-11-15T08:43:11.0724780Z env:
+2026-11-15T08:43:11.0725098Z   DRIFTWING_OUTPUT: /home/runner/work/_temp/driftwing-generated-proof-43695792249-1
+2026-11-15T08:43:11.0725467Z ##[endgroup]
+2026-11-15T08:43:11.1804634Z With the provided path, there will be 10 files uploaded
+2026-11-15T08:43:11.1808519Z Artifact name is valid!
+2026-11-15T08:43:11.1809301Z Root directory input is valid!
+2026-11-15T08:43:11.5860756Z Uploading artifact: driftwing-generated-node24-proof.zip
+2026-11-15T08:43:11.5888153Z Beginning upload of artifact content to blob storage
+2026-11-15T08:43:11.6688858Z Uploaded bytes 10297
+2026-11-15T08:43:11.6858935Z Finished uploading artifact content to blob storage!
+2026-11-15T08:43:11.6860093Z SHA256 digest of uploaded artifact is d715474bffe83206450304fa037a4f2f4a55ac9954441958845723e579c2c82d
+2026-11-15T08:43:11.6860774Z Finalizing artifact upload
+2026-11-15T08:43:12.0007785Z Artifact driftwing-generated-node24-proof successfully finalized. Artifact ID 14154570348
+2026-11-15T08:43:12.0008768Z Artifact driftwing-generated-node24-proof has been successfully uploaded! Final size is 10297 bytes. Artifact ID is 14154570348
+2026-11-15T08:43:12.0011135Z Artifact download URL: https://github.com/alvarovillalbaa/driftwing/actions/runs/43695792249/artifacts/14154570348
+2026-11-15T08:43:12.0139974Z Post job cleanup.
+2026-11-15T08:43:12.1153083Z Post job cleanup.
+2026-11-15T08:43:12.1849382Z [command]/usr/bin/git version
+2026-11-15T08:43:12.1885605Z git version 2.56.1
+2026-11-15T08:43:12.1918897Z Temporarily overriding HOME='/home/runner/work/_temp/0f479df3-eaaa-47fc-94dd-fc531230e131' before making global git config changes
+2026-11-15T08:43:12.1919894Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T08:43:12.1923630Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/driftwing/driftwing
+2026-11-15T08:43:12.1953425Z Removing SSH command configuration
+2026-11-15T08:43:12.1958910Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T08:43:12.1978137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T08:43:12.2146788Z Removing HTTP extra header
+2026-11-15T08:43:12.2150668Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T08:43:12.2172749Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T08:43:12.2320108Z Removing includeIf entries pointing to credentials config files
+2026-11-15T08:43:12.2323692Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T08:43:12.2346608Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T08:43:12.2626605Z Cleaning up orphan processes

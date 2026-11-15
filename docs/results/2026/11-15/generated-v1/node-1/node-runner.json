@@ -1,0 +1,75 @@
+{
+  "source": "d95340e4ab7f9388dd06520833885dbf4a7490c2",
+  "nodeCases": {
+    "tests": 58,
+    "pass": 58,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "generatedCombinations": 48
+  },
+  "passed": true,
+  "appInstall": false,
+  "appBuild": false,
+  "browser": false,
+  "database": false,
+  "priorCiSeconds": 539,
+  "commands": [
+    {
+      "label": "node-version",
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "stdout": "01-node-version.stdout.txt",
+      "stderr": "01-node-version.stderr.txt",
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.05,
+      "failure": null,
+      "streamsComplete": true,
+      "stdoutSha256": "6a0cec2e157365c1a8ac6d1715733b7c3321a7c5565862a701ca71ef00359d04",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "source-check",
+      "argv": [
+        "node",
+        "scripts/check.mjs"
+      ],
+      "stdout": "02-source-check.stdout.txt",
+      "stderr": "02-source-check.stderr.txt",
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.151,
+      "failure": null,
+      "streamsComplete": true,
+      "stdoutSha256": "2c57e22c0f411fc8acb8e115c313e7360d66e420d72d54e1216a8666e9c2d6d7",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "node24-generated",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/flight.test.js",
+        "tests/records.test.js",
+        "tests/game-audio.test.js",
+        "tests/unit/generated-levels.test.js"
+      ],
+      "stdout": "03-node24-generated.stdout.txt",
+      "stderr": "03-node24-generated.stderr.txt",
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 1.709,
+      "failure": null,
+      "streamsComplete": true,
+      "stdoutSha256": "f7b849cb4cca6a99e82ba429722a9a800562ee96c5930b26072d5395104a7661",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "node": "v24.22.2",
+  "sourceStable": true,
+  "gitClean": true
+}

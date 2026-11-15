@@ -14,6 +14,11 @@ The current local edition generates courses in six environments instead of using
 
 The [current implementation receipt](docs/results/2026/11-14/generated-levels.md) distinguishes local mechanics/VM checks from browser qualification and publication. The public app and the historical hosted results below still represent the earlier edition.
 
+The [Node24 source qualification](docs/results/2026/11-15/generated-v1/result.md)
+adds58 relevant passing cases and48 generated control-only journeys on the
+declared runtime. Native generated gameplay, public bytes and publication
+remain separate pending boundaries; the original receipts are preserved.
+
 Run `npm run check` for focused source checks and `npm test` for flight mechanics, records and authored sound/lifecycle boundary checks. No install is needed. Serve `public/` through a static HTTP server for play only after the applicable browser/dev-server authorization. A local filesystem URL does not support native module loading reliably.
 
 Vercel runs the same source checks and serves `public/`. Four focused hosted

@@ -1,0 +1,358 @@
+TAP version 13
+# Subtest: six generated map previews have ordered, reachable rings and safe starts
+ok 1 - six generated map previews have ordered, reachable rings and safe starts
+  ---
+  duration_ms: 3.686203
+  type: 'test'
+  ...
+# Subtest: different gust fields change actual unsteered trajectories during the clear opening
+ok 2 - different gust fields change actual unsteered trajectories during the clear opening
+  ---
+  duration_ms: 13.849248
+  type: 'test'
+  ...
+# Subtest: thermal lift changes altitude and accumulated updraft time
+ok 3 - thermal lift changes altitude and accumulated updraft time
+  ---
+  duration_ms: 5.539616
+  type: 'test'
+  ...
+# Subtest: bank direction steers and pitch changes climb and airspeed
+ok 4 - bank direction steers and pitch changes climb and airspeed
+  ---
+  duration_ms: 9.869643
+  type: 'test'
+  ...
+# Subtest: a ring crossing between frames awards once and leaves the supplied state unchanged
+ok 5 - a ring crossing between frames awards once and leaves the supplied state unchanged
+  ---
+  duration_ms: 1.914915
+  type: 'test'
+  ...
+# Subtest: gate scoring uses the interpolated crossing rather than the endpoint
+ok 6 - gate scoring uses the interpolated crossing rather than the endpoint
+  ---
+  duration_ms: 0.237957
+  type: 'test'
+  ...
+# Subtest: a missed ring resets the streak without crashing or awarding a pass
+ok 7 - a missed ring resets the streak without crashing or awarding a pass
+  ---
+  duration_ms: 0.200581
+  type: 'test'
+  ...
+# Subtest: the final ring can be passed before reaching the finish and terminal states stay stable
+ok 8 - the final ring can be passed before reaching the finish and terminal states stay stable
+  ---
+  duration_ms: 2.875074
+  type: 'test'
+  ...
+# Subtest: ground, lateral boundary and ceiling contact crash consistently with shared terrain
+ok 9 - ground, lateral boundary and ceiling contact crash consistently with shared terrain
+  ---
+  duration_ms: 0.537066
+  type: 'test'
+  ...
+# Subtest: free flight ignores ring, finish and time-limit rules
+ok 10 - free flight ignores ring, finish and time-limit rules
+  ---
+  duration_ms: 2.56006
+  type: 'test'
+  ...
+# Subtest: invalid dt cannot advance flight and a giant catch-up is capped
+ok 11 - invalid dt cannot advance flight and a giant catch-up is capped
+  ---
+  duration_ms: 6.524919
+  type: 'test'
+  ...
+# Subtest: fixed-step carry makes equal control histories independent of render-frame partitioning
+ok 12 - fixed-step carry makes equal control histories independent of render-frame partitioning
+  ---
+  duration_ms: 2.440966
+  type: 'test'
+  ...
+# Subtest: wind and terrain sampling are deterministic and remain finite for invalid coordinates
+ok 13 - wind and terrain sampling are deterministic and remain finite for invalid coordinates
+  ---
+  duration_ms: 0.244207
+  type: 'test'
+  ...
+# Subtest: a simple feedback pilot can finish every generated map preview with all rings
+ok 14 - a simple feedback pilot can finish every generated map preview with all rings
+  ---
+  duration_ms: 144.637711
+  type: 'test'
+  ...
+# Subtest: sound preference, UI and durable intent commit before an enable acknowledgement
+ok 15 - sound preference, UI and durable intent commit before an enable acknowledgement
+  ---
+  duration_ms: 6.137113
+  type: 'test'
+  ...
+# Subtest: a second toggle immediately disables an enable that is still waiting
+ok 16 - a second toggle immediately disables an enable that is still waiting
+  ---
+  duration_ms: 2.399316
+  type: 'test'
+  ...
+# Subtest: the actual sound-button callback invokes audio synchronously in the user callback
+ok 17 - the actual sound-button callback invokes audio synchronously in the user callback
+  ---
+  duration_ms: 1.763643
+  type: 'test'
+  ...
+# Subtest: the actual launch callback invokes saved sound synchronously before yielding
+ok 18 - the actual launch callback invokes saved sound synchronously before yielding
+  ---
+  duration_ms: 478.223219
+  type: 'test'
+  ...
+# Subtest: on-off-on preserves newest success after obsolete enable result true
+ok 19 - on-off-on preserves newest success after obsolete enable result true
+  ---
+  duration_ms: 1.797657
+  type: 'test'
+  ...
+# Subtest: on-off-on preserves newest success after obsolete enable result false
+ok 20 - on-off-on preserves newest success after obsolete enable result false
+  ---
+  duration_ms: 5.362071
+  type: 'test'
+  ...
+# Subtest: an obsolete success cannot acknowledge a newest enable that later fails
+ok 21 - an obsolete success cannot acknowledge a newest enable that later fails
+  ---
+  duration_ms: 1.446648
+  type: 'test'
+  ...
+# Subtest: a user disable survives an older enable result true
+ok 22 - a user disable survives an older enable result true
+  ---
+  duration_ms: 1.134743
+  type: 'test'
+  ...
+# Subtest: a user disable survives an older enable result false
+ok 23 - a user disable survives an older enable result false
+  ---
+  duration_ms: 2.234245
+  type: 'test'
+  ...
+# Subtest: a current enable failure resets preference, persists it and announces the failure
+ok 24 - a current enable failure resets preference, persists it and announces the failure
+  ---
+  duration_ms: 1.040908
+  type: 'test'
+  ...
+# Subtest: sound transitions preserve course, camera, every record and unrelated storage
+ok 25 - sound transitions preserve course, camera, every record and unrelated storage
+  ---
+  duration_ms: 0.903078
+  type: 'test'
+  ...
+# Subtest: an old launch failure cannot disable sound after a newer flight has acknowledged it
+ok 26 - an old launch failure cannot disable sound after a newer flight has acknowledged it
+  ---
+  duration_ms: 1.173194
+  type: 'test'
+  ...
+# Subtest: an old launch failure cannot disable a newer off-on choice
+ok 27 - an old launch failure cannot disable a newer off-on choice
+  ---
+  duration_ms: 1.157005
+  type: 'test'
+  ...
+# Subtest: an old launch success cannot update a newer run after its acknowledgement
+ok 28 - an old launch success cannot update a newer run after its acknowledgement
+  ---
+  duration_ms: 1.224239
+  type: 'test'
+  ...
+# Subtest: returning to the menu fences a pending launch failure
+ok 29 - returning to the menu fences a pending launch failure
+  ---
+  duration_ms: 1.165131
+  type: 'test'
+  ...
+# Subtest: a successful pending launch stays muted after an explicit pause
+ok 30 - a successful pending launch stays muted after an explicit pause
+  ---
+  duration_ms: 1.061373
+  type: 'test'
+  ...
+# Subtest: a current failure while paused can still report unavailable sound
+ok 31 - a current failure while paused can still report unavailable sound
+  ---
+  duration_ms: 1.105826
+  type: 'test'
+  ...
+# Subtest: visibility interruption keeps a late successful enable muted
+ok 32 - visibility interruption keeps a late successful enable muted
+  ---
+  duration_ms: 2.518904
+  type: 'test'
+  ...
+# Subtest: a hidden document cannot become audible before its visibility callback is delivered
+ok 33 - a hidden document cannot become audible before its visibility callback is delivered
+  ---
+  duration_ms: 1.01354
+  type: 'test'
+  ...
+# Subtest: window blur pauses a pending launch without reviving sound when it resolves
+ok 34 - window blur pauses a pending launch without reviving sound when it resolves
+  ---
+  duration_ms: 1.0399
+  type: 'test'
+  ...
+# Subtest: back-forward cache hiding preserves sound intent while pausing output and retaining resources
+ok 35 - back-forward cache hiding preserves sound intent while pausing output and retaining resources
+  ---
+  duration_ms: 1.202357
+  type: 'test'
+  ...
+# Subtest: terminal pagehide ignores pending audio result true after destroying resources
+ok 36 - terminal pagehide ignores pending audio result true after destroying resources
+  ---
+  duration_ms: 1.16343
+  type: 'test'
+  ...
+# Subtest: terminal pagehide ignores pending audio result false after destroying resources
+ok 37 - terminal pagehide ignores pending audio result false after destroying resources
+  ---
+  duration_ms: 2.91374
+  type: 'test'
+  ...
+# Subtest: stale user handlers cannot restart sound or persist another preference after terminal pagehide
+ok 38 - stale user handlers cannot restart sound or persist another preference after terminal pagehide
+  ---
+  duration_ms: 0.921485
+  type: 'test'
+  ...
+# Subtest: a queued animation frame cannot render or update sound after terminal pagehide
+ok 39 - a queued animation frame cannot render or update sound after terminal pagehide
+  ---
+  duration_ms: 0.971855
+  type: 'test'
+  ...
+# Subtest: the actual finish flow mutes continuous flight audio before its one finish cue
+ok 40 - the actual finish flow mutes continuous flight audio before its one finish cue
+  ---
+  duration_ms: 1.180468
+  type: 'test'
+  ...
+# Subtest: a crashed flight enters its result flow without a finish cue
+ok 41 - a crashed flight enters its result flow without a finish cue
+  ---
+  duration_ms: 0.934132
+  type: 'test'
+  ...
+# Subtest: window blur explicitly mutes a finished result cue even when there is no active flight to pause
+ok 42 - window blur explicitly mutes a finished result cue even when there is no active flight to pause
+  ---
+  duration_ms: 0.968722
+  type: 'test'
+  ...
+# Subtest: actual map, completion, next-level and replay callbacks retain exact generated identities and old records
+ok 43 - actual map, completion, next-level and replay callbacks retain exact generated identities and old records
+  ---
+  duration_ms: 2.053533
+  type: 'test'
+  ...
+# Subtest: a touch roll click survives render frames shorter than a physics step
+ok 44 - a touch roll click survives render frames shorter than a physics step
+  ---
+  duration_ms: 1.648167
+  type: 'test'
+  ...
+# Subtest: pause discards queued roll input before the resumed flight simulates
+ok 45 - pause discards queued roll input before the resumed flight simulates
+  ---
+  duration_ms: 1.216783
+  type: 'test'
+  ...
+# Subtest: releasing the flight stick does not discard a separately requested touch roll
+ok 46 - releasing the flight stick does not discard a separately requested touch roll
+  ---
+  duration_ms: 1.222156
+  type: 'test'
+  ...
+# Subtest: unavailable and malformed storage preserve playable defaults
+ok 47 - unavailable and malformed storage preserve playable defaults
+  ---
+  duration_ms: 1.607453
+  type: 'test'
+  ...
+# Subtest: stored data cannot inject courses, invalid records or arbitrary keys
+ok 48 - stored data cannot inject courses, invalid records or arbitrary keys
+  ---
+  duration_ms: 1.602336
+  type: 'test'
+  ...
+# Subtest: only completed course flights replace records and ties require faster time
+ok 49 - only completed course flights replace records and ties require faster time
+  ---
+  duration_ms: 0.332867
+  type: 'test'
+  ...
+# Subtest: versioned seeds reconstruct exact worlds after cache eviction and generate different maps
+ok 50 - versioned seeds reconstruct exact worlds after cache eviction and generate different maps
+  ---
+  duration_ms: 24.278814
+  type: 'test'
+  ...
+# Subtest: identifiers reject invalid, noncanonical and unbounded map seeds and levels
+ok 51 - identifiers reject invalid, noncanonical and unbounded map seeds and levels
+  ---
+  duration_ms: 0.186056
+  type: 'test'
+  ...
+# Subtest: higher levels launch faster with stronger gusts, narrower rings and denser obstacles
+ok 52 - higher levels launch faster with stronger gusts, narrower rings and denser obstacles
+  ---
+  duration_ms: 3.747475
+  type: 'test'
+  ...
+# Subtest: range queries stay deterministic and bounded beyond the generated course finish
+ok 53 - range queries stay deterministic and bounded beyond the generated course finish
+  ---
+  duration_ms: 1.159341
+  type: 'test'
+  ...
+# Subtest: spire collisions stop at swept contact, freeze terminal state and permit sufficient vertical clearance
+ok 54 - spire collisions stop at swept contact, freeze terminal state and permit sufficient vertical clearance
+  ---
+  duration_ms: 6.485936
+  type: 'test'
+  ...
+# Subtest: barrel rolls finish before scoring, cost speed, latch held input and require height and distance
+ok 55 - barrel rolls finish before scoring, cost speed, latch held input and require height and distance
+  ---
+  duration_ms: 16.590587
+  type: 'test'
+  ...
+# Subtest: saved identities, exact map reconstruction and first-completion progression survive serialization
+ok 56 - saved identities, exact map reconstruction and first-completion progression survive serialization
+  ---
+  duration_ms: 0.689768
+  type: 'test'
+  ...
+# Subtest: crashes, free flight and invalid or incomplete finishes cannot produce campaign records
+ok 57 - crashes, free flight and invalid or incomplete finishes cannot produce campaign records
+  ---
+  duration_ms: 3.746909
+  type: 'test'
+  ...
+# Subtest: ordinary controls finish varied generated levels through every ring without bypassing spires
+ok 58 - ordinary controls finish varied generated levels through every ring without bypassing spires
+  ---
+  duration_ms: 1487.639499
+  type: 'test'
+  ...
+1..58
+# tests 58
+# suites 0
+# pass 58
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1651.488356
