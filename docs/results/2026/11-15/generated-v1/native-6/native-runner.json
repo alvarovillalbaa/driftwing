@@ -1,0 +1,579 @@
+{
+  "schema": "driftwing.generated-native.v1",
+  "source": "80ca487c92a05766a405943ddfa886f15383c315",
+  "run": "43702738811",
+  "attempt": "1",
+  "cases": [
+    "L04"
+  ],
+  "passed": true,
+  "commands": [
+    {
+      "label": "node-version",
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "pid": 2276,
+      "stdout": "01-node-version.stdout.txt",
+      "stderr": "01-node-version.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.103,
+      "streamsComplete": true,
+      "stdoutSha256": "6a0cec2e157365c1a8ac6d1715733b7c3321a7c5565862a701ca71ef00359d04",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "current-renderer-source-check",
+      "argv": [
+        "node",
+        "scripts/check.mjs"
+      ],
+      "pid": 2277,
+      "stdout": "02-current-renderer-source-check.stdout.txt",
+      "stderr": "02-current-renderer-source-check.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.207,
+      "streamsComplete": true,
+      "stdoutSha256": "2c57e22c0f411fc8acb8e115c313e7360d66e420d72d54e1216a8666e9c2d6d7",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "fonts",
+      "argv": [
+        "fc-list",
+        "--format",
+        "%{family}\n"
+      ],
+      "pid": 2329,
+      "stdout": "03-fonts.stdout.txt",
+      "stderr": "03-fonts.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.411,
+      "streamsComplete": true,
+      "stdoutSha256": "8804d813612eba3c75cbf281eb26751f338298ac7bf02c0b66685798b154b55b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "tool-install",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "pid": 2330,
+      "stdout": "04-tool-install.stdout.txt",
+      "stderr": "04-tool-install.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 2.463,
+      "streamsComplete": true,
+      "stdoutSha256": "65c731cd02e19c79f6f5a3e84a4dd64a49acd6c47d2ee551d7cc9da191e8c96c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "browser-install",
+      "argv": [
+        "node",
+        "/tmp/dw-_q3v8jt1/tools/node_modules/playwright/cli.js",
+        "install",
+        "--no-shell",
+        "chromium"
+      ],
+      "pid": 2343,
+      "stdout": "05-browser-install.stdout.txt",
+      "stderr": "05-browser-install.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 5.077,
+      "streamsComplete": true,
+      "stdoutSha256": "9ae86ee8549ac174528763a532d383b7c0ca456dab785c1ab82a5faf5f5f3ec7",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "browser-path",
+      "argv": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "import {chromium} from \"/tmp/dw-_q3v8jt1/tools/node_modules/playwright/index.mjs\";console.log(chromium.executablePath());"
+      ],
+      "pid": 2380,
+      "stdout": "06-browser-path.stdout.txt",
+      "stderr": "06-browser-path.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.311,
+      "streamsComplete": true,
+      "stdoutSha256": "4874b6ba79eb067d4183feb014cfd34c84797ca3d56cf139ddf6440114137b43",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "browser-libraries",
+      "argv": [
+        "ldd",
+        "/tmp/dw-_q3v8jt1/browsers/chromium-1248/chrome-linux64/chrome"
+      ],
+      "pid": 2388,
+      "stdout": "07-browser-libraries.stdout.txt",
+      "stderr": "07-browser-libraries.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 0.616,
+      "streamsComplete": true,
+      "stdoutSha256": "81ef4cd5d460e44f550165029798872e33c19933fa41c817efa5b411a4683351",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "server",
+      "argv": [
+        "node",
+        "tests/scripts/generated-server-v1.mjs"
+      ],
+      "pid": 2398,
+      "stdout": "08-server.stdout.txt",
+      "stderr": "08-server.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 52.155,
+      "streamsComplete": true,
+      "stdoutSha256": "f5a772ff038ff6d7b2044a3ccf7c1b838f93ac8b6f5b94e9ee2fe0f3ce7f6a05",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "browser",
+      "argv": [
+        "xvfb-run",
+        "--auto-servernum",
+        "--error-file=/tmp/dw-_q3v8jt1/xvfb-errors.log",
+        "--auth-file=/tmp/dw-_q3v8jt1/xauthority",
+        "--server-args=-screen 0 1600x1200x24 -nolisten tcp",
+        "node",
+        "tests/browser/generated-v1.mjs"
+      ],
+      "pid": 2410,
+      "stdout": "09-browser.stdout.txt",
+      "stderr": "09-browser.stderr.txt",
+      "failure": null,
+      "exit": 0,
+      "groupAbsent": true,
+      "seconds": 51.968,
+      "streamsComplete": true,
+      "stdoutSha256": "371b2a018e5a9f2560a7aff7e7da7fcc36ea6b0a4341edcb538f7e4b390a1f6b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "priorCiSeconds": 952,
+  "capCiSeconds": 1200,
+  "limits": {
+    "workSeconds": 60,
+    "cleanupSeconds": 30,
+    "jobMinutes": 2
+  },
+  "appInstall": false,
+  "appBuild": false,
+  "database": false,
+  "accounts": false,
+  "forcedSignals": [],
+  "sourceStable": true,
+  "gitClean": true,
+  "scratchRemoved": true,
+  "node": "v24.22.2",
+  "storage": {
+    "freeBytes": 94952099840,
+    "requiredBytes": 36507222016,
+    "estimateBytes": 4294967296
+  },
+  "carriedNode": {
+    "run": 43695792249,
+    "source": "d95340e4ab7f9388dd06520833885dbf4a7490c2",
+    "originalCases": 58,
+    "carriedUnchangedCases": 26,
+    "supersededGameVmCases": 32,
+    "changedInputs": [
+      "public/src/game.js",
+      "tests/game-audio.test.js"
+    ],
+    "rawTapSha256": "f7b849cb4cca6a99e82ba429722a9a800562ee96c5930b26072d5395104a7661",
+    "exactOriginalInputs": [
+      {
+        "path": "package.json",
+        "bytes": 360,
+        "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009"
+      },
+      {
+        "path": "public/index.html",
+        "bytes": 11175,
+        "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255"
+      },
+      {
+        "path": "public/src/game.js",
+        "bytes": 18136,
+        "sha256": "f0db418522cc6017cfad97928e01a6403ee92a65fb299a78e0da77dcb02322c6"
+      },
+      {
+        "path": "public/src/flight.js",
+        "bytes": 16314,
+        "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911"
+      },
+      {
+        "path": "public/src/records.js",
+        "bytes": 4014,
+        "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178"
+      },
+      {
+        "path": "tests/flight.test.js",
+        "bytes": 9968,
+        "sha256": "11645b071e4eaec257ff453e4d72dc79f31ca358f09c432e139ac8c11fe84aad"
+      },
+      {
+        "path": "tests/records.test.js",
+        "bytes": 1694,
+        "sha256": "55046519b5ee61a40413b440fd714d3778cb448977d7fbc8a54059b262f5a789"
+      },
+      {
+        "path": "tests/game-audio.test.js",
+        "bytes": 23207,
+        "sha256": "e530dd1cc561e2d09d9b6e9019fe222d2c7054bad204e70941902242c31e3b41"
+      },
+      {
+        "path": "tests/unit/generated-levels.test.js",
+        "bytes": 9210,
+        "sha256": "4fed26735187a0409f4f0d685b2d22168293d783644928058d609ee3f10476fa"
+      }
+    ],
+    "rerun": false
+  },
+  "focusedNode": {
+    "passed": true,
+    "tests": 35,
+    "pass": 35,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "newRegressionCases": 3,
+    "tapSha256": "39c30b4d49d159238daa92610a98c68c69f4cabd869c30d30b4af2cd444f6142",
+    "rerun": false,
+    "carriedFrom": "native-3",
+    "carriedSource": "e62a2eeeb4ec3c32d5fc801ec5e82b604ea36a85"
+  },
+  "preinstalled": [
+    {
+      "name": "Xvfb",
+      "path": "/usr/bin/Xvfb",
+      "sha256": "0081b27338b510ec5e2068a93c6db31480872de9bb082f347f3747ef1648e794"
+    },
+    {
+      "name": "xvfb-run",
+      "path": "/usr/bin/xvfb-run",
+      "sha256": "48ee444c30fdaaede4cc311644b30e554162e956f949b206858e37eb8ba1ae05"
+    },
+    {
+      "name": "xauth",
+      "path": "/usr/bin/xauth",
+      "sha256": "ffcb5f569bf9fce94cbf37f5d61790d463508c6122511a5f4c6e280d3633086e"
+    },
+    {
+      "name": "ldd",
+      "path": "/usr/bin/ldd",
+      "sha256": "752803b8baa217b821bd4566c4fbdaec50c01cb32d2796ec056d22d190d4290f"
+    }
+  ],
+  "browserExecutable": {
+    "path": "/tmp/dw-_q3v8jt1/browsers/chromium-1248/chrome-linux64/chrome",
+    "bytes": 301186376,
+    "sha256": "377a9fc07b495c3b8d0ab8ec1fdfd153641759f9756fea34d8dfce4de82f5025"
+  },
+  "origin": "http://127.0.0.1:37015",
+  "serverReady": {
+    "url": "http://127.0.0.1:37015",
+    "pid": 2398
+  },
+  "nativeSummary": {
+    "status": "passed",
+    "cases": [
+      {
+        "id": "L04",
+        "accepted": true,
+        "durationMs": 50873,
+        "error": null
+      }
+    ],
+    "cleanup": {
+      "browsersCreated": 1,
+      "browsersClosed": 1,
+      "browserClosed": true,
+      "contextsCreated": 1,
+      "contextsClosed": 1,
+      "cdpSessionsCreated": 1,
+      "cdpSessionsDetached": 1,
+      "cdpSessionsClosedWithBrowser": 0,
+      "cdpSessionsRemaining": 0,
+      "lateChecksComplete": true,
+      "fixtureCleanup": "passed",
+      "failures": []
+    },
+    "profileClosures": [
+      {
+        "label": "L04-native-storage",
+        "contextsClosed": true,
+        "browserCloseAcknowledged": true,
+        "native": {
+          "pid": 2433,
+          "exitCode": 0,
+          "absent": true,
+          "stdoutEnded": true,
+          "stderrEnded": true
+        }
+      }
+    ]
+  },
+  "serverStop": {
+    "signal": "SIGTERM",
+    "intendedGracefulClose": true
+  },
+  "processes": {
+    "seen": [
+      {
+        "pid": 2343,
+        "starttime": "5324",
+        "state": "R",
+        "ppid": 2274,
+        "pgid": 2343,
+        "owned": true,
+        "executable": "node",
+        "display": null
+      },
+      {
+        "pid": 2355,
+        "starttime": "5362",
+        "state": "R",
+        "ppid": 2343,
+        "pgid": 2343,
+        "owned": true,
+        "executable": "node",
+        "display": null
+      },
+      {
+        "pid": 2367,
+        "starttime": "5790",
+        "state": "R",
+        "ppid": 2343,
+        "pgid": 2343,
+        "owned": true,
+        "executable": "node",
+        "display": null
+      },
+      {
+        "pid": 2388,
+        "starttime": "5893",
+        "state": "S",
+        "ppid": 2274,
+        "pgid": 2388,
+        "owned": true,
+        "executable": "bash",
+        "display": null
+      },
+      {
+        "pid": 2395,
+        "starttime": "5897",
+        "state": "S",
+        "ppid": 2388,
+        "pgid": 2388,
+        "owned": true,
+        "executable": "bash",
+        "display": null
+      },
+      {
+        "pid": 2396,
+        "starttime": "5897",
+        "state": "S",
+        "ppid": 2395,
+        "pgid": 2388,
+        "owned": true,
+        "executable": "bash",
+        "display": null
+      },
+      {
+        "pid": 2397,
+        "starttime": "5897",
+        "state": "D",
+        "ppid": 2396,
+        "pgid": 2388,
+        "owned": true,
+        "executable": "ld-linux-x86-64.so.2",
+        "display": null
+      },
+      {
+        "pid": 2410,
+        "starttime": "5963",
+        "state": "S",
+        "ppid": 2274,
+        "pgid": 2410,
+        "owned": true,
+        "executable": "sh",
+        "display": null
+      },
+      {
+        "pid": 2418,
+        "starttime": "5964",
+        "state": "D",
+        "ppid": 2410,
+        "pgid": 2410,
+        "owned": true,
+        "executable": "Xvfb",
+        "display": 99
+      },
+      {
+        "pid": 2433,
+        "starttime": "6065",
+        "state": "R",
+        "ppid": 2421,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "chrome",
+        "display": null
+      },
+      {
+        "pid": 2435,
+        "starttime": "6076",
+        "state": "S",
+        "ppid": 1,
+        "pgid": 2434,
+        "owned": true,
+        "executable": "chrome_crashpad_handler",
+        "display": null
+      },
+      {
+        "pid": 2437,
+        "starttime": "6076",
+        "state": "S",
+        "ppid": 1,
+        "pgid": 2436,
+        "owned": true,
+        "executable": "chrome_crashpad_handler",
+        "display": null
+      },
+      {
+        "pid": 2440,
+        "starttime": "6076",
+        "state": "R",
+        "ppid": 2433,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "chrome",
+        "display": null
+      },
+      {
+        "pid": 2441,
+        "starttime": "6076",
+        "state": "S",
+        "ppid": 2433,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable",
+        "display": null
+      },
+      {
+        "pid": 2462,
+        "starttime": "6397",
+        "state": "D",
+        "ppid": 2440,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,13653210559433994125,847091038799457996,262144 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708988185955192",
+        "display": null
+      },
+      {
+        "pid": 2465,
+        "starttime": "6397",
+        "state": "S",
+        "ppid": 2433,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,6161835385990438325,4591003467326041224,524288 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708989122997041",
+        "display": null
+      },
+      {
+        "pid": 2467,
+        "starttime": "6399",
+        "state": "S",
+        "ppid": 2441,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,12037943155689218163,9088122154199762771,524288 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708990060038890",
+        "display": null
+      },
+      {
+        "pid": 2501,
+        "starttime": "6417",
+        "state": "S",
+        "ppid": 2441,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=5 --launch-time-ticks=64171818 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,14361274111314005563,4421428730644320776,1572864 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708990997080739",
+        "display": null
+      },
+      {
+        "pid": 2512,
+        "starttime": "6419",
+        "state": "S",
+        "ppid": 2441,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=7 --launch-time-ticks=64192891 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,1072078632616739139,11634273708600771084,1572864 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708992871164437",
+        "display": null
+      },
+      {
+        "pid": 2514,
+        "starttime": "6419",
+        "state": "S",
+        "ppid": 2441,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=64195268 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5306104206476668023,10374134714063312627,1572864 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708991934122588",
+        "display": null
+      },
+      {
+        "pid": 2556,
+        "starttime": "7215",
+        "state": "S",
+        "ppid": 2440,
+        "pgid": 2433,
+        "owned": true,
+        "executable": "playwright_chromiumdev_profile-nMhMKr --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --use-gl=angle --use-angle=swiftshader-webgl --shared-files --metrics-shmem-handle=4,i,18437144327342966931,2746659544807521449,262144 --field-trial-handle=3,i,4047959430163991999,14104328769494953310,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AimEnabled,AutoDeElevate,AvoidCorsURLLoaderRestartOnRedirect,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,NetworkTimeServiceQuerying,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,11746361515699011961,8000904902041212730,4 --trace-process-track-uuid=3190708993808206286",
+        "display": null
+      }
+    ],
+    "present": [],
+    "scanUncertain": []
+  },
+  "x11Cleanup": {
+    "observed": {
+      "display": 99,
+      "pid": 2418,
+      "lock": "/tmp/.X99-lock",
+      "socket": "/tmp/.X11-unix/X99",
+      "exe": "/usr/bin/Xvfb",
+      "starttime": "5964",
+      "socketInode": 33427,
+      "lockInode": 33426
+    },
+    "pidAbsent": true,
+    "lockAbsent": true,
+    "socketAbsent": true
+  }
+}

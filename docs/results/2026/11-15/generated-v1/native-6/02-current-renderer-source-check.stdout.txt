@@ -1,0 +1,1 @@
+PASS: 5 native modules, source syntax, imports, 66 unique DOM IDs and public assets.

@@ -2,14 +2,20 @@
 
 An original browser airplane game where wind changes flight. Product intent is the parent Notion entry quoted in `docs/spec.md`; gameplay details are implementation choices.
 
-- Generated-source Node24 acceptance is docs/results/2026/11-15/generated-v1/result.md.
-  The58 changed flight/records/game-VM/generated cases passed on Node24.22.2,
-  including48 ordinary-control combinations. Bind their9 exact inputs and raw
-  TAP/runtime before carrying; do not replay this closed source scope unchanged.
-  Current native generated play/publication remain pending. Actual CI use is
-  539historical +15new =554s of the original1200s cap; keep that total intact.
-  No Fallline permission or budget is inherited. Fresh local storage is2.6GiB,
-  still below34GiB: bounded source/evidence only, no local heavy execution.
+- Current generated qualification is docs/results/2026/11-15/generated-v1/result.md.
+  Node 24.22.2 has 61 distinct source cases: 26 unchanged cases carried from the
+  original 58-case packet, plus 35 current game VM cases replacing its old 32.
+  Carry exact inputs, runtime, raw streams and stable source vectors; do not
+  replay closed suites. L03 (7c49a57), L01 (f127b6a) and L04 (80ca487) have
+  independent normal native closure and are accepted on their linked bytes.
+  L02 remains unaccepted after a terminal-control lookup race; its repair is
+  prepared. Actual CI is 1,028 / 1,200 seconds, including every historical and
+  failed job. V5 requests ten additional minutes (30 total), but is NOT approved.
+  Read docs/proposals/generated-native-v5.md and the actual user answer before
+  activation. The QA workflow is removed while pending; main stays b38a158.
+  Do not publish, repeat accepted cases, reset the cap or borrow Fallline approval.
+  Local storage last measured about 2.6 GiB / 34 GiB required: bounded source and
+  evidence only, no heavy local execution. Preserve dirty work/index/local refs.
 
 - GEN-3659 (14 November) supersedes the three authored scenes. The current local
   edition generates six biomes from versioned seed/level IDs, saves replayable

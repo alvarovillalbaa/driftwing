@@ -1,0 +1,147 @@
+{
+  "status": "prepared-inactive-awaiting-explicit-answer",
+  "ciUsedSeconds": 1028,
+  "originalCiCapSeconds": 1200,
+  "proposedCiCapSeconds": 1800,
+  "proposedAdditionalSeconds": 600,
+  "proposedFutureJobMaxSeconds": 540,
+  "currentAppBuildInputs": [
+    {
+      "path": "package.json",
+      "bytes": 360,
+      "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009"
+    },
+    {
+      "path": "public/favicon.svg",
+      "bytes": 253,
+      "sha256": "ced9d59c0cd0b1252e63a8666b78e864da532b1f1c07181020cf4374ceb9c941"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 11175,
+      "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255"
+    },
+    {
+      "path": "public/src/audio.js",
+      "bytes": 3509,
+      "sha256": "c824e61425ee4d344a72c426722c22533ff8f42e9034d121beae070d83cc3bdf"
+    },
+    {
+      "path": "public/src/flight.js",
+      "bytes": 16314,
+      "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911"
+    },
+    {
+      "path": "public/src/game.js",
+      "bytes": 18408,
+      "sha256": "8de4fce83acc0f8c7ec0048e1c883f2faf8e9719fc21234d596876f461fed849"
+    },
+    {
+      "path": "public/src/records.js",
+      "bytes": 4014,
+      "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178"
+    },
+    {
+      "path": "public/src/renderer.js",
+      "bytes": 28176,
+      "sha256": "41f00012169c36098f8bbd9c441dea8631502b14fc876f32eb680e6c65f32c2f"
+    },
+    {
+      "path": "public/styles.css",
+      "bytes": 19435,
+      "sha256": "1c4e2bbbc19a8690cf2c1b46366f1473c136843675203fc51874d97dae6a6c02"
+    },
+    {
+      "path": "scripts/check.mjs",
+      "bytes": 1701,
+      "sha256": "f948bfb97cbf65ff4b3350f5d54ebce45f9d6f2e634b5d9bc1120e1387d42f07"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 691,
+      "sha256": "a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8"
+    }
+  ],
+  "recipeFiles": [
+    {
+      "path": "tests/browser/generated-v5.mjs",
+      "bytes": 62091,
+      "sha256": "399fa24f800b2b125231bbdc1e48dcc2fc8df65a2955f5dfc9410253e9be9f4f"
+    },
+    {
+      "path": "tests/scripts/generated-native-v5.py",
+      "bytes": 25559,
+      "sha256": "2c203a43c651602073cf09c70106a55d4fdca23edee04966e9df65a8f21e1c84"
+    },
+    {
+      "path": "tests/browser/generated-hosted-v1.mjs",
+      "bytes": 7038,
+      "sha256": "44c0df394289ea2ffabb8e253f3fe57d714558b54a24fca72a5c3345f059a059"
+    },
+    {
+      "path": "tests/scripts/generated-hosted-v1.py",
+      "bytes": 9965,
+      "sha256": "426ddb80264ca4d5bfbbd73ab276985ab6ce813463fedfa1e82a5a947e0c993d"
+    },
+    {
+      "path": "tests/scripts/generated-retire-v1.py",
+      "bytes": 3957,
+      "sha256": "1e3b525d653f13de3cc07299ec4de1acf8ee601f1c5eb586053fa47e2ab0d161"
+    },
+    {
+      "path": "tests/scripts/emit-generated-hosted.mjs",
+      "bytes": 1387,
+      "sha256": "cfc5402ffd79b197d53001efb542045ac64e8ea635e66ceacc3596f7ef8cd2b0"
+    },
+    {
+      "path": "docs/qualification/generated-v5-native.workflow.yml.example",
+      "bytes": 1405,
+      "sha256": "f4f67ee52e498a0146f6ad01808f406f6ffab1d5959242ecc50e1bc3942f13ba"
+    },
+    {
+      "path": "docs/qualification/generated-v5-hosted.workflow.yml.example",
+      "bytes": 1521,
+      "sha256": "92735f2eec888f9bc80529e281b02f24a636bcfd550d1fb08293ded9ce4aced0"
+    },
+    {
+      "path": "docs/qualification/generated-v5-retire.workflow.yml.example",
+      "bytes": 1433,
+      "sha256": "961d03357b7ae8705b11c8b26c61780be6d393d7d177ef99e3ec295a6c660ecd"
+    }
+  ],
+  "staticChecks": {
+    "nodeSyntax": true,
+    "pythonAst": true,
+    "threeWorkflowYaml": true,
+    "gitDiffCheck": true,
+    "localDocLinks": 26,
+    "sourceInputsStable": 11,
+    "acceptedNativeCarryGuard": "Actual extracted read-only guard passed for L03/L01/L04 with the already verified QA-only Vercel bytes; no browser or app/module suite executed",
+    "closedSourceOrNativeCasesRerun": false,
+    "newRuntimeTests": 0
+  },
+  "originalCheckoutPreservation": {
+    "unchangedOriginalFiles": [
+      "docs/flight-contract.md",
+      "docs/results/2026/11-14/generated-levels.md",
+      "docs/spec.md",
+      "package.json",
+      "public/index.html",
+      "public/src/flight.js",
+      "public/src/records.js",
+      "tests/flight.test.js",
+      "tests/unit/generated-levels.test.js"
+    ],
+    "changedOwnedFiles": [
+      "AGENTS.md",
+      "README.md",
+      "public/src/game.js",
+      "public/src/renderer.js",
+      "public/styles.css",
+      "tests/game-audio.test.js"
+    ],
+    "localHead": "b38a15859c3441807637eb96092920bb321fc48e"
+  },
+  "mainUnchanged": "b38a15859c3441807637eb96092920bb321fc48e",
+  "authority": "No V5 approval is inferred from this file or execution marker."
+}

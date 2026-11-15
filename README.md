@@ -1,6 +1,6 @@
 # Driftwing
 
-Last updated: 2026-11-14
+Last updated: 2026-11-15
 
 A little airplane. A wide-open sky. An original browser flight game where wind currents move the aircraft.
 
@@ -14,10 +14,13 @@ The current local edition generates courses in six environments instead of using
 
 The [current implementation receipt](docs/results/2026/11-14/generated-levels.md) distinguishes local mechanics/VM checks from browser qualification and publication. The public app and the historical hosted results below still represent the earlier edition.
 
-The [Node24 source qualification](docs/results/2026/11-15/generated-v1/result.md)
-adds58 relevant passing cases and48 generated control-only journeys on the
-declared runtime. Native generated gameplay, public bytes and publication
-remain separate pending boundaries; the original receipts are preserved.
+The [current qualification](docs/results/2026/11-15/generated-v1/result.md)
+has 61 distinct source cases on Node 24.22.2 and three accepted native journeys:
+touch/scene, keyboard/native focus and actual storage-disabled completion.
+The complete generated-map/progression journey remains unaccepted after a
+terminal-control race in its driver. Its bounded V5 continuation is prepared
+and awaiting an explicit CI extension. Public bytes and publication remain
+pending; the public app still represents the earlier edition.
 
 Run `npm run check` for focused source checks and `npm test` for flight mechanics, records and authored sound/lifecycle boundary checks. No install is needed. Serve `public/` through a static HTTP server for play only after the applicable browser/dev-server authorization. A local filesystem URL does not support native module loading reliably.
 
