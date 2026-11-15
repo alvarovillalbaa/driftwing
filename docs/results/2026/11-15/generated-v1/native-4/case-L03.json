@@ -1,0 +1,79 @@
+{
+  "id": "L03",
+  "title": "narrow real touch roll stick release and corrupt preference recovery",
+  "accepted": true,
+  "error": null,
+  "observations": {
+    "stage": "setup L03",
+    "canvasBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "fit320": {
+      "width": 320,
+      "height": 844,
+      "scrollWidth": 320,
+      "deck": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 844
+      },
+      "stick": {
+        "x": 202,
+        "y": 530,
+        "width": 104,
+        "height": 104,
+        "visible": true
+      },
+      "pixels": {
+        "width": 320,
+        "height": 844,
+        "sampleColors": 172,
+        "sampleSha256": "1c5ad1054604172e05d58edbc946daf38ecda3e09931add0acf8c6118d880972"
+      }
+    },
+    "fit390": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "deck": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "stick": {
+        "x": 272,
+        "y": 530,
+        "width": 104,
+        "height": 104,
+        "visible": true
+      },
+      "pixels": {
+        "width": 390,
+        "height": 844,
+        "sampleColors": 175,
+        "sampleSha256": "56fcbc1d26f8fd02108bd5be62598baa734ee584233f2648cf58bbd4c01faf4d"
+      }
+    },
+    "corruptPreferencesRecovered": true,
+    "actualTouchRoll": true,
+    "releaseAndCancel": true,
+    "profileClosure": {
+      "label": "L03-narrow-touch",
+      "contextsClosed": true,
+      "browserCloseAcknowledged": true,
+      "native": {
+        "pid": 2431,
+        "exitCode": 0,
+        "absent": true,
+        "stdoutEnded": true,
+        "stderrEnded": true
+      }
+    }
+  },
+  "durationMs": 16909
+}

@@ -158,7 +158,7 @@ try:
     receipt["node"]=run("node-version",["node","--version"]).strip();assert receipt["node"]=="v24.22.2"
     usage=shutil.disk_usage(root);receipt["storage"]={"freeBytes":usage.free,"requiredBytes":34*1024**3,"estimateBytes":4*1024**3}
     assert usage.free>=34*1024**3
-    inputs=json.loads((repo/"docs/qualification/generated-v3-build-inputs.json").read_text())
+    inputs=json.loads((repo/"docs/qualification/generated-v4-build-inputs.json").read_text())
     assert len(inputs)==11
     production_bytes=safe_read(repo/"docs/qualification/generated-v1-production-vercel.json")
     assert len(production_bytes)==691 and sha(production_bytes)=="a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8"
@@ -167,7 +167,7 @@ try:
     assert qa.pop("git")=={"deploymentEnabled":False} and qa==production
     bind([r for r in inputs if r["path"]!="vercel.json"])
     assert next(r for r in inputs if r["path"]=="vercel.json")["sha256"]==sha(production_bytes)
-    manifest=json.loads((repo/"docs/qualification/generated-v3-public.json").read_text())
+    manifest=json.loads((repo/"docs/qualification/generated-v4-public.json").read_text())
     assert len(manifest)==8
     bind([dict(r,path="public/"+r["path"]) for r in manifest])
     n=repo/"docs/results/2026/11-15/generated-v1/node-1"

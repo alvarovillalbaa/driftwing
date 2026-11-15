@@ -42,6 +42,7 @@ body[data-mode=flying] .wind-readout,body[data-mode=paused] .wind-readout,body[d
 .flight-toolbar{top:65px}
 .trick-status{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);padding:8px 12px;background:#163b44de;color:#f7f9f0;border-radius:8px;font-size:9px;white-space:nowrap}
 body[data-mode=menu] .trick-status,body[data-mode=error] .trick-status{display:none}
+body:not([data-mode=flying]) .flight-event{display:none}
 body[data-mode=flying] .flight-footer{display:none}
 .touch-controls{right:20px;justify-content:space-between;align-items:flex-end}
 .touch-controls>.button{margin-bottom:18px;touch-action:manipulation}

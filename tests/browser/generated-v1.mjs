@@ -462,6 +462,7 @@ try {
    await page.keyboard.press('KeyR');await page.keyboard.press('KeyP');const paused=await freezePaused(page);await page.keyboard.press('Escape');await mode(page,'flying');await click(page,'#help-button');const guide=await freezePaused(page);await click(page,'#guide-done');await mode(page,'paused');await click(page,'#resume-button');
    await nativeFocusState(page,'current generated native focus',false);const other=await context.newPage();await other.goto('about:blank');await other.bringToFront();await nativeFocusState(page,'actual current hidden and unfocused',true);const hidden=await freezePaused(page);
    await page.bringToFront();await nativeFocusState(page,'actual current visible and focused',false);await mode(page,'paused');await other.close();await click(page,'#resume-button');await mode(page,'flying');await click(page,'#pause-button');await click(page,'#pause-menu-button');await sentinel(page);
+   assert.equal(await page.locator('#flight-event').evaluate(e=>getComputedStyle(e).display),'none');await capture(page,'l01-returned-menu');
    await closeNativeBrowser();const closure={label:'L01-native-default',normalNativeClose:true,process:report.ownedChrome.process,closeBasis:report.ownedChrome.closeBasis};report.profileClosures.push(closure);
    return{maps,newTerrain:{one,two},actualSavedReplay:true,bounds,initial,climbed,banked,paused,guide,hidden,actualNativeFocus:true,unrelatedStoragePreserved:true,profileClosure:closure};
   });
