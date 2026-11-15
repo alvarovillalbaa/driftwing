@@ -1,0 +1,76 @@
+{
+  "source": "0d4244ee34d7fa1726f05e42c134d064d5aa4ecd",
+  "run": 43704042754,
+  "case": "L02",
+  "originalCaseAccepted": true,
+  "plannedRingFraction": 0.6,
+  "courses": [
+    {
+      "id": "v2-coast-2173171922-1",
+      "passed": 7,
+      "total": 8,
+      "minimumRequired": 5,
+      "meetsPlannedThreshold": true,
+      "levelBefore": 1,
+      "levelAfter": 2
+    },
+    {
+      "id": "v2-ridge-3120253219-2",
+      "passed": 8,
+      "total": 8,
+      "minimumRequired": 5,
+      "meetsPlannedThreshold": true,
+      "levelBefore": 2,
+      "levelAfter": 3
+    },
+    {
+      "id": "v2-cloudline-2701905515-3",
+      "passed": 8,
+      "total": 8,
+      "minimumRequired": 5,
+      "meetsPlannedThreshold": true,
+      "levelBefore": 3,
+      "levelAfter": 4
+    },
+    {
+      "id": "v2-canyon-3720383069-4",
+      "passed": 8,
+      "total": 8,
+      "minimumRequired": 5,
+      "meetsPlannedThreshold": true,
+      "levelBefore": 4,
+      "levelAfter": 5
+    },
+    {
+      "id": "v2-islands-3608259323-5",
+      "passed": 6,
+      "total": 8,
+      "minimumRequired": 5,
+      "meetsPlannedThreshold": true,
+      "levelBefore": 5,
+      "levelAfter": 6
+    },
+    {
+      "id": "v2-aurora-724942534-6",
+      "passed": 8,
+      "total": 8,
+      "minimumRequired": 5,
+      "meetsPlannedThreshold": true,
+      "levelBefore": 6,
+      "levelAfter": 7
+    }
+  ],
+  "persistedLevel": 7,
+  "normalProfileClosure": {
+    "label": "L02-generated-courses",
+    "contextsClosed": true,
+    "browserCloseAcknowledged": true,
+    "native": {
+      "pid": 2598,
+      "exitCode": 0,
+      "absent": true,
+      "stdoutEnded": true,
+      "stderrEnded": true
+    }
+  }
+}

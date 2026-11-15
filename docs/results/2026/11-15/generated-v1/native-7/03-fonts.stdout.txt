@@ -1,0 +1,53 @@
+Liberation Mono
+Liberation Serif
+Lato,Lato Hairline
+Lato,Lato Heavy
+DejaVu Serif,DejaVu Serif Condensed
+Lato,Lato Medium
+Lato,Lato Light
+DejaVu Serif
+DejaVu Math TeX Gyre
+Liberation Sans
+Lato
+Liberation Sans
+Liberation Mono
+DejaVu Sans,DejaVu Sans Condensed
+DejaVu Serif,DejaVu Serif Condensed
+Liberation Serif
+Lato,Lato Heavy
+Lato
+Lato,Lato Medium
+DejaVu Serif
+DejaVu Sans
+Lato,Lato Semibold
+Lato,Lato Thin
+DejaVu Sans,DejaVu Sans Condensed
+Liberation Sans
+Lato,Lato Black
+Lato,Lato Thin
+DejaVu Sans,DejaVu Sans Condensed
+Lato,Lato Light
+DejaVu Sans,DejaVu Sans Condensed
+DejaVu Sans Mono
+Lato,Lato Hairline
+Lato,Lato Black
+Lato
+DejaVu Sans
+Liberation Mono
+Liberation Mono
+DejaVu Sans,DejaVu Sans Light
+DejaVu Serif
+Lato
+DejaVu Sans Mono
+DejaVu Serif
+DejaVu Sans Mono
+Noto Color Emoji
+DejaVu Sans Mono
+Liberation Sans
+Liberation Serif
+Lato,Lato Semibold
+DejaVu Sans
+DejaVu Serif,DejaVu Serif Condensed
+DejaVu Sans
+Liberation Serif
+DejaVu Serif,DejaVu Serif Condensed

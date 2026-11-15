@@ -1,0 +1,32 @@
+{
+  "run": 43704042754,
+  "job": 132781167392,
+  "source": "0d4244ee34d7fa1726f05e42c134d064d5aa4ecd",
+  "startedAt": "2026-11-15T10:25:58Z",
+  "completedAt": "2026-11-15T10:30:55Z",
+  "actualJobSeconds": 297,
+  "priorCiSeconds": 1028,
+  "totalCiSeconds": 1325,
+  "capCiSeconds": 1800,
+  "artifacts": [
+    {
+      "id": 14157516702,
+      "name": "driftwing-generated-v5-proof",
+      "size_in_bytes": 459561,
+      "url": "https://api.github.com/repos/alvarovillalbaa/driftwing/actions/artifacts/14157516702",
+      "archive_download_url": "https://api.github.com/repos/alvarovillalbaa/driftwing/actions/artifacts/14157516702/zip",
+      "expired": false,
+      "created_at": "2026-11-15T10:30:53Z",
+      "expires_at": "2026-11-22T10:30:52Z",
+      "updated_at": "2026-11-15T10:30:53Z",
+      "digest": "sha256:c48ed2315636c4b3facef160b4e49ba2f42da24219b5bacfba28d7c487bb9a4d",
+      "workflow_run": {
+        "id": 43704042754,
+        "repository_id": 1434961858,
+        "head_repository_id": 1434961858,
+        "head_branch": "qa/driftwing-generated-20261115",
+        "head_sha": "0d4244ee34d7fa1726f05e42c134d064d5aa4ecd"
+      }
+    }
+  ]
+}

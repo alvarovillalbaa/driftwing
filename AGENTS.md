@@ -8,13 +8,15 @@ An original browser airplane game where wind changes flight. Product intent is t
   Carry exact inputs, runtime, raw streams and stable source vectors; do not
   replay closed suites. L03 (7c49a57), L01 (f127b6a) and L04 (80ca487) have
   independent normal native closure and are accepted on their linked bytes.
-  L02 remains unaccepted after a terminal-control lookup race; its repair is
-  prepared. Actual CI is 1,028 / 1,200 seconds, including every historical and
-  failed job. The user explicitly approved V5's ten additional minutes (30 total)
-  on 15 November. The aggregate cap is now 1,800 seconds, retaining the 1,028
-  seconds already used. Read docs/proposals/generated-native-v5.md; run only L02,
-  then separately pinned hosted verification and owned QA retirement. Main stays
-  b38a158 until the required native acceptance; remove temporary main workflows.
+  L02 now passed at 0d4244e / run 43704042754 with all six native finishes,
+  replay, level-7 reload, crash/free-entry preservation and normal native closure.
+  Its original failed terminal lookup remains preserved. All four native cases
+  and 61 source cases are closed; carry them unchanged and do not replay them.
+  The user explicitly approved ten additional CI minutes on 15 November, thirty
+  total. Current actual use is 1,325 / 1,800 seconds, retaining every failed job.
+  Only separately pinned hosted verification and owned QA retirement remain.
+  Source publication must restore production JSON without publishing it on QA;
+  remove active temporary workflows from main and keep exact source boundaries.
   Do not publish, repeat accepted cases, reset the cap or borrow Fallline approval.
   Local storage last measured about 2.6 GiB / 34 GiB required: bounded source and
   evidence only, no heavy local execution. Preserve dirty work/index/local refs.

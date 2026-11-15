@@ -1,80 +1,78 @@
-# Generated edition qualification: three native journeys accepted
+# Generated edition: source and native acceptance
 
 15 November 2026. Owner: [GEN-3659](https://app.notion.com/p/418a1ee8bd0680c99343ea23eb42d0dd).
-**Source is qualified in the scopes below; the generated edition is unpublished.**
-Remote main remains b38a15859c3441807637eb96092920bb321fc48e. Its old public
-app/READY deployment does not qualify the new edition. The owned QA branch is
-kept deployment-disabled and its active workflow is removed while [V5 approval](../../../../proposals/generated-native-v5.md)
-is pending. No permission or budget transfers from Fallline; Pliego stays deferred.
+**61 distinct source cases and four independently closed native journeys are
+accepted. Product publication and anonymous hosted acceptance are the next gates.**
 
-Six seeded environments replace the authored scenes. New terrain and saved-level
-replay, first-finish progression through level 50, 48–70 m/s launch, denser shared
-physical/rendered spires, stronger gusts and completed 250-point barrel rolls are
-implemented. The entry fills the game screen. Native work corrected secondary
-Roll activation and ordinary Canvas composition; a state-scoped CSS rule hides
-flight announcements outside play. The original [14 November source receipt](../../11-14/generated-levels.md)
-and all old native receipts retain their own exact proof boundaries.
+Six seeded environments replace authored scenes. Native map creation/replay,
+first-finish progression through level 50, faster launch, stronger gusts, denser
+shared physical/rendered spires, completed 250-point barrel rolls and a fullscreen
+entry are implemented. Native qualification repaired actual secondary-touch Roll
+activation, ordinary Canvas composition and the flight-announcement display
+outside play. Source, browser, hosted and scientific proof remain distinct.
 
-## Actual source qualification
+## Exact source scope
 
-| Packet | Exact source / scope |
+- [Original Node phase](node-phase-original.md), source d95340e4ab7f9388dd06520833885dbf4a7490c2 /
+  run 43695792249: 58/58 on actual Node 24.22.2, including 48 controlled generated
+  combinations across six maps, two authored seeds and levels 1/12/25/50.
+- [Changed game VM](native-3/result.md), source e62a2eeeb4ec3c32d5fc801ec5e82b604ea36a85 /
+  run 43699401714: 35/35 current game VM cases, replacing the original 32 after
+  the actual secondary-touch repair. The current distinct total is **26 unchanged
+  flight/records/generator cases + 35 current game VM cases = 61**.
+
+Exact inputs, runtime, original TAP/streams/digests and stable clean source vectors
+are checked before carrying. The original 58-case suite and unchanged standalone
+audio suite are not replayed. Current renderer source checks passed separately.
+Module/VM results do not execute real Canvas/audio or physical devices. Original
+empty-stderr copy preservation was corrected after the [first failed guard](native-1/result.md);
+the original failed source vector and all raw command digests remain preserved.
+
+## Independently accepted native journeys
+
+| Case | Exact source / packet / result |
 | --- | --- |
-| [Original Node phase](node-phase-original.md) | d95340e4ab7f9388dd06520833885dbf4a7490c2 / [run 43695792249](https://github.com/alvarovillalbaa/driftwing/actions/runs/43695792249): 58/58 on Node 24.22.2; includes 48 controlled generated combinations across six maps, two seeds and levels 1/12/25/50. |
-| [Changed game VM](native-3/result.md) | e62a2eeeb4ec3c32d5fc801ec5e82b604ea36a85 / [run 43699401714](https://github.com/alvarovillalbaa/driftwing/actions/runs/43699401714): 35/35 on Node 24.22.2, replacing the old 32 VM cases after the observed secondary-touch repair. |
+| L03 | 7c49a5739c5840ee856cbab3907f75faa8e1f111 / [run 43701089667](native-4/result.md): actual 320/390px touch Roll, End/Cancel, corrupt preference recovery, saved reload and composited scene. Normal native exit 0/absence and both stream ends. Its original narrow menu PNG precedes the later exact non-flying display rule. |
+| L01 | f127b6a83f2d78a1eb72e23c1cd05235258ccf8e / [run 43701756778](native-5/result.md): independently accepted before L02 began. All six maps, new terrain/saved replay, faster keyboard climb/bank, pause/guide and actual native hidden/unfocused/visible/focused tab transitions. Normal manual Chrome/default-context/page closure, exit 0/reaping/EOF/group absence. Corrected desktop menu PNG viewed. |
+| L04 | 80ca487c92a05766a405943ddfa886f15383c315 / [run 43702738811](native-6/result.md): native storage disablement without a shim, actual generated 8/8 finish/1,602 points, visit-only result/reload and unrelated session sentinel. Normal context/browser/native exit 0/absence. |
+| L02 | 0d4244ee34d7fa1726f05e42c134d064d5aa4ecd / [run 43704042754](native-7/result.md): all six real generated finishes plus replay, completed keyboard roll, earned records/one-time progression, actual level-7 reload, crash/free-entry preservation and normal native context/browser/exit 0/absence. Gate results are 7/8, 8/8, 8/8, 8/8, 6/8, 8/8; actual replay 7/8. |
 
-The current distinct source scope is **61 cases: 26 unchanged flight/records/
-generator cases + 35 current game VM cases**. Exact inputs, original TAP/runtime,
-command hashes and stable clean source vectors are verified before carrying.
-The closed 58-case suite and unchanged standalone audio suite are not replayed.
-The current renderer checker also passed after removing its optional desynchronized
-hint. Module/VM checks do not execute real Canvas/audio or physical devices.
+V5 explicitly byte-binds L01/L03/L04 before carrying them, including original raw
+streams, independent normal closure and all application inputs. L03's only CSS
+difference is the verified single non-flying announcement display rule; current
+L01 validates that changed desktop menu boundary. H01 must separately qualify
+the current 320px menu. The accepted packets do not become one combined run.
 
-The first native guard detected that three originally empty Node stderr files
-had been copied as a newline. [That failed packet](native-1/result.md) and the bad
-source vector remain preserved. The copies now match the literal original empty
-blobs and all six actual command-stream digests; original Node results were not
-rerun or rewritten. All later raw artifact files are verified by original size
-and SHA-256, including zero-byte streams.
+Real-time native inputs read actual Canvas next-ring pixels/public HUD. No private
+flight/model import, valid-score fixture, result injection, browser API shim or
+synthetic animation clock is used. Whole native PNGs are retained; representative
+originals were viewed. Manual Chrome diagnostics retain complete sanitized bytes
+plus observed raw hashes/counts, rather than original raw stderr. Native runners
+also retain stable source/assets, clean Git, original command streams, normal
+server closure, absence of owned processes/selected new X11 resources and nonce/
+inode-checked scratch removal. Final teardown alone never accepts a failed case.
 
-## Native boundaries
+## Budget, preservation and remaining gates
 
-| Case | Exact accepted source / observed outcome |
-| --- | --- |
-| L03 | 7c49a5739c5840ee856cbab3907f75faa8e1f111 / [run 43701089667](native-4/result.md): real 320/390px touch Roll, End/Cancel, corrupt preference recovery, saved reload, visible composited scene and explicit normal native exit 0/absence. Its original narrow menu PNG precedes the later non-flying announcement display rule; retain that source boundary. |
-| L01 | f127b6a83f2d78a1eb72e23c1cd05235258ccf8e / [run 43701756778](native-5/result.md): independently passed before L02 began. All six maps, fresh seed/replay/reload, faster keyboard climb/bank, pause/guide and actual hidden/unfocused/visible/focused tab transitions. Native-default Browser.close/exit 0/reaping/EOF/context/page closure and process-group absence all observed. Current corrected desktop menu PNG was viewed. |
-| L04 | 80ca487c92a05766a405943ddfa886f15383c315 / [run 43702738811](native-6/result.md): actual Chrome storage disablement without a shim, real generated 8/8 finish/1,602 points, visit-only result, actual reload/no record and preserved unrelated session sentinel. Explicit normal context/browser/native exit 0/absence. |
-| L02 | **Unaccepted.** [Attempt 5](native-5/result.md) observed five finishes plus a replay, then the real terminal screen hid the stick between observations. Aurora, final progression reload/crash/free-entry and normal per-case closure were not reached. A public-mode terminal-race repair is prepared; no source-only fix upgrades the old result. |
+The user explicitly [authorized ten extra minutes](v5-authorization.md) for
+Driftwing only, thirty total. Actual job use is 539 historical + 15 Node + 6 + 41
++ 42 + 42 + 267 + 76 + 297 = **1,325 / 1,800 seconds (22m05s)**. All failures remain
+under native-1 through native-7. This is job wall time, not billing. Closed source
+or native cases must not be replayed unchanged. H01 and retirement each have a
+one-minute maximum and must fit the actual remainder when activated.
 
-Real-time native inputs use the actual Canvas next-ring pixels and public HUD;
-there is no private flight/model import, valid score fixture, result injection,
-substitute browser API or synthetic animation clock. Cases require their actual
-controls, earned records and normal independent native closure. Whole viewport
-PNGs were retained and viewed. Nested manual Chrome diagnostics preserve complete
-sanitized bytes plus observed raw hashes/counts, rather than original raw stderr.
-Native final runners separately retain source/asset vectors, clean Git, original
-streams, absence of owned processes and selected new X11 resources, and nonce/
-inode-checked scratch removal. Failed cases are not accepted by final teardown.
+Source publication restores the exact production Vercel JSON in an unreferenced
+release commit with no active workflow, updates main by its checked lease and
+preserves the QA deployment-disable overlay on every published QA head. The
+intended project/team and actual release/READY metadata must be read separately,
+then anonymous public payloads/security headers and current narrow interaction
+must pass. The unique owned QA ref must be retired with checked identity/readback.
+No current generated deployment or completed hosted proof is claimed by this note.
 
-## Budget and pending release
-
-Actual job seconds are 539 historical + 15 Node + 6 + 41 + 42 + 42 + 267 + 76
-= **1,028 / 1,200 seconds (17m08s of 20 minutes)**. Original job/artifact identities
-and every failure remain under node-1/native-1 through native-6. This is elapsed
-job time, not a billing claim. Only 172 seconds remain; an unchanged accepted case
-must not be replayed to spend that remainder.
-
-The [inactive V5 proposal](../../../../proposals/generated-native-v5.md) requests
-10 additional minutes, 30 total, to finish only L02, then separately publish the
-accepted source, verify exact intended READY provider metadata and anonymous
-hosted payloads/320px interaction, and retire the owned QA ref by checked lease.
-No extension is authorized until the actual user answer. No active temporary
-workflow is retained while pending; main and Vercel project settings stay unchanged.
-The latest project/team readback found no deployment for this generated QA branch.
-
-No local installation, build, browser or database ran after the failed storage
-reserve. Small source/evidence writes resumed with about 2.6 GiB free against
-34 GiB required. Dirty user work, local index/refs and original source history
-remain intact. Physical touch hardware, audible output, broad accessibility/
-performance, all seeds/high-level native play, new beyond-finish native free
-flight, human fun/difficulty and scientific flight accuracy remain outside proof.
-The full portfolio remains in progress.
+Original dirty Mac work/index/local refs and all old source/native evidence are
+preserved. No local heavy installation/build/browser/database ran under the failed
+storage reserve; bounded source/evidence writes resumed with about 2.6 GiB free.
+Physical touch hardware, audible output, broad accessibility/performance, all
+seeds/high-level native play, new beyond-finish native free flight, human fun/
+difficulty and scientific flight accuracy remain outside proof. Fallline and
+Pliego retain their separate pending status; the full portfolio remains open.

@@ -15,12 +15,11 @@ The current local edition generates courses in six environments instead of using
 The [current implementation receipt](docs/results/2026/11-14/generated-levels.md) distinguishes local mechanics/VM checks from browser qualification and publication. The public app and the historical hosted results below still represent the earlier edition.
 
 The [current qualification](docs/results/2026/11-15/generated-v1/result.md)
-has 61 distinct source cases on Node 24.22.2 and three accepted native journeys:
-touch/scene, keyboard/native focus and actual storage-disabled completion.
-The complete generated-map/progression journey remains unaccepted after a
-terminal-control race in its driver. Its bounded V5 continuation is prepared
-and awaiting an explicit CI extension. Public bytes and publication remain
-pending; the public app still represents the earlier edition.
+has 61 distinct source cases on Node 24.22.2 and four accepted native journeys:
+touch/scene, keyboard/native focus, actual storage-disabled completion and the
+complete six-map/progression/replay journey. Each has normal native closure on
+its linked source. Public bytes and publication remain the separate next gates;
+the public app still represents the earlier edition at this qualification stage.
 
 Run `npm run check` for focused source checks and `npm test` for flight mechanics, records and authored sound/lifecycle boundary checks. No install is needed. Serve `public/` through a static HTTP server for play only after the applicable browser/dev-server authorization. A local filesystem URL does not support native module loading reliably.
 
