@@ -10,9 +10,11 @@ An original browser airplane game where wind changes flight. Product intent is t
   independent normal native closure and are accepted on their linked bytes.
   L02 remains unaccepted after a terminal-control lookup race; its repair is
   prepared. Actual CI is 1,028 / 1,200 seconds, including every historical and
-  failed job. V5 requests ten additional minutes (30 total), but is NOT approved.
-  Read docs/proposals/generated-native-v5.md and the actual user answer before
-  activation. The QA workflow is removed while pending; main stays b38a158.
+  failed job. The user explicitly approved V5's ten additional minutes (30 total)
+  on 15 November. The aggregate cap is now 1,800 seconds, retaining the 1,028
+  seconds already used. Read docs/proposals/generated-native-v5.md; run only L02,
+  then separately pinned hosted verification and owned QA retirement. Main stays
+  b38a158 until the required native acceptance; remove temporary main workflows.
   Do not publish, repeat accepted cases, reset the cap or borrow Fallline approval.
   Local storage last measured about 2.6 GiB / 34 GiB required: bounded source and
   evidence only, no heavy local execution. Preserve dirty work/index/local refs.

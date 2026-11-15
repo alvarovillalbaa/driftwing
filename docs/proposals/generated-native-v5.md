@@ -1,6 +1,12 @@
 # Generated native V5: bounded continuation approval
 
-**Status: prepared, inactive; explicit authorization is pending.**
+**Status: explicitly authorized on 15 November 2026; activation is limited to the scope below.**
+
+The user answered "Autorizar 10 min adicionales" to the exact ten-minute
+extension question. The aggregate cap is now 1,800 seconds. Prior measured use
+is 1,028 seconds; retain that counter and every earlier failed job. This approval
+applies only to Driftwing. The three closed native cases and 61 source cases are
+carried by their original proof, and the remaining L02-only recipe runs first.
 
 Driftwing's generated edition has 61 distinct source cases on actual Node
 24.22.2: 26 unchanged flight/records/generator cases carried by their original
@@ -53,7 +59,8 @@ with production Git settings. No real Auth, database, provider/model, credential
 paid service, app dependency, OS package or project environment/settings change
 is part of this extension. No PR, private user data or external messaging.
 
-All new recipes remain inactive documents until the actual user answer arrives.
+The actual user answer has arrived. Activate each reviewed recipe sequentially
+only when its required source/deployment/remaining-budget pins are available.
 The environment marker driftwing-native-v5-10m is an execution guard, not a grant
 of permission. No active temporary workflow belongs on main. The QA ref is kept
 only as the bounded, deployment-disabled proposal/evidence owner while pending.

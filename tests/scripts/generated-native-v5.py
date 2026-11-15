@@ -39,7 +39,8 @@ env.update(LANG="C.UTF-8",TZ="UTC",CI="true",NO_COLOR="1",
     PLAYWRIGHT_BROWSERS_PATH=str(root/"browsers"),PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="1",
     DRIFTWING_CHECK_ROOT=str(root),DRIFTWING_PLAYWRIGHT_MODULE=str(root/"tools/node_modules/playwright/index.mjs"),
     DRIFTWING_OUTPUT=str(out),DRIFTWING_GENERATED_CASES=",".join(cases),
-    DRIFTWING_WORK_SECONDS=str(work_seconds),DRIFTWING_CLEANUP_SECONDS=str(cleanup_seconds),SOURCE_COMMIT=os.environ["GITHUB_SHA"])
+    DRIFTWING_WORK_SECONDS=str(work_seconds),DRIFTWING_CLEANUP_SECONDS=str(cleanup_seconds),SOURCE_COMMIT=os.environ["GITHUB_SHA"],
+    DRIFTWING_APPROVAL=os.environ["DRIFTWING_APPROVAL"])
 receipt={"schema":"driftwing.generated-native.v5","source":os.environ["GITHUB_SHA"],
     "run":os.environ["GITHUB_RUN_ID"],"attempt":os.environ["GITHUB_RUN_ATTEMPT"],"cases":cases,
     "passed":False,"commands":[],"priorCiSeconds":int(os.environ["DRIFTWING_PRIOR_CI_SECONDS"]),
