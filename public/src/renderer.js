@@ -30,7 +30,7 @@ const cross = (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z
 export function createRenderer(canvas) {
   if (!canvas || typeof canvas.getContext !== 'function') throw new Error('Driftwing needs a canvas to draw its flight view.');
   let ctx;
-  try { ctx = canvas.getContext('2d', { alpha: false, desynchronized: true }); }
+  try { ctx = canvas.getContext('2d', { alpha: false }); }
   catch { try { ctx = canvas.getContext('2d'); } catch { ctx = null; } }
   if (!ctx) throw new Error('The flight view could not start. Try a browser with Canvas 2D enabled.');
 

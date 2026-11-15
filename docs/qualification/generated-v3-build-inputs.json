@@ -1,0 +1,57 @@
+[
+  {
+    "path": "package.json",
+    "bytes": 360,
+    "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009"
+  },
+  {
+    "path": "public/favicon.svg",
+    "bytes": 253,
+    "sha256": "ced9d59c0cd0b1252e63a8666b78e864da532b1f1c07181020cf4374ceb9c941"
+  },
+  {
+    "path": "public/index.html",
+    "bytes": 11175,
+    "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255"
+  },
+  {
+    "path": "public/src/audio.js",
+    "bytes": 3509,
+    "sha256": "c824e61425ee4d344a72c426722c22533ff8f42e9034d121beae070d83cc3bdf"
+  },
+  {
+    "path": "public/src/flight.js",
+    "bytes": 16314,
+    "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911"
+  },
+  {
+    "path": "public/src/game.js",
+    "bytes": 18408,
+    "sha256": "8de4fce83acc0f8c7ec0048e1c883f2faf8e9719fc21234d596876f461fed849"
+  },
+  {
+    "path": "public/src/records.js",
+    "bytes": 4014,
+    "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178"
+  },
+  {
+    "path": "public/src/renderer.js",
+    "bytes": 28176,
+    "sha256": "41f00012169c36098f8bbd9c441dea8631502b14fc876f32eb680e6c65f32c2f"
+  },
+  {
+    "path": "public/styles.css",
+    "bytes": 19378,
+    "sha256": "c550efdab574521025c4a9a17561eeff03331f4d4df804bf9d65f7bd61bd14ac"
+  },
+  {
+    "path": "scripts/check.mjs",
+    "bytes": 1701,
+    "sha256": "f948bfb97cbf65ff4b3350f5d54ebce45f9d6f2e634b5d9bc1120e1387d42f07"
+  },
+  {
+    "path": "vercel.json",
+    "bytes": 691,
+    "sha256": "a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8"
+  }
+]

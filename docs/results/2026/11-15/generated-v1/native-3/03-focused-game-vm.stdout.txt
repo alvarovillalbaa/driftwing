@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: sound preference, UI and durable intent commit before an enable acknowledgement
+ok 1 - sound preference, UI and durable intent commit before an enable acknowledgement
+  ---
+  duration_ms: 4.922493
+  type: 'test'
+  ...
+# Subtest: a second toggle immediately disables an enable that is still waiting
+ok 2 - a second toggle immediately disables an enable that is still waiting
+  ---
+  duration_ms: 1.682151
+  type: 'test'
+  ...
+# Subtest: the actual sound-button callback invokes audio synchronously in the user callback
+ok 3 - the actual sound-button callback invokes audio synchronously in the user callback
+  ---
+  duration_ms: 1.178061
+  type: 'test'
+  ...
+# Subtest: the actual launch callback invokes saved sound synchronously before yielding
+ok 4 - the actual launch callback invokes saved sound synchronously before yielding
+  ---
+  duration_ms: 429.459731
+  type: 'test'
+  ...
+# Subtest: on-off-on preserves newest success after obsolete enable result true
+ok 5 - on-off-on preserves newest success after obsolete enable result true
+  ---
+  duration_ms: 1.724832
+  type: 'test'
+  ...
+# Subtest: on-off-on preserves newest success after obsolete enable result false
+ok 6 - on-off-on preserves newest success after obsolete enable result false
+  ---
+  duration_ms: 2.53631
+  type: 'test'
+  ...
+# Subtest: an obsolete success cannot acknowledge a newest enable that later fails
+ok 7 - an obsolete success cannot acknowledge a newest enable that later fails
+  ---
+  duration_ms: 1.9964
+  type: 'test'
+  ...
+# Subtest: a user disable survives an older enable result true
+ok 8 - a user disable survives an older enable result true
+  ---
+  duration_ms: 2.205193
+  type: 'test'
+  ...
+# Subtest: a user disable survives an older enable result false
+ok 9 - a user disable survives an older enable result false
+  ---
+  duration_ms: 1.097496
+  type: 'test'
+  ...
+# Subtest: a current enable failure resets preference, persists it and announces the failure
+ok 10 - a current enable failure resets preference, persists it and announces the failure
+  ---
+  duration_ms: 1.089224
+  type: 'test'
+  ...
+# Subtest: sound transitions preserve course, camera, every record and unrelated storage
+ok 11 - sound transitions preserve course, camera, every record and unrelated storage
+  ---
+  duration_ms: 0.927991
+  type: 'test'
+  ...
+# Subtest: an old launch failure cannot disable sound after a newer flight has acknowledged it
+ok 12 - an old launch failure cannot disable sound after a newer flight has acknowledged it
+  ---
+  duration_ms: 1.205768
+  type: 'test'
+  ...
+# Subtest: an old launch failure cannot disable a newer off-on choice
+ok 13 - an old launch failure cannot disable a newer off-on choice
+  ---
+  duration_ms: 1.119013
+  type: 'test'
+  ...
+# Subtest: an old launch success cannot update a newer run after its acknowledgement
+ok 14 - an old launch success cannot update a newer run after its acknowledgement
+  ---
+  duration_ms: 1.199172
+  type: 'test'
+  ...
+# Subtest: returning to the menu fences a pending launch failure
+ok 15 - returning to the menu fences a pending launch failure
+  ---
+  duration_ms: 1.174156
+  type: 'test'
+  ...
+# Subtest: a successful pending launch stays muted after an explicit pause
+ok 16 - a successful pending launch stays muted after an explicit pause
+  ---
+  duration_ms: 1.089841
+  type: 'test'
+  ...
+# Subtest: a current failure while paused can still report unavailable sound
+ok 17 - a current failure while paused can still report unavailable sound
+  ---
+  duration_ms: 1.314397
+  type: 'test'
+  ...
+# Subtest: visibility interruption keeps a late successful enable muted
+ok 18 - visibility interruption keeps a late successful enable muted
+  ---
+  duration_ms: 2.54609
+  type: 'test'
+  ...
+# Subtest: a hidden document cannot become audible before its visibility callback is delivered
+ok 19 - a hidden document cannot become audible before its visibility callback is delivered
+  ---
+  duration_ms: 1.067341
+  type: 'test'
+  ...
+# Subtest: window blur pauses a pending launch without reviving sound when it resolves
+ok 20 - window blur pauses a pending launch without reviving sound when it resolves
+  ---
+  duration_ms: 1.091798
+  type: 'test'
+  ...
+# Subtest: back-forward cache hiding preserves sound intent while pausing output and retaining resources
+ok 21 - back-forward cache hiding preserves sound intent while pausing output and retaining resources
+  ---
+  duration_ms: 1.181741
+  type: 'test'
+  ...
+# Subtest: terminal pagehide ignores pending audio result true after destroying resources
+ok 22 - terminal pagehide ignores pending audio result true after destroying resources
+  ---
+  duration_ms: 1.193939
+  type: 'test'
+  ...
+# Subtest: terminal pagehide ignores pending audio result false after destroying resources
+ok 23 - terminal pagehide ignores pending audio result false after destroying resources
+  ---
+  duration_ms: 2.47862
+  type: 'test'
+  ...
+# Subtest: stale user handlers cannot restart sound or persist another preference after terminal pagehide
+ok 24 - stale user handlers cannot restart sound or persist another preference after terminal pagehide
+  ---
+  duration_ms: 0.943376
+  type: 'test'
+  ...
+# Subtest: a queued animation frame cannot render or update sound after terminal pagehide
+ok 25 - a queued animation frame cannot render or update sound after terminal pagehide
+  ---
+  duration_ms: 0.999183
+  type: 'test'
+  ...
+# Subtest: the actual finish flow mutes continuous flight audio before its one finish cue
+ok 26 - the actual finish flow mutes continuous flight audio before its one finish cue
+  ---
+  duration_ms: 1.16989
+  type: 'test'
+  ...
+# Subtest: a crashed flight enters its result flow without a finish cue
+ok 27 - a crashed flight enters its result flow without a finish cue
+  ---
+  duration_ms: 0.941582
+  type: 'test'
+  ...
+# Subtest: window blur explicitly mutes a finished result cue even when there is no active flight to pause
+ok 28 - window blur explicitly mutes a finished result cue even when there is no active flight to pause
+  ---
+  duration_ms: 0.975885
+  type: 'test'
+  ...
+# Subtest: actual map, completion, next-level and replay callbacks retain exact generated identities and old records
+ok 29 - actual map, completion, next-level and replay callbacks retain exact generated identities and old records
+  ---
+  duration_ms: 1.880589
+  type: 'test'
+  ...
+# Subtest: a touch roll click survives render frames shorter than a physics step
+ok 30 - a touch roll click survives render frames shorter than a physics step
+  ---
+  duration_ms: 1.761994
+  type: 'test'
+  ...
+# Subtest: pause discards queued roll input before the resumed flight simulates
+ok 31 - pause discards queued roll input before the resumed flight simulates
+  ---
+  duration_ms: 1.222723
+  type: 'test'
+  ...
+# Subtest: releasing the flight stick does not discard a separately requested touch roll
+ok 32 - releasing the flight stick does not discard a separately requested touch roll
+  ---
+  duration_ms: 1.192205
+  type: 'test'
+  ...
+# Subtest: a secondary touch starts a roll without relying on a compatibility click
+ok 33 - a secondary touch starts a roll without relying on a compatibility click
+  ---
+  duration_ms: 1.336265
+  type: 'test'
+  ...
+# Subtest: primary touch and mouse pointer presses keep their existing click activation
+ok 34 - primary touch and mouse pointer presses keep their existing click activation
+  ---
+  duration_ms: 2.766186
+  type: 'test'
+  ...
+# Subtest: a disabled secondary touch cannot queue a roll, and pause clears a valid press
+ok 35 - a disabled secondary touch cannot queue a roll, and pause clears a valid press
+  ---
+  duration_ms: 1.297396
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 551.481059

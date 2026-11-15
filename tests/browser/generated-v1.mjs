@@ -4,7 +4,7 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { gzipSync } from 'node:zlib';
+import { gzipSync, inflateSync } from 'node:zlib';
 
 const TITLES = [
   "six generated maps saved replay faster keyboard flight and native interruptions",
@@ -296,7 +296,9 @@ async function result(page) {
   }), 5000, 'actual result');
 }
 async function drawing(page) {
-  const observed = await within(() => page.locator('#sky').evaluate(canvas => {
+  let observed;
+  await poll(async()=>{
+  observed = await within(() => page.locator('#sky').evaluate(canvas => {
     const context = canvas.getContext('2d'), width = canvas.width, height = canvas.height, colors = new Set(), bytes = [];
     if (!context || width < 1 || height < 1) throw new Error('canvas unavailable');
     for (let y = 1; y <= 16; y++) for (let x = 1; x <= 20; x++) {
@@ -305,7 +307,9 @@ async function drawing(page) {
     }
     return { width, height, colors: colors.size, bytes };
   }), 5000, 'actual Canvas pixels');
-  assert(observed.colors >= 12, 'canvas must have visible drawn variation'); return { width: observed.width, height: observed.height, sampleColors: observed.colors, sampleSha256: sha(Buffer.from(observed.bytes)) };
+  return observed.colors>=12;
+  },'actual Canvas repaint after native layout',5000,50);
+  return { width: observed.width, height: observed.height, sampleColors: observed.colors, sampleSha256: sha(Buffer.from(observed.bytes)) };
 }
 async function caseRun(index, action) {
   current=report.cases.find(c=>c.id===CASE_IDS[index]);if(!current)return;diagnosticPage=null;const begun=Date.now(); mark('setup ' + current.id);
@@ -337,8 +341,26 @@ async function capture(page,name){
  const bytes=await within(()=>page.screenshot({type:'png',fullPage:false}),10000,'original viewport screenshot');
  assert.ok(bytes.length>0&&bytes.length<=2097152);
  const file=name+'.png';fs.writeFileSync(path.join(proof,file),bytes,{flag:'wx'});
- const canvas=await page.locator('#sky').evaluate(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return{rect:{x:r.x,y:r.y,width:r.width,height:r.height},width:e.width,height:e.height,display:s.display,visibility:s.visibility,opacity:s.opacity};});
- report.visuals.push({caseId:current.id,file,kind:'original-native-full-viewport',bytes:bytes.length,sha256:sha(bytes),viewport:page.viewportSize(),canvas,hud:await hud(page),drawing:await drawing(page)});return file;
+ const canvas=await page.locator('#sky').evaluate(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return{rect:{x:r.x,y:r.y,width:r.width,height:r.height},width:e.width,height:e.height,display:s.display,visibility:s.visibility,opacity:s.opacity,attributes:e.getContext('2d').getContextAttributes()};});
+ const h=await hud(page),sceneScreenshot=h.mode==='flying'?pngScene(bytes):null;
+ report.visuals.push({caseId:current.id,file,kind:'original-native-full-viewport',bytes:bytes.length,sha256:sha(bytes),viewport:page.viewportSize(),canvas,hud:h,drawing:await drawing(page),sceneScreenshot});
+ if(sceneScreenshot)assert.ok(sceneScreenshot.colors>=32,'actual screenshot must show the painted scene');return file;
+}
+function pngScene(png){
+ assert.equal(png.subarray(0,8).toString('hex'),'89504e470d0a1a0a');let at=8,w,h,bpp;const chunks=[];
+ while(at<png.length){const n=png.readUInt32BE(at),type=png.toString('ascii',at+4,at+8),b=png.subarray(at+8,at+8+n);assert.ok(at+12+n<=png.length);
+  if(type==='IHDR'){w=b.readUInt32BE(0);h=b.readUInt32BE(4);assert.equal(b[8],8);bpp=b[9]===2?3:b[9]===6?4:0;assert.ok(bpp&&w<=4000&&h<=4000);assert.equal(b[12],0);}
+  if(type==='IDAT')chunks.push(b);at+=n+12;if(type==='IEND')break;
+ }
+ assert.ok(w&&h&&bpp);const row=w*bpp,raw=inflateSync(Buffer.concat(chunks),{maxOutputLength:(row+1)*h});assert.equal(raw.length,(row+1)*h);
+ let previous=Buffer.alloc(row),offset=0;const colors=new Set();
+ const paeth=(a,b,c)=>{const p=a+b-c,x=Math.abs(p-a),y=Math.abs(p-b),z=Math.abs(p-c);return x<=y&&x<=z?a:y<=z?b:c;};
+ for(let y=0;y<h;y++){const filter=raw[offset++],line=Buffer.allocUnsafe(row);assert.ok(filter<=4);
+  for(let x=0;x<row;x++){const a=x>=bpp?line[x-bpp]:0,b=previous[x],c=x>=bpp?previous[x-bpp]:0;line[x]=(raw[offset++]+(filter===0?0:filter===1?a:filter===2?b:filter===3?Math.floor((a+b)/2):paeth(a,b,c)))&255;}
+  if(y>=h*.3&&y<h*.52&&y%3===0)for(let x=Math.ceil(w*.2);x<w*.8;x+=3){const i=x*bpp;colors.add(line[i]+','+line[i+1]+','+line[i+2]);}
+  previous=line;
+ }
+ return{width:w,height:h,region:[.2,.3,.8,.52],colors:colors.size,method:'read-only native PNG reconstruction; original bytes retained'};
 }
 async function fit(page){
  const canvas=await page.locator('#sky').boundingBox();current.observations.canvasBounds=canvas;

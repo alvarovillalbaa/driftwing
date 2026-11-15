@@ -10,8 +10,8 @@ assert re.fullmatch("[a-f0-9]{40}",os.environ["GITHUB_SHA"])
 cases=os.environ["DRIFTWING_GENERATED_CASES"].split(",")
 assert cases in (["L03"],["L01","L02","L04"])
 short=cases==["L03"]
-work_seconds=60 if short else 405
-global_end=time.monotonic()+(165 if short else 525)
+work_seconds=60 if short else 375
+global_end=time.monotonic()+(165 if short else 465)
 runner=Path(os.environ["RUNNER_TEMP"]).resolve()
 job=os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]
 out=Path(os.environ["DRIFTWING_OUTPUT"]).resolve()
@@ -40,10 +40,10 @@ env.update(LANG="C.UTF-8",TZ="UTC",CI="true",NO_COLOR="1",
 receipt={"schema":"driftwing.generated-native.v1","source":os.environ["GITHUB_SHA"],
     "run":os.environ["GITHUB_RUN_ID"],"attempt":os.environ["GITHUB_RUN_ATTEMPT"],"cases":cases,
     "passed":False,"commands":[],"priorCiSeconds":int(os.environ["DRIFTWING_PRIOR_CI_SECONDS"]),
-    "capCiSeconds":1200,"limits":{"workSeconds":work_seconds,"cleanupSeconds":60,"jobMinutes":3 if short else 9},
+    "capCiSeconds":1200,"limits":{"workSeconds":work_seconds,"cleanupSeconds":60,"jobMinutes":3 if short else 8},
     "appInstall":False,"appBuild":False,"database":False,"accounts":False,"forcedSignals":[],
     "sourceStable":False,"gitClean":False,"scratchRemoved":False}
-assert receipt["priorCiSeconds"]+(180 if short else 540)<=1200
+assert receipt["priorCiSeconds"]+(180 if short else 480)<=1200
 active=[];seen={};scan_uncertain=[];x11_before=None;server=None;before=None
 def sha(b):return hashlib.sha256(b).hexdigest()
 def write(name,value): (out/name).write_text(json.dumps(value,indent=2)+"\n")
@@ -158,7 +158,7 @@ try:
     receipt["node"]=run("node-version",["node","--version"]).strip();assert receipt["node"]=="v24.22.2"
     usage=shutil.disk_usage(root);receipt["storage"]={"freeBytes":usage.free,"requiredBytes":34*1024**3,"estimateBytes":4*1024**3}
     assert usage.free>=34*1024**3
-    inputs=json.loads((repo/"docs/qualification/generated-v2-build-inputs.json").read_text())
+    inputs=json.loads((repo/"docs/qualification/generated-v3-build-inputs.json").read_text())
     assert len(inputs)==11
     production_bytes=safe_read(repo/"docs/qualification/generated-v1-production-vercel.json")
     assert len(production_bytes)==691 and sha(production_bytes)=="a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8"
@@ -167,7 +167,7 @@ try:
     assert qa.pop("git")=={"deploymentEnabled":False} and qa==production
     bind([r for r in inputs if r["path"]!="vercel.json"])
     assert next(r for r in inputs if r["path"]=="vercel.json")["sha256"]==sha(production_bytes)
-    manifest=json.loads((repo/"docs/qualification/generated-v2-public.json").read_text())
+    manifest=json.loads((repo/"docs/qualification/generated-v3-public.json").read_text())
     assert len(manifest)==8
     bind([dict(r,path="public/"+r["path"]) for r in manifest])
     n=repo/"docs/results/2026/11-15/generated-v1/node-1"
@@ -181,7 +181,7 @@ try:
     assert original==json.loads((n/"source-after.json").read_text())
     bind([next(r for r in original if r["path"]==p) for p in
         ["scripts/check.mjs","package.json","vercel.json","public/index.html",
-         "public/src/flight.js","public/src/records.js","public/src/renderer.js","public/src/audio.js"]])
+         "public/src/flight.js","public/src/records.js","public/src/audio.js"]])
     for c in node["commands"]:
         assert c["exit"]==0 and c["groupAbsent"] and c["streamsComplete"] and c["failure"] is None
         for key in ["stdout","stderr"]:assert sha(safe_read(n/c[key]))==c[key+"Sha256"]
@@ -209,6 +209,7 @@ try:
             assert c["exit"]==0 and c["groupAbsent"] and c["streamsComplete"] and c["failure"] is None
             for key in ["stdout","stderr"]:assert sha(safe_read(previous/c[key]))==c[key+"Sha256"]
         receipt["focusedNode"]={**qualified["focusedNode"],"carriedFrom":carry,"carriedSource":qualified["source"],"rerun":False}
+        run("current-renderer-source-check",["node","scripts/check.mjs"],8)
     else:
         run("focused-source-check",["node","scripts/check.mjs"],8)
         focused=run("focused-game-vm",["node","--test","--test-reporter=tap","tests/game-audio.test.js"],12)
@@ -249,7 +250,7 @@ try:
     args=["xvfb-run","--auto-servernum","--error-file="+str(xlog),"--auth-file="+str(auth),
         "--server-args=-screen 0 1600x1200x24 -nolisten tcp","node","tests/browser/generated-v1.mjs"]
     native=start("browser",args)
-    native_stdout=finish(native,130 if short else 475,allow_failure=True)
+    native_stdout=finish(native,130 if short else 445,allow_failure=True)
     assert xlog.lstat().st_ino==xlog_identity.st_ino
     (out/"xvfb-errors.txt").write_bytes(safe_read(xlog,1048576))
     report_file=out/"generated-browser.json"
