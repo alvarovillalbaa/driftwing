@@ -13,11 +13,14 @@ An original browser airplane game where wind changes flight. Product intent is t
   Its original failed terminal lookup remains preserved. All four native cases
   and 61 source cases are closed; carry them unchanged and do not replay them.
   The user explicitly approved ten additional CI minutes on 15 November, thirty
-  total. Current actual use is 1,325 / 1,800 seconds, retaining every failed job.
-  Only separately pinned hosted verification and owned QA retirement remain.
+  total. Actual source/native job use was 1,325 / 1,800 seconds before H01, retaining every failed job.
+  H01 passed at 50284d8 / run 43705190548: all eight anonymous production
+  payloads/headers and real 320px entry/flight/pause/menu/reload match release
+  62d6e10 / READY dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn. Current CI is 1,350 /
+  1,800 seconds; only owned QA retirement remains. No closed checks are rerun.
   Source publication must restore production JSON without publishing it on QA;
   remove active temporary workflows from main and keep exact source boundaries.
-  Do not publish, repeat accepted cases, reset the cap or borrow Fallline approval.
+  Do not repeat accepted cases, reset the cap or borrow Fallline approval.
   Local storage last measured about 2.6 GiB / 34 GiB required: bounded source and
   evidence only, no heavy local execution. Preserve dirty work/index/local refs.
 

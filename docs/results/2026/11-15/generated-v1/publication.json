@@ -1,0 +1,140 @@
+{
+  "releaseSource": "62d6e1045e7e676fd2f8c2edcba1f62743e62b78",
+  "releaseTree": "efe14337eab0c5593ee68eed450c9aa1fc6d2dd5",
+  "nativeEvidenceSource": "23fe87fb85fea2c60e6c00dfa606e8060aecc56a",
+  "projectId": "prj_axFn1xpGeUoQMWqNbNqN9nJvD26p",
+  "teamId": "team_JpdIsOJgYNpX0ywVZ54Zdb7m",
+  "requestedGitSource": {
+    "type": "github",
+    "org": "alvarovillalbaa",
+    "repo": "driftwing",
+    "ref": "main",
+    "sha": "62d6e1045e7e676fd2f8c2edcba1f62743e62b78"
+  },
+  "observedReady": {
+    "id": "dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn",
+    "name": "driftwing",
+    "url": "driftwing-g0oq1bss9-my-team-4f230354.vercel.app",
+    "target": "production",
+    "readyState": "READY",
+    "meta": {
+      "githubCommitRef": "main",
+      "githubCommitSha": "62d6e1045e7e676fd2f8c2edcba1f62743e62b78",
+      "githubCommitMessage": "Publish generated skies with four native journeys qualified",
+      "githubRepo": "driftwing",
+      "githubOrg": "alvarovillalbaa"
+    },
+    "alias": [
+      "driftwing-two.vercel.app",
+      "driftwing-alvaro.vercel.app",
+      "driftwing-my-team-4f230354.vercel.app",
+      "driftwing-git-main-my-team-4f230354.vercel.app"
+    ]
+  },
+  "aliases": [
+    {
+      "alias": "driftwing-git-qa-driftwing-gameplay-20261105-my-team-4f230354.vercel.app",
+      "projectId": "prj_axFn1xpGeUoQMWqNbNqN9nJvD26p",
+      "deploymentId": "dpl_AkfGXhDr4vfFMjZM7YnKJckuUXRN",
+      "updatedAt": 1793917232366
+    },
+    {
+      "alias": "driftwing-alvaro.vercel.app",
+      "projectId": "prj_axFn1xpGeUoQMWqNbNqN9nJvD26p",
+      "deploymentId": "dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn",
+      "updatedAt": 1794739046715
+    },
+    {
+      "alias": "driftwing-my-team-4f230354.vercel.app",
+      "projectId": "prj_axFn1xpGeUoQMWqNbNqN9nJvD26p",
+      "deploymentId": "dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn",
+      "updatedAt": 1794739046714
+    },
+    {
+      "alias": "driftwing-two.vercel.app",
+      "projectId": "prj_axFn1xpGeUoQMWqNbNqN9nJvD26p",
+      "deploymentId": "dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn",
+      "updatedAt": 1794739046712
+    },
+    {
+      "alias": "driftwing-git-main-my-team-4f230354.vercel.app",
+      "projectId": "prj_axFn1xpGeUoQMWqNbNqN9nJvD26p",
+      "deploymentId": "dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn",
+      "updatedAt": 1794739046713
+    }
+  ],
+  "applicationBuildBlobs": [
+    {
+      "path": "package.json",
+      "bytes": 360,
+      "sha256": "07009b31168ec754957e4d9f4803b9c6a86e99967402d822286574eb143f1009",
+      "gitBlob": "66b298de5264a7cd6b7643c49446be15b85b21a0"
+    },
+    {
+      "path": "public/favicon.svg",
+      "bytes": 253,
+      "sha256": "ced9d59c0cd0b1252e63a8666b78e864da532b1f1c07181020cf4374ceb9c941",
+      "gitBlob": "72a43221376b1f96875aa6cb50aafd140fe0a8cf"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 11175,
+      "sha256": "1168412b4098e5b138b3e0beb9e3a8ac4405e9ae1d9d1d388498436fb4056255",
+      "gitBlob": "342fb15c3308323709311620d2f2f1bc3600a55d"
+    },
+    {
+      "path": "public/src/audio.js",
+      "bytes": 3509,
+      "sha256": "c824e61425ee4d344a72c426722c22533ff8f42e9034d121beae070d83cc3bdf",
+      "gitBlob": "6c0bfdb3fef13ae799255094eb06156e96048649"
+    },
+    {
+      "path": "public/src/flight.js",
+      "bytes": 16314,
+      "sha256": "1cea748a03545ecdd3cecefa2cea9b80aec0b09e876ccff2fe6c723312625911",
+      "gitBlob": "65ed82770c4f36c80ba353f57c829ac9d0775f2b"
+    },
+    {
+      "path": "public/src/game.js",
+      "bytes": 18408,
+      "sha256": "8de4fce83acc0f8c7ec0048e1c883f2faf8e9719fc21234d596876f461fed849",
+      "gitBlob": "c23a234c9708ec57605ef2ad5cea27b2ace62997"
+    },
+    {
+      "path": "public/src/records.js",
+      "bytes": 4014,
+      "sha256": "e02cca8c20cf996d9789ca0012626e972d3dd3615eb0aede2f9e612babd61178",
+      "gitBlob": "81f0b859a11982601c8ae34d23e3c00e0bb91681"
+    },
+    {
+      "path": "public/src/renderer.js",
+      "bytes": 28176,
+      "sha256": "41f00012169c36098f8bbd9c441dea8631502b14fc876f32eb680e6c65f32c2f",
+      "gitBlob": "b708956ecb46f3fe063775a123f3b15478402f4b"
+    },
+    {
+      "path": "public/styles.css",
+      "bytes": 19435,
+      "sha256": "1c4e2bbbc19a8690cf2c1b46366f1473c136843675203fc51874d97dae6a6c02",
+      "gitBlob": "3e3e91d67d5b03e0ee1bb3ee7d1366b3427c2263"
+    },
+    {
+      "path": "scripts/check.mjs",
+      "bytes": 1701,
+      "sha256": "f948bfb97cbf65ff4b3350f5d54ebce45f9d6f2e634b5d9bc1120e1387d42f07",
+      "gitBlob": "b002535a251ac7a77ca173aef8dca64764cc4663"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 691,
+      "sha256": "a746a59e157185e859141597b39b4e0b2e2d258d9a837f7ec96117dc8a1998b8",
+      "gitBlob": "8138ba426bea84cb719bf8129dba9b5ab01ed4ca"
+    }
+  ],
+  "activeMainWorkflows": 0,
+  "proofLimits": [
+    "Selected provider metadata only; unrelated account and access-link fields are omitted.",
+    "The tool did not expose a separate gitSource object on readback. The request was pinned and returned commit metadata matches; anonymous served-byte/native proof is a separate next gate.",
+    "Production JSON is the exact original blob; the QA overlay is retained only on QA. No project environment or security configuration was changed."
+  ]
+}

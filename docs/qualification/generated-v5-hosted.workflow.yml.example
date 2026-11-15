@@ -11,10 +11,10 @@ jobs:
     timeout-minutes: 1
     env:
       DRIFTWING_APPROVAL: driftwing-native-v5-10m
-      DRIFTWING_PRIOR_CI_SECONDS: '1028'
+      DRIFTWING_PRIOR_CI_SECONDS: '1325'
       DRIFTWING_HOSTED_ORIGIN: 'https://driftwing-alvaro.vercel.app'
-      DRIFTWING_RELEASE_SOURCE: 'PIN_AFTER_NATIVE_ACCEPTANCE'
-      DRIFTWING_DEPLOYMENT: 'PIN_ACTUAL_READY_DEPLOYMENT'
+      DRIFTWING_RELEASE_SOURCE: '62d6e1045e7e676fd2f8c2edcba1f62743e62b78'
+      DRIFTWING_DEPLOYMENT: 'dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn'
     steps:
       - name: Define owned output
         shell: bash

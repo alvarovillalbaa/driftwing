@@ -1,8 +1,9 @@
-# Generated edition: source and native acceptance
+# Generated edition delivery
 
 15 November 2026. Owner: [GEN-3659](https://app.notion.com/p/418a1ee8bd0680c99343ea23eb42d0dd).
-**61 distinct source cases and four independently closed native journeys are
-accepted. Product publication and anonymous hosted acceptance are the next gates.**
+**Published at [Driftwing](https://driftwing-alvaro.vercel.app), with 61 distinct
+source cases, four independently closed native journeys and anonymous production
+H01 accepted. Only owned QA retirement remains.**
 
 Six seeded environments replace authored scenes. Native map creation/replay,
 first-finish progression through level 50, faster launch, stronger gusts, denser
@@ -40,7 +41,7 @@ the original failed source vector and all raw command digests remain preserved.
 V5 explicitly byte-binds L01/L03/L04 before carrying them, including original raw
 streams, independent normal closure and all application inputs. L03's only CSS
 difference is the verified single non-flying announcement display rule; current
-L01 validates that changed desktop menu boundary. H01 must separately qualify
+L01 validates that changed desktop menu boundary. [Hosted H01](hosted-1/result.md) separately qualifies
 the current 320px menu. The accepted packets do not become one combined run.
 
 Real-time native inputs read actual Canvas next-ring pixels/public HUD. No private
@@ -56,18 +57,34 @@ inode-checked scratch removal. Final teardown alone never accepts a failed case.
 
 The user explicitly [authorized ten extra minutes](v5-authorization.md) for
 Driftwing only, thirty total. Actual job use is 539 historical + 15 Node + 6 + 41
-+ 42 + 42 + 267 + 76 + 297 = **1,325 / 1,800 seconds (22m05s)**. All failures remain
++ 42 + 42 + 267 + 76 + 297 + 25 = **1,350 / 1,800 seconds (22m30s)**. All failures remain
 under native-1 through native-7. This is job wall time, not billing. Closed source
-or native cases must not be replayed unchanged. H01 and retirement each have a
-one-minute maximum and must fit the actual remainder when activated.
+or native cases must not be replayed unchanged. H01 used 25 seconds of its one-minute maximum; the remaining one-minute
+retirement must fit the actual remainder when activated.
 
-Source publication restores the exact production Vercel JSON in an unreferenced
-release commit with no active workflow, updates main by its checked lease and
-preserves the QA deployment-disable overlay on every published QA head. The
-intended project/team and actual release/READY metadata must be read separately,
-then anonymous public payloads/security headers and current narrow interaction
-must pass. The unique owned QA ref must be retired with checked identity/readback.
-No current generated deployment or completed hosted proof is claimed by this note.
+## Exact published boundary
+
+Release **62d6e1045e7e676fd2f8c2edcba1f62743e62b78** restores only the exact
+production Vercel JSON over the accepted QA tree, with no active workflow.
+All eleven application/build Git blobs match the qualified source. The intended
+project prj_axFn1xpGeUoQMWqNbNqN9nJvD26p / team_JpdIsOJgYNpX0ywVZ54Zdb7m
+reports production **dpl_9NLyY7Pk3QVXkYX4L1mDvHWRydEn READY**, and the public
+aliases point to it. [Selected provider metadata](publication.json) records the
+pinned request and returned commit metadata; it omits unrelated account/access
+fields and does not replace served-byte proof.
+
+[Anonymous H01](hosted-1/result.md), source 50284d8a557d4400e9eddb80a8b9fc8804a8294f /
+run 43705190548, matched all eight unique production payloads/security headers
+before and after actual 320px entry/flight/earned ring/pause/menu/reload. Its
+original viewed PNG shows the corrected current menu. Actual context/browser/
+native exit 0, process/group absence, complete streams, stable source/clean Git
+and owned scratch removal all passed. No bypass, account or private record.
+The QA overlay was verified separately from the exact production configuration.
+The four native journeys and 61 source cases were not replayed.
+
+The owned QA ref still requires identity-checked deletion/readback; a final
+documentation commit must preserve all eleven application/build blobs and no
+active main workflow. It cannot be reported as a new browser execution.
 
 Original dirty Mac work/index/local refs and all old source/native evidence are
 preserved. No local heavy installation/build/browser/database ran under the failed

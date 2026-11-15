@@ -10,16 +10,18 @@ Source intent and implementation choices are recorded in [the product contract](
 
 The app uses native JavaScript modules and original Canvas/SVG geometry. There are no runtime dependencies, accounts, analytics, external assets or backend services. Course records and preferences stay on the current browser/device. This is an arcade game rather than a real-world aviation simulation.
 
-The current local edition generates courses in six environments instead of using three fixed scenes. Choose new terrain or replay a saved seed/level. First completion advances difficulty through 50: faster launch, stronger gusts, narrower rings and denser rock spires. Space / touch Roll performs a barrel roll when height and distance allow; completing it without impact earns 250 points. Free flight generates obstacles and thermals beyond the course finish and grows harder with distance. The game fills the screen, with map selection and level replay inside its menu.
+The current edition generates courses in six environments instead of using three fixed scenes. Choose new terrain or replay a saved seed/level. First completion advances difficulty through 50: faster launch, stronger gusts, narrower rings and denser rock spires. Space / touch Roll performs a barrel roll when height and distance allow; completing it without impact earns 250 points. Free flight generates obstacles and thermals beyond the course finish and grows harder with distance. The game fills the screen, with map selection and level replay inside its menu.
 
-The [current implementation receipt](docs/results/2026/11-14/generated-levels.md) distinguishes local mechanics/VM checks from browser qualification and publication. The public app and the historical hosted results below still represent the earlier edition.
+The [original implementation receipt](docs/results/2026/11-14/generated-levels.md) preserves the initial local mechanics/VM boundary. The [current delivery receipt](docs/results/2026/11-15/generated-v1/result.md) binds the generated source, native journeys and actual production bytes; the 5 November results below remain historical.
 
 The [current qualification](docs/results/2026/11-15/generated-v1/result.md)
 has 61 distinct source cases on Node 24.22.2 and four accepted native journeys:
 touch/scene, keyboard/native focus, actual storage-disabled completion and the
 complete six-map/progression/replay journey. Each has normal native closure on
-its linked source. Public bytes and publication remain the separate next gates;
-the public app still represents the earlier edition at this qualification stage.
+its linked source. The generated edition is published, with anonymous H01
+matching all eight production resources and the current 320px native flow.
+The original failed packets and physical-device/audio/performance limits remain
+explicit in the receipt.
 
 Run `npm run check` for focused source checks and `npm test` for flight mechanics, records and authored sound/lifecycle boundary checks. No install is needed. Serve `public/` through a static HTTP server for play only after the applicable browser/dev-server authorization. A local filesystem URL does not support native module loading reliably.
 
