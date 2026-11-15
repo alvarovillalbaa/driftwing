@@ -1,0 +1,31 @@
+{
+  "run": 43701756778,
+  "job": 132774215042,
+  "source": "f127b6a83f2d78a1eb72e23c1cd05235258ccf8e",
+  "startedAt": "2026-11-15T09:58:02Z",
+  "completedAt": "2026-11-15T10:02:29Z",
+  "actualJobSeconds": 267,
+  "priorCiSeconds": 685,
+  "totalCiSeconds": 952,
+  "artifacts": [
+    {
+      "id": 14156957179,
+      "name": "driftwing-generated-native-proof",
+      "size_in_bytes": 1837880,
+      "url": "https://api.github.com/repos/alvarovillalbaa/driftwing/actions/artifacts/14156957179",
+      "archive_download_url": "https://api.github.com/repos/alvarovillalbaa/driftwing/actions/artifacts/14156957179/zip",
+      "expired": false,
+      "created_at": "2026-11-15T10:02:26Z",
+      "expires_at": "2026-11-22T10:02:25Z",
+      "updated_at": "2026-11-15T10:02:26Z",
+      "digest": "sha256:3048a1022941e336021d0c48ba519306d0c34577ef1797ffbf11cb27de29d154",
+      "workflow_run": {
+        "id": 43701756778,
+        "repository_id": 1434961858,
+        "head_repository_id": 1434961858,
+        "head_branch": "qa/driftwing-generated-20261115",
+        "head_sha": "f127b6a83f2d78a1eb72e23c1cd05235258ccf8e"
+      }
+    }
+  ]
+}

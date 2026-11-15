@@ -22,6 +22,8 @@ const KEY = 'driftwing.v1', SENTINEL_KEY = 'driftwing.authored-unrelated', SENTI
 const ROUTES = new Set(['/', '/styles.css', '/favicon.svg', '/src/game.js', '/src/flight.js', '/src/renderer.js', '/src/audio.js', '/src/records.js']);
 const workSeconds=Number(process.env.DRIFTWING_WORK_SECONDS??450);
 assert.ok(Number.isInteger(workSeconds)&&workSeconds>=30&&workSeconds<=450);
+const cleanupSeconds=Number(process.env.DRIFTWING_CLEANUP_SECONDS??60);
+assert.ok(Number.isInteger(cleanupSeconds)&&cleanupSeconds>=20&&cleanupSeconds<=60);
 const workEnd = Date.now() + workSeconds*1000;
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const clean = value => String(value ?? '').replace(/(?:https?:\/\/|file:\/\/|wss?:\/\/)[^\s)]+/g, '[URL]').replace(/[\x00-\x1f\x7f]/g, ' ').slice(0, 1000);
@@ -33,7 +35,7 @@ const report = { schemaVersion: 1, origin: ORIGIN, sourceCommit: process.env.SOU
     requestFailures: 0, responseErrors: 0, unexpectedDialogs: 0, events: [] },
   cleanup: { browsersCreated: 0, browsersClosed: 0, browserClosed: false, contextsCreated: 0, contextsClosed: 0,
     cdpSessionsCreated: 0, cdpSessionsDetached: 0, cdpSessionsClosedWithBrowser: 0, cdpSessionsRemaining: 0, lateChecksComplete: false, fixtureCleanup: 'unverified', failures: [] },
-  limits: { workSeconds, cleanupSeconds: 60, stdoutSeconds: 2, reportBytes: 393216, visualBytesEach: 2097152 },
+  limits: { workSeconds, cleanupSeconds, stdoutSeconds: 2, reportBytes: 393216, visualBytesEach: 2097152 },
   proofLimits: ["Real unmodified animation/wall clock; no application/model import, private state, score fixture or synthetic DOM events.","One headed native-default noDefaults CDP profile observes real tab visibility/focus. Three independent managed full Chromium processes use actual native input and exit0/absence closure.","The visual pilot reads only actual Canvas next-ring accent components and public HUD distance. Its screen-space aim curve is a camera calibration, not a flight-state simulator.","Whole original viewport PNGs are retained separately; automated pixels are not human visual, physical-device, acoustic or performance acceptance.","Authored corrupt owned JSON and unrelated one-time sentinels are the only injected storage fixtures. Actual course records are earned through controls.","Prior native/scientific/source receipts remain bound to original sources; this generated edition and anonymous hosted publication are separate.","The new short free entry does not qualify beyond-finish native generated free flight. Unchanged range/physics constraints have their separately pinned Node evidence.","Nested original-native diagnostic source is sanitized as declared by the existing helper; native raw stderr is not independently archived."] };
 let diagnosticPage=null;
 let chromium, current, stage = 'preflight', cleanupEnd, root, child, identity, marker, interrupted = false, expired = false, nativeChrome;
@@ -392,8 +394,10 @@ async function ringPixels(page){
   found.sort((a,b)=>b.rank-a.rank);return{width:w,height:h,candidate:found[0]||null,candidates:found.slice(0,3)};
  }),5000,'read-only actual next-ring pixels');
 }
-async function stickPoint(page,bank,pitch,id=1){
- const r=await page.locator('#stick-area').boundingBox();assert.ok(r&&r.width>=40&&r.height>=40);
+async function stickPoint(page,bank,pitch,id=1,allowNativeResult=false){
+ const r=await page.locator('#stick-area').boundingBox();
+ if((!r||r.width<40||r.height<40)&&allowNativeResult&&(await hud(page)).mode==='result')return null;
+ assert.ok(r&&r.width>=40&&r.height>=40);
  const length=Math.hypot(bank,pitch),scale=length>1?1/length:1;
  return{x:r.x+r.width/2+bank*scale*r.width*.34,y:r.y+r.height/2-pitch*scale*r.width*.34,id,radiusX:2,radiusY:2,force:1};
 }
@@ -420,7 +424,8 @@ async function visualPilot(page,session,observation,{keyboardRoll=false,duration
    if(keyboardRoll&&!requested&&ready==='SPACE / ROLL · +250'){firstScore=h.score;await within(()=>page.keyboard.down('Space'),3000,'real roll key');requested=true;}
    if(requested&&ready==='BARREL ROLL')sawActive=true;
    if(requested&&!released&&sawActive&&ready!=='BARREL ROLL'){await within(()=>page.keyboard.up('Space'),3000,'release real roll key');released=true;observation.keyboardRoll={sawActive,scoreBefore:firstScore,scoreAfter:h.score,event:await page.locator('#flight-event').textContent()};assert.ok(h.score>=firstScore+250);}
-   const point=await stickPoint(page,bank,pitch);await within(()=>session.send('Input.dispatchTouchEvent',{type:contact?'touchMove':'touchStart',touchPoints:[point]}),3000,'native visual-pilot stick');contact=true;
+   const point=await stickPoint(page,bank,pitch,1,true);if(!point){observation.nativeTerminalTransition={lastHud:h,actualMode:'result',reason:'native result hid the stick between observations'};break;}
+   await within(()=>session.send('Input.dispatchTouchEvent',{type:contact?'touchMove':'touchStart',touchPoints:[point]}),3000,'native visual-pilot stick');contact=true;
    await within(()=>delay(160),1000,'unmodified animation loop');
   }
  }finally{
@@ -521,7 +526,7 @@ try {
 } catch (error) { report.errors.push(clean(error.message)); }
 finally {
   clearTimeout(workTimer);
-  cleanupEnd = Math.min(Date.now() + 60000, workEnd + 60000); current = null;
+  cleanupEnd = Math.min(Date.now() + cleanupSeconds*1000, workEnd + cleanupSeconds*1000); current = null;
   try { await closeNativeBrowser(true); } catch (error) { report.cleanup.failures.push(clean(error.message)); }
   for (const item of sessions) if (!item.detached && !item.closedWithBrowser) {
     try { await within(() => item.session.detach(), 4000, 'remaining touch CDP detach', true); item.detached = true; report.cleanup.cdpSessionsDetached++; }
@@ -544,7 +549,7 @@ finally {
     catch (error) { report.cleanup.failures.push(clean(error.message)); }
   }
   if (critical()) report.errors.push('unexpected browser/network error, including late observations');
-  if (interrupted || expired || Date.now() > workEnd + 60000) report.errors.push(interrupted ? 'interrupted' : 'work or cleanup deadline');
+  if (interrupted || expired || Date.now() > workEnd + cleanupSeconds*1000) report.errors.push(interrupted ? 'interrupted' : 'work or cleanup deadline');
   if (report.cleanup.browsersCreated !== report.cleanup.browsersClosed || report.cleanup.contextsCreated !== report.cleanup.contextsClosed
     || !report.cleanup.browserClosed || !report.cleanup.lateChecksComplete || report.cleanup.cdpSessionsRemaining || report.cleanup.fixtureCleanup !== 'passed' || report.cleanup.failures.length) report.errors.push('resource cleanup unverified');
   const expectedCount=selected.size,expectedDetached=[...selected].filter(x=>x!=='L01').length;
@@ -556,7 +561,7 @@ finally {
   fs.writeFileSync(path.join(proof,'generated-browser.json'),JSON.stringify(report,null,2)+'\n');
   let result = JSON.stringify(report);
   if (Buffer.byteLength(result) > 393216) { report.status = 'failed'; result = JSON.stringify({ schemaVersion: 1, origin: ORIGIN, status: 'failed', cases: report.cases.map(({ id, title }) => ({ id, title, accepted: false, error: 'report limit', observations: {} })), errors: ['report limit'], cleanup: report.cleanup }); }
-  const outputEnd = Math.min(Date.now() + 2000, workEnd + 62000), timer = setTimeout(() => process.exit(1), Math.max(1, outputEnd - Date.now()));
+  const outputEnd = Math.min(Date.now() + 2000, workEnd + cleanupSeconds*1000 + 2000), timer = setTimeout(() => process.exit(1), Math.max(1, outputEnd - Date.now()));
   process.stdout.write('DRIFTWING_BROWSER_DRIVER=' + result + '\n', () => {
     clearTimeout(timer); clearTimeout(workTimer); for (const [signal, handler] of handlers) process.removeListener(signal, handler);
     process.exit(report.status === 'passed' && !interrupted && !expired && Date.now() <= outputEnd ? 0 : 1);

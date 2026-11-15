@@ -8,10 +8,10 @@ jobs:
   generated-native:
     if: github.ref == 'refs/heads/qa/driftwing-generated-20261115'
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 2
     env:
-      DRIFTWING_GENERATED_CASES: L01,L02,L04
-      DRIFTWING_PRIOR_CI_SECONDS: '685'
+      DRIFTWING_GENERATED_CASES: L04
+      DRIFTWING_PRIOR_CI_SECONDS: '952'
       DRIFTWING_CARRY_FOCUSED: native-3
     steps:
       - name: Define owned output
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
           node-version: '24.22.2'
-      - name: Remaining generated flights focus storage and owned cleanup
+      - name: Native storage-unavailable generated finish and owned cleanup
         run: python3 tests/scripts/generated-native-v1.py
       - name: Preserve original output
         if: always()

@@ -8,10 +8,12 @@ assert os.environ.get("GITHUB_REPOSITORY")=="alvarovillalbaa/driftwing"
 assert os.environ.get("GITHUB_REF")=="refs/heads/qa/driftwing-generated-20261115"
 assert re.fullmatch("[a-f0-9]{40}",os.environ["GITHUB_SHA"])
 cases=os.environ["DRIFTWING_GENERATED_CASES"].split(",")
-assert cases in (["L03"],["L01","L02","L04"])
-short=cases==["L03"]
-work_seconds=60 if short else 375
-global_end=time.monotonic()+(165 if short else 465)
+assert cases in (["L03"],["L04"],["L01","L02","L04"])
+short=cases==["L03"];storage_only=cases==["L04"]
+work_seconds=60 if short or storage_only else 375
+cleanup_seconds=30 if storage_only else 60
+job_minutes=2 if storage_only else 3 if short else 8
+global_end=time.monotonic()+(110 if storage_only else 165 if short else 465)
 runner=Path(os.environ["RUNNER_TEMP"]).resolve()
 job=os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]
 out=Path(os.environ["DRIFTWING_OUTPUT"]).resolve()
@@ -36,14 +38,14 @@ env.update(LANG="C.UTF-8",TZ="UTC",CI="true",NO_COLOR="1",
     PLAYWRIGHT_BROWSERS_PATH=str(root/"browsers"),PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="1",
     DRIFTWING_CHECK_ROOT=str(root),DRIFTWING_PLAYWRIGHT_MODULE=str(root/"tools/node_modules/playwright/index.mjs"),
     DRIFTWING_OUTPUT=str(out),DRIFTWING_GENERATED_CASES=",".join(cases),
-    DRIFTWING_WORK_SECONDS=str(work_seconds),SOURCE_COMMIT=os.environ["GITHUB_SHA"])
+    DRIFTWING_WORK_SECONDS=str(work_seconds),DRIFTWING_CLEANUP_SECONDS=str(cleanup_seconds),SOURCE_COMMIT=os.environ["GITHUB_SHA"])
 receipt={"schema":"driftwing.generated-native.v1","source":os.environ["GITHUB_SHA"],
     "run":os.environ["GITHUB_RUN_ID"],"attempt":os.environ["GITHUB_RUN_ATTEMPT"],"cases":cases,
     "passed":False,"commands":[],"priorCiSeconds":int(os.environ["DRIFTWING_PRIOR_CI_SECONDS"]),
-    "capCiSeconds":1200,"limits":{"workSeconds":work_seconds,"cleanupSeconds":60,"jobMinutes":3 if short else 8},
+    "capCiSeconds":1200,"limits":{"workSeconds":work_seconds,"cleanupSeconds":cleanup_seconds,"jobMinutes":job_minutes},
     "appInstall":False,"appBuild":False,"database":False,"accounts":False,"forcedSignals":[],
     "sourceStable":False,"gitClean":False,"scratchRemoved":False}
-assert receipt["priorCiSeconds"]+(180 if short else 480)<=1200
+assert receipt["priorCiSeconds"]+job_minutes*60<=1200
 active=[];seen={};scan_uncertain=[];x11_before=None;server=None;before=None
 def sha(b):return hashlib.sha256(b).hexdigest()
 def write(name,value): (out/name).write_text(json.dumps(value,indent=2)+"\n")
@@ -250,7 +252,7 @@ try:
     args=["xvfb-run","--auto-servernum","--error-file="+str(xlog),"--auth-file="+str(auth),
         "--server-args=-screen 0 1600x1200x24 -nolisten tcp","node","tests/browser/generated-v1.mjs"]
     native=start("browser",args)
-    native_stdout=finish(native,130 if short else 445,allow_failure=True)
+    native_stdout=finish(native,95 if storage_only else 130 if short else 445,allow_failure=True)
     assert xlog.lstat().st_ino==xlog_identity.st_ino
     (out/"xvfb-errors.txt").write_bytes(safe_read(xlog,1048576))
     report_file=out/"generated-browser.json"

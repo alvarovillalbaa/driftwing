@@ -1,0 +1,282 @@
+{
+  "id": "L01",
+  "title": "six generated maps saved replay faster keyboard flight and native interruptions",
+  "accepted": true,
+  "error": null,
+  "observations": {
+    "stage": "setup L01",
+    "canvasBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1000
+    },
+    "focusLast": {
+      "label": "actual current visible and focused final",
+      "hidden": false,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "mode": "paused",
+      "width": 1440,
+      "height": 1000,
+      "activeTag": "CANVAS",
+      "activeId": "sky"
+    },
+    "focusSnapshots": [
+      {
+        "label": "current generated native focus",
+        "hidden": false,
+        "visibilityState": "visible",
+        "hasFocus": true,
+        "mode": "flying",
+        "width": 1440,
+        "height": 1000,
+        "activeTag": "CANVAS",
+        "activeId": "sky"
+      },
+      {
+        "label": "actual current hidden and unfocused",
+        "hidden": true,
+        "visibilityState": "hidden",
+        "hasFocus": false,
+        "mode": "paused",
+        "width": 1440,
+        "height": 1000,
+        "activeTag": "CANVAS",
+        "activeId": "sky"
+      },
+      {
+        "label": "actual current visible and focused",
+        "hidden": false,
+        "visibilityState": "visible",
+        "hasFocus": true,
+        "mode": "paused",
+        "width": 1440,
+        "height": 1000,
+        "activeTag": "CANVAS",
+        "activeId": "sky"
+      }
+    ],
+    "maps": [
+      {
+        "id": "v2-coast-697383697-1",
+        "pixels": {
+          "width": 1440,
+          "height": 1000,
+          "sampleColors": 153,
+          "sampleSha256": "13089dc4d393bdce449f25fd82fa485b4e2a8311bb10995fe82b32536a4727af"
+        }
+      },
+      {
+        "id": "v2-ridge-1015271863-1",
+        "pixels": {
+          "width": 1440,
+          "height": 1000,
+          "sampleColors": 118,
+          "sampleSha256": "271fbaf7ab8233570420f204f10dd7f10bccb116ad62c8b51718b29c88a214ec"
+        }
+      },
+      {
+        "id": "v2-cloudline-1833382503-1",
+        "pixels": {
+          "width": 1440,
+          "height": 1000,
+          "sampleColors": 125,
+          "sampleSha256": "ad91c58412a72a2acf5013fd4fc262d711b370ea1c1fbf293a5d1f7b097c4a1a"
+        }
+      },
+      {
+        "id": "v2-canyon-1036810289-1",
+        "pixels": {
+          "width": 1440,
+          "height": 1000,
+          "sampleColors": 106,
+          "sampleSha256": "d803a7c219d556c863928391e9f88aad24103e81c0866c928266b4090559ec09"
+        }
+      },
+      {
+        "id": "v2-islands-3526444558-1",
+        "pixels": {
+          "width": 1440,
+          "height": 1000,
+          "sampleColors": 150,
+          "sampleSha256": "7877120db1cdcd14d0748143fd9681c6f4336dc79515b767f65f3ce09b10a2bb"
+        }
+      },
+      {
+        "id": "v2-aurora-4117315819-1",
+        "pixels": {
+          "width": 1440,
+          "height": 1000,
+          "sampleColors": 133,
+          "sampleSha256": "577f201410b1bc5d23e419212b1d7e416ce05ccf32de163c179cc709aeb30845"
+        }
+      }
+    ],
+    "newTerrain": {
+      "one": "v2-aurora-4117315819-1",
+      "two": "v2-aurora-1709571003-1"
+    },
+    "actualSavedReplay": true,
+    "bounds": {
+      "width": 1440,
+      "height": 1000,
+      "scrollWidth": 1440,
+      "deck": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000
+      },
+      "stick": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "pixels": {
+        "width": 1440,
+        "height": 1000,
+        "sampleColors": 133,
+        "sampleSha256": "577f201410b1bc5d23e419212b1d7e416ce05ccf32de163c179cc709aeb30845"
+      }
+    },
+    "initial": {
+      "mode": "flying",
+      "altitude": 112,
+      "airspeed": 48,
+      "passed": 0,
+      "distanceKm": null,
+      "score": 0,
+      "timeSeconds": 0,
+      "windLabel": "Calm air",
+      "windDetail": "0.6 m/s horizontal · +0.0 m/s lift",
+      "nextGate": "Next ring 248 m"
+    },
+    "climbed": {
+      "mode": "flying",
+      "altitude": 118,
+      "airspeed": 46,
+      "passed": 0,
+      "distanceKm": null,
+      "score": 0,
+      "timeSeconds": 1,
+      "windLabel": "Calm air",
+      "windDetail": "0.5 m/s horizontal · +0.0 m/s lift",
+      "nextGate": "Next ring 180 m"
+    },
+    "banked": {
+      "mode": "flying",
+      "altitude": 111,
+      "airspeed": 47,
+      "passed": 0,
+      "distanceKm": null,
+      "score": 0,
+      "timeSeconds": 0,
+      "windLabel": "Calm air",
+      "windDetail": "0.1 m/s horizontal · +0.0 m/s lift",
+      "nextGate": "Next ring 206 m"
+    },
+    "paused": {
+      "mode": "paused",
+      "altitude": 112,
+      "airspeed": 48,
+      "passed": 0,
+      "distanceKm": null,
+      "score": 0,
+      "timeSeconds": 0,
+      "windLabel": "Calm air",
+      "windDetail": "0.6 m/s horizontal · +0.0 m/s lift",
+      "nextGate": "Next ring 250 m"
+    },
+    "guide": {
+      "mode": "paused",
+      "altitude": 112,
+      "airspeed": 48,
+      "passed": 0,
+      "distanceKm": null,
+      "score": 0,
+      "timeSeconds": 0,
+      "windLabel": "Calm air",
+      "windDetail": "0.6 m/s horizontal · +0.0 m/s lift",
+      "nextGate": "Next ring 244 m"
+    },
+    "hidden": {
+      "mode": "paused",
+      "altitude": 112,
+      "airspeed": 48,
+      "passed": 0,
+      "distanceKm": null,
+      "score": 0,
+      "timeSeconds": 0,
+      "windLabel": "Calm air",
+      "windDetail": "0.6 m/s horizontal · +0.0 m/s lift",
+      "nextGate": "Next ring 244 m"
+    },
+    "actualNativeFocus": true,
+    "unrelatedStoragePreserved": true,
+    "profileClosure": {
+      "label": "L01-native-default",
+      "normalNativeClose": true,
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "exitObservedAndReaped": true,
+        "closeObserved": true,
+        "pipesEOF": [
+          true,
+          true
+        ],
+        "originalProcessGroupAbsent": true,
+        "termSent": false,
+        "killSent": false,
+        "forcedDrain": false,
+        "stopReason": null,
+        "streams": [
+          {
+            "name": "stdout",
+            "originalObservedBytes": 0,
+            "originalObservedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "originalBytesRetained": false,
+            "completeSanitized": true,
+            "redactionType": "owned-DevTools-endpoint",
+            "sanitizationEncoding": "latin1-byte-preserving",
+            "redactionCount": 0,
+            "sanitizedBytes": 0,
+            "sanitizedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sanitizedBytesRetained": true,
+            "encoding": "gzip-base64",
+            "observedCompressedBytes": 20,
+            "compressedBytes": 20,
+            "data": "H4sIAAAAAAAAAwMAAAAAAAAAAAA="
+          },
+          {
+            "name": "stderr",
+            "originalObservedBytes": 13318,
+            "originalObservedSha256": "80233ac5c85cef5d9e19020bd320a1eaa54a60debde3d9e1a959f664b5fe4394",
+            "originalBytesRetained": false,
+            "completeSanitized": true,
+            "redactionType": "owned-DevTools-endpoint",
+            "sanitizationEncoding": "latin1-byte-preserving",
+            "redactionCount": 1,
+            "sanitizedBytes": 13264,
+            "sanitizedSha256": "4f2c1e9d6aeb0aab4e2d6a2334aafabd6c4c9075deafd325b23fa300bd9dd751",
+            "sanitizedBytesRetained": true,
+            "encoding": "gzip-base64",
+            "observedCompressedBytes": 1069,
+            "compressedBytes": 1069,
+            "data": "H4sIAAAAAAAAA9Way27jNhSG9/MURDZtN5JI8Sqgi06cTrOoE+SCFggCg5aOHTUyKZBSHL99ITtpYyvpdBFY1M4yRPHjz/8c8ki8I1wmGeGKZBhjFieKSUwjIZiUaXZ2dXVxlRXz1sfz1kd5ntGE3aNfdVlBgRqLcmsM5E33s3kANG99hk5tWxXI2AbV2nlAHtwTOKSLwoH3Gbo1j8auzesfqNnUgH6EZ72qK/DILtCTrspi+79H2gE6afL6BGlTIGvQ7fT8T3TSmvL55Kcvd+/jK4G5omPGF4SPFJ9FSUIVVuHjf5nA0421lUdV6RswpVl299xd/DE9m8xOJ5ezs+nk8uJ8enP/4VA5FmysRtvhixEZTSZ7+FgxzthbfDv/C/JmVjv7vOnGwQTZG4euKrSC5sEWGbJuGS0cQAH+sbF1NPna+miqV/Cb9hdrAy5Dr4/TzcPPKLZuGb9pEHcNMtS+jBOcs247mgz9B7AUNGTgA4NgJRMux2OQPj4mbDz4B3YhCSb74Rm4XUiCGR1vPiGUSp6GrPc7wGpUBqGMihHlk57ejDMcst6HwBzTZGzAn6zwpbM1uKYEH32D5peq+h717aVdg4sLeCpz8PGk9HWlN5Pt5Qd9nHVDi67Bdfe8GDFDNw+AjF5Br82uB7TWfudnZ5/KAgo03yBtNijyuwehRVmB/zCWOOYYjzeWBOGChGzNQ70FkYqMV2+pJBUh630AnCZJKj9tdz+FZm3d4+/a6CW4LhPsAtp/D3y/4efE//4z/38eEFRmRDCxpxOXWP2zpi7rNi7rPM6rEkwT53a10qaYzdvFAtxOuVm5qqtOPiLEPTq1poHn5gp8WzVZ9njjtPFd207X1kH2RmAPpkDf6rZr42wVnTrQDZzu+vi67SLqKDnuno33KAVNCX6lzPPYad+Ai62BWW7rzWx3/Qa0U8JtMSW7R9uuSmu6ULhu9LI0y12HP3h0/aAdFOcrvQS02ML+S8HlIQVNWAAUDIsQKDg5OkXPFzShSQAUOD0+RW9GaJIGECM0TdIAZoQIFQBFynEIM6JC0IJiHoAWAoeQLwQ7fqT2KSQJwZ1CHp+ir4XCdHgKlgywpvZmhCUkBC0wDUELMkDW6mtBeAD7C5aS4+87+1pQFYIWLA0gdzKmjl+P9GeE8QD2nUyQANZUJnAAFSKTePjaTHYryeBayK5SDUALOcCOr6eFTOjwey0pcQi+kFgcv07tU4TwXktKMkAG7/siDYIihDpVShrA+4thKPpaMD58PSIlEyFkLR5EjAg2fG02DEVfC4mHrwRkZ4zhtVB4gKroHQoVQIwoQgNY2RWWx9z99r99ExwJjjkd0Xnwt5+Sd/iCBH0Mpq+3kCM6V9zXWyZBH8zd01tFgjCBR3q24wVfqHHpLelY/b3Dl0Hq/TfwesRT0DMAAA=="
+          }
+        ]
+      },
+      "closeBasis": {
+        "browserCloseAcknowledged": true,
+        "browserDisconnected": true,
+        "defaultContextCloseObserved": true,
+        "defaultPagesClosed": true
+      }
+    }
+  },
+  "durationMs": 16316
+}

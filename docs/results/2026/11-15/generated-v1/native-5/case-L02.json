@@ -1,0 +1,2318 @@
+{
+  "id": "L02",
+  "title": "six visually piloted generated flights earn replay progression and persistent records",
+  "accepted": false,
+  "error": "The expression evaluated to a falsy value:    assert.ok(r&&r.width>=40&&r.height>=40) ",
+  "observations": {
+    "stage": "setup L02",
+    "courses": [
+      {
+        "id": "v2-coast-313480709-1",
+        "levelBefore": 1,
+        "method": "read-only orange-next-ring Canvas components plus public HUD, native CDP stick",
+        "samples": [
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 129,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "2.2 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 81 m"
+            },
+            "ring": {
+              "x": 149,
+              "y": 428,
+              "width": 64,
+              "height": 66,
+              "pixels": 39,
+              "rank": 2496
+            },
+            "bank": -0.3488348221110796,
+            "pitch": 0.2487116644866352
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 130,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.4 m/s",
+              "windDetail": "2.1 m/s horizontal · +3.4 m/s lift",
+              "nextGate": "Next ring 70 m"
+            },
+            "ring": {
+              "x": 160,
+              "y": 492,
+              "width": 62,
+              "height": 166,
+              "pixels": 90,
+              "rank": 5580
+            },
+            "bank": -0.22707864677746958,
+            "pitch": -0.37822402034167624
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 131,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.5 m/s",
+              "windDetail": "1.9 m/s horizontal · +3.5 m/s lift",
+              "nextGate": "Next ring 59 m"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 131,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.5 m/s",
+              "windDetail": "1.8 m/s horizontal · +3.5 m/s lift",
+              "nextGate": "Next ring 49 m"
+            },
+            "ring": {
+              "x": 163,
+              "y": 503,
+              "width": 64,
+              "height": 140,
+              "pixels": 76,
+              "rank": 4864
+            },
+            "bank": -0.23097604123441154,
+            "pitch": -0.06948095876890378
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 132,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.3 m/s",
+              "windDetail": "1.5 m/s horizontal · +3.3 m/s lift",
+              "nextGate": "Next ring 38 m"
+            },
+            "ring": {
+              "x": 168,
+              "y": 509,
+              "width": 54,
+              "height": 108,
+              "pixels": 56,
+              "rank": 3024
+            },
+            "bank": -0.18481572853773073,
+            "pitch": 0.002012851313980546
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 133,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "1.1 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 27 m"
+            },
+            "ring": {
+              "x": 133,
+              "y": 500,
+              "width": 120,
+              "height": 122,
+              "pixels": 81,
+              "rank": 9720
+            },
+            "bank": -0.5518902237407692,
+            "pitch": 0.25800638620400984
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 133,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +2.9 m/s",
+              "windDetail": "0.9 m/s horizontal · +2.9 m/s lift",
+              "nextGate": "Next ring 22 m"
+            },
+            "ring": {
+              "x": 184,
+              "y": 661,
+              "width": 34,
+              "height": 112,
+              "pixels": 69,
+              "rank": 2346
+            },
+            "bank": 0.05907056345444972,
+            "pitch": -0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 133,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +2.5 m/s",
+              "windDetail": "0.4 m/s horizontal · +2.5 m/s lift",
+              "nextGate": "Next ring 11 m"
+            },
+            "ring": {
+              "x": 173,
+              "y": 694,
+              "width": 64,
+              "height": 190,
+              "pixels": 112,
+              "rank": 7168
+            },
+            "bank": -0.19264274430151207,
+            "pitch": -0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +2.0 m/s",
+              "windDetail": "0.2 m/s horizontal · +2.0 m/s lift",
+              "nextGate": "Next ring 0 m"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +1.5 m/s",
+              "windDetail": "0.7 m/s horizontal · +1.5 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +0.9 m/s",
+              "windDetail": "1.1 m/s horizontal · +0.9 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +0.7 m/s",
+              "windDetail": "1.2 m/s horizontal · +0.7 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "1.4 m/s horizontal · +0.3 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "1.4 m/s horizontal · +0.2 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "1.4 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "1.1 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "0.9 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 134,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1333,
+              "timeSeconds": 38,
+              "windLabel": "Calm air",
+              "windDetail": "0.4 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          }
+        ],
+        "nativeSeed": "v2-coast-313480709-1",
+        "keyboardRoll": {
+          "sawActive": true,
+          "scoreBefore": 0,
+          "scoreAfter": 250,
+          "event": "Barrel roll complete · +250 points"
+        },
+        "result": {
+          "title": "A flight to remember.",
+          "message": "You found your way through Coast. There’s always another line to try.",
+          "score": 1673,
+          "gates": "7 / 8",
+          "time": "0:38",
+          "liftSeconds": 15,
+          "recordMessage": "A new personal best. Saved on this device."
+        },
+        "elapsedMs": 38293,
+        "record": {
+          "score": 1673,
+          "time": 38.29999999999847,
+          "passed": 7
+        },
+        "levelAfter": 2
+      },
+      {
+        "id": "v2-ridge-2564052849-2",
+        "levelBefore": 2,
+        "method": "read-only orange-next-ring Canvas components plus public HUD, native CDP stick",
+        "samples": [
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 158,
+              "airspeed": 49,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "1.3 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 79 m"
+            },
+            "ring": {
+              "x": 115,
+              "y": 420,
+              "width": 96,
+              "height": 82,
+              "pixels": 63,
+              "rank": 5166
+            },
+            "bank": -0.6135600239267474,
+            "pitch": 0.2607211529066661
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 157,
+              "airspeed": 49,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.3 m/s",
+              "windDetail": "1.3 m/s horizontal · +3.3 m/s lift",
+              "nextGate": "Next ring 69 m"
+            },
+            "ring": {
+              "x": 105,
+              "y": 427,
+              "width": 80,
+              "height": 84,
+              "pixels": 55,
+              "rank": 4400
+            },
+            "bank": -0.6874670879410216,
+            "pitch": 0.30535479657000975
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 157,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.4 m/s",
+              "windDetail": "1.4 m/s horizontal · +3.4 m/s lift",
+              "nextGate": "Next ring 58 m"
+            },
+            "ring": {
+              "x": 101,
+              "y": 429,
+              "width": 64,
+              "height": 68,
+              "pixels": 42,
+              "rank": 2688
+            },
+            "bank": -0.7013913648419496,
+            "pitch": 0.39654287323691445
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 157,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.3 m/s",
+              "windDetail": "1.6 m/s horizontal · +3.3 m/s lift",
+              "nextGate": "Next ring 48 m"
+            },
+            "ring": {
+              "x": 114,
+              "y": 441,
+              "width": 98,
+              "height": 96,
+              "pixels": 65,
+              "rank": 6240
+            },
+            "bank": -0.5595332736366218,
+            "pitch": 0.356732775817718
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 158,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "1.9 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 37 m"
+            },
+            "ring": {
+              "x": 123,
+              "y": 445,
+              "width": 104,
+              "height": 88,
+              "pixels": 61,
+              "rank": 5368
+            },
+            "bank": -0.5042259083728279,
+            "pitch": 0.47624866870076005
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 159,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +2.8 m/s",
+              "windDetail": "2.2 m/s horizontal · +2.8 m/s lift",
+              "nextGate": "Next ring 27 m"
+            },
+            "ring": {
+              "x": 134,
+              "y": 678,
+              "width": 106,
+              "height": 78,
+              "pixels": 58,
+              "rank": 4524
+            },
+            "bank": -0.4183481572853773,
+            "pitch": -0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 160,
+              "airspeed": 47,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +2.4 m/s",
+              "windDetail": "2.7 m/s horizontal · +2.4 m/s lift",
+              "nextGate": "Next ring 16 m"
+            },
+            "ring": {
+              "x": 338,
+              "y": 473,
+              "width": 102,
+              "height": 84,
+              "pixels": 59,
+              "rank": 4956
+            },
+            "bank": 0.75,
+            "pitch": 0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 160,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +1.9 m/s",
+              "windDetail": "3.2 m/s horizontal · +1.9 m/s lift",
+              "nextGate": "Next ring 6 m"
+            },
+            "ring": {
+              "x": 147,
+              "y": 487,
+              "width": 120,
+              "height": 84,
+              "pixels": 63,
+              "rank": 5292
+            },
+            "bank": -0.5526066350710901,
+            "pitch": 0.598888869177448
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 161,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1092,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +1.7 m/s",
+              "windDetail": "3.5 m/s horizontal · +1.7 m/s lift",
+              "nextGate": "Next ring 0 m"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 162,
+              "airspeed": 47,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +1.2 m/s",
+              "windDetail": "4.1 m/s horizontal · +1.2 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 163,
+              "airspeed": 47,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +0.7 m/s",
+              "windDetail": "4.6 m/s horizontal · +0.7 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 164,
+              "airspeed": 47,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "5.0 m/s horizontal · +0.3 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 164,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "5.2 m/s horizontal · +0.1 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 165,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "5.4 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 165,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "5.3 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 166,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind left",
+              "windDetail": "5.3 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 166,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 38,
+              "windLabel": "Crosswind left",
+              "windDetail": "4.9 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 166,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1270,
+              "timeSeconds": 38,
+              "windLabel": "Crosswind left",
+              "windDetail": "4.5 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          }
+        ],
+        "nativeSeed": "v2-ridge-2564052849-2",
+        "result": {
+          "title": "A flight to remember.",
+          "message": "You found your way through High Ridge. There’s always another line to try.",
+          "score": 1630,
+          "gates": "8 / 8",
+          "time": "0:38",
+          "liftSeconds": 14,
+          "recordMessage": "A new personal best. Saved on this device."
+        },
+        "elapsedMs": 38546,
+        "record": {
+          "score": 1630,
+          "time": 38.374999999998465,
+          "passed": 8
+        },
+        "levelAfter": 3
+      },
+      {
+        "id": "v2-cloudline-1908764138-3",
+        "levelBefore": 3,
+        "method": "read-only orange-next-ring Canvas components plus public HUD, native CDP stick",
+        "samples": [
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 165,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +2.5 m/s",
+              "windDetail": "0.6 m/s horizontal · +2.5 m/s lift",
+              "nextGate": "Next ring 90 m"
+            },
+            "ring": {
+              "x": 214,
+              "y": 413,
+              "width": 202,
+              "height": 84,
+              "pixels": 132,
+              "rank": 11088
+            },
+            "bank": 0.14227856045359127,
+            "pitch": 0.2625774438440387
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 166,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +2.8 m/s",
+              "windDetail": "0.5 m/s horizontal · +2.8 m/s lift",
+              "nextGate": "Next ring 79 m"
+            },
+            "ring": {
+              "x": 170,
+              "y": 419,
+              "width": 126,
+              "height": 84,
+              "pixels": 76,
+              "rank": 6384
+            },
+            "bank": -0.29363389125522427,
+            "pitch": 0.3027892320924496
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 167,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "0.8 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 69 m"
+            },
+            "ring": {
+              "x": 286,
+              "y": 436,
+              "width": 86,
+              "height": 90,
+              "pixels": 59,
+              "rank": 5074
+            },
+            "bank": 0.75,
+            "pitch": 0.20293614715899488
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 168,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.2 m/s",
+              "windDetail": "1.2 m/s horizontal · +3.2 m/s lift",
+              "nextGate": "Next ring 58 m"
+            },
+            "ring": {
+              "x": 267,
+              "y": 449,
+              "width": 140,
+              "height": 104,
+              "pixels": 89,
+              "rank": 9256
+            },
+            "bank": 0.476065238190597,
+            "pitch": 0.21232768906674962
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 169,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.2 m/s",
+              "windDetail": "1.8 m/s horizontal · +3.2 m/s lift",
+              "nextGate": "Next ring 48 m"
+            },
+            "ring": {
+              "x": 298,
+              "y": 475,
+              "width": 90,
+              "height": 116,
+              "pixels": 71,
+              "rank": 6390
+            },
+            "bank": 0.75,
+            "pitch": 0.06177282875242578
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 171,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.0 m/s",
+              "windDetail": "2.4 m/s horizontal · +3.0 m/s lift",
+              "nextGate": "Next ring 37 m"
+            },
+            "ring": {
+              "x": 121,
+              "y": 479,
+              "width": 124,
+              "height": 108,
+              "pixels": 78,
+              "rank": 8424
+            },
+            "bank": -0.7436018957345971,
+            "pitch": 0.23454250756332018
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 172,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +2.8 m/s",
+              "windDetail": "3.0 m/s horizontal · +2.8 m/s lift",
+              "nextGate": "Next ring 27 m"
+            },
+            "ring": {
+              "x": 286,
+              "y": 507,
+              "width": 126,
+              "height": 124,
+              "pixels": 84,
+              "rank": 10416
+            },
+            "bank": 0.75,
+            "pitch": 0.06393085566725551
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 173,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +2.5 m/s",
+              "windDetail": "3.5 m/s horizontal · +2.5 m/s lift",
+              "nextGate": "Next ring 16 m"
+            },
+            "ring": {
+              "x": 77,
+              "y": 533,
+              "width": 128,
+              "height": 128,
+              "pixels": 85,
+              "rank": 10880
+            },
+            "bank": -0.75,
+            "pitch": 0.05298817290534852
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 174,
+              "airspeed": 48,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1096,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +2.1 m/s",
+              "windDetail": "3.9 m/s horizontal · +2.1 m/s lift",
+              "nextGate": "Next ring 6 m"
+            },
+            "ring": {
+              "x": 65,
+              "y": 545,
+              "width": 132,
+              "height": 104,
+              "pixels": 77,
+              "rank": 8008
+            },
+            "bank": -0.75,
+            "pitch": 0.1950206179327418
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 175,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +1.6 m/s",
+              "windDetail": "4.1 m/s horizontal · +1.6 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 176,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +1.1 m/s",
+              "windDetail": "4.0 m/s horizontal · +1.1 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 177,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 36,
+              "windLabel": "Rising air +0.6 m/s",
+              "windDetail": "3.8 m/s horizontal · +0.6 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 178,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "3.6 m/s horizontal · +0.4 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 178,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "3.1 m/s horizontal · +0.1 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 179,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "2.4 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 179,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "2.1 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 179,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "1.5 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 180,
+              "airspeed": 48,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1267,
+              "timeSeconds": 37,
+              "windLabel": "Crosswind right",
+              "windDetail": "1.0 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          }
+        ],
+        "nativeSeed": "v2-cloudline-1908764138-3",
+        "result": {
+          "title": "A flight to remember.",
+          "message": "You found your way through Cloudline. There’s always another line to try.",
+          "score": 1627,
+          "gates": "8 / 8",
+          "time": "0:37",
+          "liftSeconds": 15,
+          "recordMessage": "A new personal best. Saved on this device."
+        },
+        "elapsedMs": 37381,
+        "record": {
+          "score": 1627,
+          "time": 37.34166666666519,
+          "passed": 8
+        },
+        "levelAfter": 4
+      },
+      {
+        "id": "v2-canyon-527187933-4",
+        "levelBefore": 4,
+        "method": "read-only orange-next-ring Canvas components plus public HUD, native CDP stick",
+        "samples": [
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 138,
+              "airspeed": 50,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +2.9 m/s",
+              "windDetail": "1.8 m/s horizontal · +2.9 m/s lift",
+              "nextGate": "Next ring 89 m"
+            },
+            "ring": {
+              "x": 91,
+              "y": 430,
+              "width": 96,
+              "height": 98,
+              "pixels": 77,
+              "rank": 7392
+            },
+            "bank": -0.75,
+            "pitch": 0.35075193621416234
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 50,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "1.5 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 83 m"
+            },
+            "ring": {
+              "x": 80,
+              "y": 532,
+              "width": 90,
+              "height": 122,
+              "pixels": 81,
+              "rank": 7290
+            },
+            "bank": -0.75,
+            "pitch": -0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 50,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +3.4 m/s",
+              "windDetail": "0.8 m/s horizontal · +3.4 m/s lift",
+              "nextGate": "Next ring 73 m"
+            },
+            "ring": {
+              "x": 210,
+              "y": 465,
+              "width": 98,
+              "height": 156,
+              "pixels": 104,
+              "rank": 10192
+            },
+            "bank": 0.31018957345971565,
+            "pitch": 0.2834059639103938
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 50,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +3.6 m/s",
+              "windDetail": "0.5 m/s horizontal · +3.6 m/s lift",
+              "nextGate": "Next ring 62 m"
+            },
+            "ring": {
+              "x": 93,
+              "y": 507,
+              "width": 140,
+              "height": 236,
+              "pixels": 178,
+              "rank": 24920
+            },
+            "bank": -0.75,
+            "pitch": -0.3423639871199436
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 50,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 33,
+              "windLabel": "Rising air +3.6 m/s",
+              "windDetail": "0.7 m/s horizontal · +3.6 m/s lift",
+              "nextGate": "Next ring 50 m"
+            },
+            "ring": {
+              "x": 146,
+              "y": 443,
+              "width": 254,
+              "height": 100,
+              "pixels": 169,
+              "rank": 16900
+            },
+            "bank": -0.20972244268577522,
+            "pitch": 0.6073195961261078
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 50,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.4 m/s",
+              "windDetail": "1.0 m/s horizontal · +3.4 m/s lift",
+              "nextGate": "Next ring 40 m"
+            },
+            "ring": {
+              "x": 71,
+              "y": 458,
+              "width": 124,
+              "height": 114,
+              "pixels": 87,
+              "rank": 9918
+            },
+            "bank": -0.75,
+            "pitch": 0.30450382996199366
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 49,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +3.1 m/s",
+              "windDetail": "1.2 m/s horizontal · +3.1 m/s lift",
+              "nextGate": "Next ring 29 m"
+            },
+            "ring": {
+              "x": 247,
+              "y": 488,
+              "width": 124,
+              "height": 150,
+              "pixels": 100,
+              "rank": 12400
+            },
+            "bank": 0.5819905213270142,
+            "pitch": 0.17121002668451415
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 137,
+              "airspeed": 49,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +2.8 m/s",
+              "windDetail": "1.2 m/s horizontal · +2.8 m/s lift",
+              "nextGate": "Next ring 18 m"
+            },
+            "ring": {
+              "x": 241,
+              "y": 696,
+              "width": 164,
+              "height": 126,
+              "pixels": 105,
+              "rank": 13230
+            },
+            "bank": 0.3213048677857997,
+            "pitch": -0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 138,
+              "airspeed": 49,
+              "passed": 7,
+              "distanceKm": null,
+              "score": 1161,
+              "timeSeconds": 34,
+              "windLabel": "Rising air +2.3 m/s",
+              "windDetail": "1.1 m/s horizontal · +2.3 m/s lift",
+              "nextGate": "Next ring 7 m"
+            },
+            "ring": {
+              "x": 221,
+              "y": 510,
+              "width": 240,
+              "height": 150,
+              "pixels": 148,
+              "rank": 22200
+            },
+            "bank": 0.1368932459044775,
+            "pitch": 0.65
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 138,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +1.7 m/s",
+              "windDetail": "0.9 m/s horizontal · +1.7 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 139,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +1.2 m/s",
+              "windDetail": "0.6 m/s horizontal · +1.2 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 139,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 35,
+              "windLabel": "Rising air +0.7 m/s",
+              "windDetail": "0.3 m/s horizontal · +0.7 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 140,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 35,
+              "windLabel": "Calm air",
+              "windDetail": "0.2 m/s horizontal · +0.4 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 140,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 35,
+              "windLabel": "Calm air",
+              "windDetail": "0.3 m/s horizontal · +0.1 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 140,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 36,
+              "windLabel": "Calm air",
+              "windDetail": "0.5 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 141,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "0.6 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 141,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "0.8 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          },
+          {
+            "hud": {
+              "mode": "flying",
+              "altitude": 141,
+              "airspeed": 49,
+              "passed": 8,
+              "distanceKm": null,
+              "score": 1341,
+              "timeSeconds": 36,
+              "windLabel": "Crosswind right",
+              "windDetail": "0.9 m/s horizontal · +0.0 m/s lift",
+              "nextGate": "Keep flying to the finish"
+            },
+            "ring": null,
+            "bank": 0,
+            "pitch": 0
+          }
+        ],
+        "nativeSeed": "v2-canyon-527187933-4",
+        "result": {
+          "title": "A flight to remember.",
+          "message": "You found your way through Red Canyon. There’s always another line to try.",
+          "score": 1701,
+          "gates": "8 / 8",
+          "time": "0:36",
+          "liftSeconds": 14,
+          "recordMessage": "A new personal best. Saved on this device."
+        },
+        "elapsedMs": 36962,
+        "record": {
+          "score": 1701,
+          "time": 36.89999999999855,
+          "passed": 8
+        },
+        "levelAfter": 5
+      }
+    ],
+    "replay": {
+      "id": "v2-coast-313480709-1",
+      "method": "read-only orange-next-ring Canvas components plus public HUD, native CDP stick",
+      "samples": [
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 127,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +3.1 m/s",
+            "windDetail": "2.2 m/s horizontal · +3.1 m/s lift",
+            "nextGate": "Next ring 82 m"
+          },
+          "ring": {
+            "x": 139,
+            "y": 556,
+            "width": 84,
+            "height": 78,
+            "pixels": 53,
+            "rank": 4134
+          },
+          "bank": -0.441543794979814,
+          "pitch": -0.65
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 128,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +3.3 m/s",
+            "windDetail": "2.1 m/s horizontal · +3.3 m/s lift",
+            "nextGate": "Next ring 71 m"
+          },
+          "ring": {
+            "x": 155,
+            "y": 440,
+            "width": 60,
+            "height": 82,
+            "pixels": 46,
+            "rank": 2760
+          },
+          "bank": -0.2499561172546954,
+          "pitch": 0.4737737637485466
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 128,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +3.5 m/s",
+            "windDetail": "2.0 m/s horizontal · +3.5 m/s lift",
+            "nextGate": "Next ring 60 m"
+          },
+          "ring": {
+            "x": 102,
+            "y": 418,
+            "width": 130,
+            "height": 54,
+            "pixels": 69,
+            "rank": 3726
+          },
+          "bank": -0.75,
+          "pitch": 0.5511449864646012
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 129,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 35,
+            "windLabel": "Rising air +3.5 m/s",
+            "windDetail": "1.8 m/s horizontal · +3.5 m/s lift",
+            "nextGate": "Next ring 50 m"
+          },
+          "ring": {
+            "x": 179,
+            "y": 515,
+            "width": 32,
+            "height": 128,
+            "pixels": 69,
+            "rank": 2208
+          },
+          "bank": 0.08246445497630332,
+          "pitch": -0.46452874510612036
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 130,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 35,
+            "windLabel": "Rising air +3.4 m/s",
+            "windDetail": "1.6 m/s horizontal · +3.4 m/s lift",
+            "nextGate": "Next ring 40 m"
+          },
+          "ring": {
+            "x": 159,
+            "y": 462,
+            "width": 44,
+            "height": 50,
+            "pixels": 27,
+            "rank": 1188
+          },
+          "bank": -0.3193084079340004,
+          "pitch": 0.5368455310074522
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 130,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 35,
+            "windLabel": "Rising air +3.1 m/s",
+            "windDetail": "1.3 m/s horizontal · +3.1 m/s lift",
+            "nextGate": "Next ring 30 m"
+          },
+          "ring": {
+            "x": 150,
+            "y": 493,
+            "width": 98,
+            "height": 120,
+            "pixels": 71,
+            "rank": 6958
+          },
+          "bank": -0.355139013257038,
+          "pitch": 0.10973381898144474
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 131,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 35,
+            "windLabel": "Rising air +2.8 m/s",
+            "windDetail": "1.0 m/s horizontal · +2.8 m/s lift",
+            "nextGate": "Next ring 20 m"
+          },
+          "ring": {
+            "x": 165,
+            "y": 511,
+            "width": 64,
+            "height": 88,
+            "pixels": 49,
+            "rank": 3136
+          },
+          "bank": -0.177656762668611,
+          "pitch": 0.1690796047017124
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 132,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 36,
+            "windLabel": "Rising air +2.4 m/s",
+            "windDetail": "0.5 m/s horizontal · +2.4 m/s lift",
+            "nextGate": "Next ring 9 m"
+          },
+          "ring": {
+            "x": 183,
+            "y": 690,
+            "width": 60,
+            "height": 170,
+            "pixels": 100,
+            "rank": 6000
+          },
+          "bank": -0.040546716316858494,
+          "pitch": -0.65
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 133,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 36,
+            "windLabel": "Rising air +1.9 m/s",
+            "windDetail": "0.2 m/s horizontal · +1.9 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 134,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 36,
+            "windLabel": "Rising air +1.4 m/s",
+            "windDetail": "0.5 m/s horizontal · +1.4 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 134,
+            "airspeed": 47,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 36,
+            "windLabel": "Rising air +1.1 m/s",
+            "windDetail": "0.8 m/s horizontal · +1.1 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 134,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 36,
+            "windLabel": "Rising air +0.6 m/s",
+            "windDetail": "1.1 m/s horizontal · +0.6 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 135,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 37,
+            "windLabel": "Crosswind left",
+            "windDetail": "1.3 m/s horizontal · +0.4 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 135,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 37,
+            "windLabel": "Crosswind left",
+            "windDetail": "1.4 m/s horizontal · +0.1 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 135,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 37,
+            "windLabel": "Crosswind left",
+            "windDetail": "1.4 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 135,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 37,
+            "windLabel": "Crosswind left",
+            "windDetail": "1.3 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 135,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 37,
+            "windLabel": "Crosswind left",
+            "windDetail": "1.0 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 135,
+            "airspeed": 48,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1077,
+            "timeSeconds": 38,
+            "windLabel": "Calm air",
+            "windDetail": "0.5 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        }
+      ],
+      "nativeSeed": "v2-coast-313480709-1",
+      "result": {
+        "title": "A flight to remember.",
+        "message": "You found your way through Coast. There’s always another line to try.",
+        "score": 1417,
+        "gates": "7 / 8",
+        "time": "0:38",
+        "liftSeconds": 15,
+        "recordMessage": "Your best completed course score stays on this device."
+      },
+      "elapsedMs": 38261
+    },
+    "activeFlight": {
+      "id": "v2-islands-3645792542-5",
+      "levelBefore": 5,
+      "method": "read-only orange-next-ring Canvas components plus public HUD, native CDP stick",
+      "samples": [
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 106,
+            "airspeed": 50,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 32,
+            "windLabel": "Rising air +3.2 m/s",
+            "windDetail": "1.2 m/s horizontal · +3.2 m/s lift",
+            "nextGate": "Next ring 74 m"
+          },
+          "ring": {
+            "x": 178,
+            "y": 398,
+            "width": 202,
+            "height": 86,
+            "pixels": 124,
+            "rank": 10664
+          },
+          "bank": -0.29283480725069627,
+          "pitch": 0.65
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 106,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 33,
+            "windLabel": "Rising air +3.3 m/s",
+            "windDetail": "1.3 m/s horizontal · +3.3 m/s lift",
+            "nextGate": "Next ring 69 m"
+          },
+          "ring": {
+            "x": 118,
+            "y": 392,
+            "width": 78,
+            "height": 58,
+            "pixels": 44,
+            "rank": 2552
+          },
+          "bank": -0.7365293474298213,
+          "pitch": 0.5897384422180129
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 107,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 33,
+            "windLabel": "Rising air +3.5 m/s",
+            "windDetail": "1.4 m/s horizontal · +3.5 m/s lift",
+            "nextGate": "Next ring 58 m"
+          },
+          "ring": {
+            "x": 255,
+            "y": 492,
+            "width": 108,
+            "height": 242,
+            "pixels": 168,
+            "rank": 18144
+          },
+          "bank": 0.6407582938388625,
+          "pitch": -0.3652741673699928
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 108,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 33,
+            "windLabel": "Rising air +3.4 m/s",
+            "windDetail": "1.5 m/s horizontal · +3.4 m/s lift",
+            "nextGate": "Next ring 47 m"
+          },
+          "ring": {
+            "x": 252,
+            "y": 464,
+            "width": 142,
+            "height": 178,
+            "pixels": 128,
+            "rank": 18176
+          },
+          "bank": 0.4104540945662956,
+          "pitch": 0.3611069517146642
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 109,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 33,
+            "windLabel": "Rising air +3.2 m/s",
+            "windDetail": "1.4 m/s horizontal · +3.2 m/s lift",
+            "nextGate": "Next ring 35 m"
+          },
+          "ring": {
+            "x": 248,
+            "y": 474,
+            "width": 166,
+            "height": 174,
+            "pixels": 146,
+            "rank": 24236
+          },
+          "bank": 0.3783147801168301,
+          "pitch": 0.2748230053313432
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 110,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 33,
+            "windLabel": "Rising air +2.9 m/s",
+            "windDetail": "1.0 m/s horizontal · +2.9 m/s lift",
+            "nextGate": "Next ring 24 m"
+          },
+          "ring": {
+            "x": 252,
+            "y": 480,
+            "width": 178,
+            "height": 162,
+            "pixels": 140,
+            "rank": 22680
+          },
+          "bank": 0.43050977340784236,
+          "pitch": 0.3867399089357615
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 111,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +2.5 m/s",
+            "windDetail": "0.5 m/s horizontal · +2.5 m/s lift",
+            "nextGate": "Next ring 13 m"
+          },
+          "ring": {
+            "x": 252,
+            "y": 494,
+            "width": 194,
+            "height": 158,
+            "pixels": 144,
+            "rank": 22752
+          },
+          "bank": 0.41872037914691945,
+          "pitch": 0.4252790402208621
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 112,
+            "airspeed": 49,
+            "passed": 6,
+            "distanceKm": null,
+            "score": 849,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +2.3 m/s",
+            "windDetail": "0.2 m/s horizontal · +2.3 m/s lift",
+            "nextGate": "Next ring 7 m"
+          },
+          "ring": {
+            "x": 231,
+            "y": 732,
+            "width": 260,
+            "height": 166,
+            "pixels": 164,
+            "rank": 27224
+          },
+          "bank": 0.20764786080633643,
+          "pitch": -0.65
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 113,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +1.7 m/s",
+            "windDetail": "0.6 m/s horizontal · +1.7 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 115,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +1.2 m/s",
+            "windDetail": "1.4 m/s horizontal · +1.2 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 115,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 34,
+            "windLabel": "Rising air +0.7 m/s",
+            "windDetail": "2.1 m/s horizontal · +0.7 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 116,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 35,
+            "windLabel": "Crosswind right",
+            "windDetail": "2.8 m/s horizontal · +0.3 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 116,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 35,
+            "windLabel": "Crosswind right",
+            "windDetail": "3.1 m/s horizontal · +0.2 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 117,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 35,
+            "windLabel": "Crosswind right",
+            "windDetail": "3.6 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 117,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 35,
+            "windLabel": "Crosswind right",
+            "windDetail": "3.8 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 117,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 35,
+            "windLabel": "Crosswind right",
+            "windDetail": "3.9 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 117,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 36,
+            "windLabel": "Crosswind right",
+            "windDetail": "3.9 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        },
+        {
+          "hud": {
+            "mode": "flying",
+            "altitude": 118,
+            "airspeed": 49,
+            "passed": 7,
+            "distanceKm": null,
+            "score": 1023,
+            "timeSeconds": 36,
+            "windLabel": "Crosswind right",
+            "windDetail": "3.7 m/s horizontal · +0.0 m/s lift",
+            "nextGate": "Keep flying to the finish"
+          },
+          "ring": null,
+          "bank": 0,
+          "pitch": 0
+        }
+      ],
+      "nativeSeed": "v2-islands-3645792542-5"
+    }
+  },
+  "durationMs": 231658
+}
