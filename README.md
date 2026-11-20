@@ -1,5 +1,9 @@
 # Driftwing
 
+<!-- project-family:start -->
+> **Project family:** [Games](https://github.com/alvarovillalbaa#games) · **Area:** Browser games
+<!-- project-family:end -->
+
 Last updated: 2026-11-15
 
 A little airplane. A wide-open sky. An original browser flight game where wind currents move the aircraft.
